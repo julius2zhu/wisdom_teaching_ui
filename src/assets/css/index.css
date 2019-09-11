@@ -1,0 +1,22 @@
+.my-icon-user {
+  background: url('../image/user.png') center no-repeat;
+}
+
+.my-icon-user:before {
+  /**占位，不然不显示**/
+  content: "001";
+  visibility: hidden;
+}
+
+.my-icon-password {
+  background: url('../image/lock.png') center no-repeat;
+}
+
+.my-icon-password:before {
+  content: "002";
+  visibility: hidden;
+}
+/**直接设置在Login.vue的style标签中不起作用**/
+.el-form-item__label{
+  color: #00BFFF !important;
+}
