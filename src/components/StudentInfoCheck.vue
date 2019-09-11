@@ -18,7 +18,6 @@
               element-loading-background="rgba(0, 0, 0, 0.8">
       <el-table-column label="序号" type="index" width="50"/>
       <el-table-column prop="name" label="姓名" width="100"/>
-      <el-table-column prop="sex" label="性别" width="50"/>
       <el-table-column prop="grade" label="班级" width="100"/>
       <el-table-column prop="number" label="学号"/>
       <el-table-column prop="department" label="系别"/>
@@ -36,11 +35,11 @@
               <span>{{ props.row.number }}</span>
             </el-form-item>
             <el-form-item label="学生性别:">
-              <span v-if="props.row.sex=='女'" style="color: red">
-                {{ props.row.sex }}
+              <span v-if="props.row.sex==='0'" style="color: red">
+                  女
               </span>
               <span v-else style="color: blue">
-                 {{ props.row.sex }}
+                  男
               </span>
             </el-form-item>
             <el-form-item label="所在系部:">
@@ -50,7 +49,7 @@
               <span>{{ props.row.major }}</span>
             </el-form-item>
             <el-form-item label="班主任:">
-              <span>{{ props.row.teacher}}</span>
+              <span>{{ props.row.classTeacher}}</span>
             </el-form-item>
           </el-form>
         </template>
@@ -125,7 +124,8 @@
         let key = this.searchKeys.trim()
         let condition = {
           currentPage: this.currentPage,
-          count: this.count
+          count: this.count,
+          teacherName: sessionStorage.getItem('name')
         }
         if (item === 'name') {
           condition.name = key
@@ -166,6 +166,7 @@
         this.axios(url, {
           method: 'post',
           data: {
+            teacherName: sessionStorage.getItem('name'),
             currentPage: 1,
             count: this.count
           }
@@ -191,6 +192,7 @@
       this.axios(url, {
         method: 'post',
         data: {
+          teacherName: sessionStorage.getItem('name'),
           currentPage: 1,
           count: this.count
         }
@@ -207,7 +209,6 @@
       }).catch(error => {
         this.loading = false
       }).finally(() => {
-        console.log('finally')
         this.loading = false
       })
     }

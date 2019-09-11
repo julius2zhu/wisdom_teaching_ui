@@ -17,17 +17,27 @@
               element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8"
-              @select="selectionSingle"
-              @select-all="selectAll">
+              @selection-change="selectionChange"
+              ref="table">
       <el-table-column type="selection"/>
       <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column prop="name" label="姓名" />
-      <el-table-column prop="grade" label="班级" />
+      <el-table-column prop="name" label="姓名"/>
+      <el-table-column prop="grade" label="班级"/>
       <el-table-column prop="number" label="学号"/>
       <el-table-column prop="department" label="系别"/>
       <el-table-column prop="major" label="专业"/>
+      <el-table-column label="操作" width="160" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="on(scope.$index,scope.row)">到
+          </el-button>
+          <el-button size="mini" type="danger" @click="off(scope.$index,scope.row)">未到
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="footer">
+      <el-button type="primary" @click="submit">提交信息</el-button>
+      <el-button type="danger">重置信息</el-button>
       <el-pagination background
                      @size-change="handleSizeChange"
                      @current-change="handleCurrentChange"
@@ -43,8 +53,13 @@
 
 <script>
   export default {
+    name: 'OnlineCheckName',
     data () {
       return {
+        reason: '',
+        //所有选择数据的id
+        selections: [],
+        dialogVisible: false,
         //表格数据
         tableData: [],
         //当前页
@@ -60,8 +75,6 @@
         //搜索下拉框选项
         itemSelect: 'name',
         searchKeys: '',
-        //所有选择数据的id
-        selections: [],
         searchCondition: [
           {value: 'name', label: '学生姓名'},
           {value: 'number', label: '学生学号'},
@@ -156,15 +169,6 @@
         })
         this.loading = false
       },
-      //每次选中一个则会被添加到selection中
-      //取消选中一个则会从selection去掉一个
-      selectionSingle (selection, row) {
-        this.selections = selection
-      },
-      //选中所有触发
-      selectAll (selection) {
-        this.selections = selection
-      },
       //导出excel数据操作
       exportExcel () {
         let ids = ''
@@ -181,6 +185,50 @@
         let url = this.url_request.ip_port_dev + '/student_export'
         //一个超链接就可以,不需要使用axios麻烦
         window.location.href = url + '?ids=' + ids
+      },
+      //当选择项被改变时候触发
+      selectionChange (selection) {
+        this.selections = selection
+      },
+      //到
+      on (index, row) {
+        this.$refs.table.toggleRowSelection(row, false)
+      },
+      off (index, row) {
+        this.$refs.table.toggleRowSelection(row, true)
+      },
+      submit () {
+        let data = {}
+        //未考勤人id
+        let noOnlineIds = ''
+        this.selections.forEach(function (item) {
+          noOnlineIds += item.studentId + ','
+        })
+        //所有人的id
+        let wholeIds = ''
+        this.tableData.forEach(function (item) {
+          wholeIds += item.studentId + ','
+        })
+        data.what = 'insert'
+        data.ids = wholeIds
+        data.teacherName = sessionStorage.getItem('name')
+        let url = this.url_request.ip_port_dev + '/online_checkName'
+        //执行插入操作
+        this.axios.get(url, {
+          params: data
+        }).then(reponse => {
+          data.what = 'update'
+          data.ids = noOnlineIds
+          this.axios.get(url, {
+            params: data
+          }).then(
+            this.$message('提交成功!')
+          ).catch(error => {
+            this.$message('提交失败!')
+          })
+        }).catch(error => {
+          this.$message('提交失败!')
+        })
       }
     },
     //请求数据

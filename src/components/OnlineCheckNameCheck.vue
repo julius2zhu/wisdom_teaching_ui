@@ -17,15 +17,14 @@
               element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8"
-              @select="selectionSingle"
-              @select-all="selectAll">
-      <el-table-column type="selection"/>
+              ref="table">
       <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column prop="name" label="姓名" />
-      <el-table-column prop="grade" label="班级" />
-      <el-table-column prop="number" label="学号"/>
-      <el-table-column prop="department" label="系别"/>
-      <el-table-column prop="major" label="专业"/>
+      <el-table-column prop="name" label="姓名"/>
+      <el-table-column width="150" label="详细信息" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="detail(scope.$index, scope.row)">查看详细信息</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="footer">
       <el-pagination background
@@ -38,15 +37,27 @@
                      :total="totalCount">
       </el-pagination>
     </div>
+    <!--详细的未考勤信息-->
+    <el-dialog title="未考勤信息" :visible.sync="dialogVisible">
+      <el-table :data="onlineData">
+        <el-table-column label="序号" :index="indexMethod" type="index" width="50"/>
+        <el-table-column property="createDate" label="日期" width="150"/>
+        <el-table-column property="online" label="未考勤次数" width="200"/>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   export default {
+    name: 'OnlineCheckNameCheck',
     data () {
       return {
+        dialogVisible: false,
         //表格数据
         tableData: [],
+        //学生未考勤数据
+        onlineData: [],
         //当前页
         currentPage: 1,
         //总页数
@@ -60,8 +71,6 @@
         //搜索下拉框选项
         itemSelect: 'name',
         searchKeys: '',
-        //所有选择数据的id
-        selections: [],
         searchCondition: [
           {value: 'name', label: '学生姓名'},
           {value: 'number', label: '学生学号'},
@@ -156,15 +165,6 @@
         })
         this.loading = false
       },
-      //每次选中一个则会被添加到selection中
-      //取消选中一个则会从selection去掉一个
-      selectionSingle (selection, row) {
-        this.selections = selection
-      },
-      //选中所有触发
-      selectAll (selection) {
-        this.selections = selection
-      },
       //导出excel数据操作
       exportExcel () {
         let ids = ''
@@ -181,6 +181,25 @@
         let url = this.url_request.ip_port_dev + '/student_export'
         //一个超链接就可以,不需要使用axios麻烦
         window.location.href = url + '?ids=' + ids
+      },
+      //查看性详细信息
+      detail (index, row) {
+        this.dialogVisible = true
+        let studentId = row.studentId
+        let url = this.url_request.ip_port_dev + '/online_check'
+        this.axios.get(url, {
+          params: {
+            name: row.name,
+            studentId: studentId
+          }
+        }).then(response => {
+          this.onlineData = response.data
+        }).catch(error => {
+
+        })
+      },
+      indexMethod (index) {
+        return index + 1
       }
     },
     //请求数据

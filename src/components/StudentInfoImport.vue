@@ -1,8 +1,5 @@
 <template>
   <div>
-    <el-link :href="downloadTemplate" type="primary" target="_blank">
-      下载导入模板和说明文档
-    </el-link>
     <el-upload class="upload-class" ref="upload" drag
                :action="uploadUrl"
                :on-change="beforeAvatarUpload"
@@ -11,9 +8,15 @@
                :on-success="success"
                :on-error="error"
                :on-progress="progress">
+      <br/>
+      <el-link :href="downloadTemplate" type="primary" target="_blank">
+      <span id="toast">
+        下载导入模板和说明文档
+      </span>
+      </el-link>
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <br/>
-      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+      <el-button style="margin: 10px 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
       <div slot="tip" class="el-upload__tip">只能上传xlsx文件</div>
     </el-upload>
     <!--弹窗-->
@@ -81,5 +84,11 @@
 
   .progress {
     margin-left: 50px;
+  }
+
+  #toast {
+    margin-top: 30px;
+    color: red;
+    font-size: larger;
   }
 </style>

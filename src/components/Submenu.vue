@@ -27,8 +27,12 @@
     </el-submenu>
     <el-submenu index="4" v-if="hasTeacherRole||hasAdminRole">
       <template slot="title"><i class="el-icon-message"></i>课堂管理</template>
-      <el-menu-item index="4-1">在线考勤</el-menu-item>
-      <el-menu-item index="4-2">话题讨论</el-menu-item>
+      <el-menu-item index="4-1">
+        <router-link to="/main/onlineCheckName">在线考勤</router-link>
+      </el-menu-item>
+      <el-menu-item index="4-2">
+        <router-link to="/main/onlineCheckNameCheck">考勤记录查看</router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="5" v-if="hasStudentRole||hasAdminRole">
       <template slot="title"><i class="el-icon-message"></i>个人作业管理</template>

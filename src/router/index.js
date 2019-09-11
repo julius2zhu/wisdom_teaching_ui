@@ -3,11 +3,12 @@ import Router from 'vue-router'
 import Main from '../components/Main'
 import Login from '../components/Login'
 import Register from '../components/Register'
+import OnlineCheckName from '../components/OnlineCheckName'
+import OnlineCheckNameCheck from '../components/OnlineCheckNameCheck'
 import StudentInfoMaintain from '../components/StudentInfoMaintain'
 import StudentInfoCheck from '../components/StudentInfoCheck'
 import StudentInfoExport from '../components/StudentInfoExport'
 import StudentInfoImport from '../components/StudentInfoImport'
-import OnlineExamination from '../components/OnlineExamination'
 import Welcome from '../components/Welcome'
 import AlterPassWord from '../components/AlterPassWord'
 import UserManage from '../components/UserManage'
@@ -44,8 +45,12 @@ export default new Router({
           component: StudentInfoImport
         },
         {
-          path: 'onlineExamination',
-          component: OnlineExamination
+          path: 'onlineCheckName',
+          component: OnlineCheckName
+        },
+        {
+          path: 'onlineCheckNameCheck',
+          component: OnlineCheckNameCheck
         },
         {
           path: 'alterPassWord',

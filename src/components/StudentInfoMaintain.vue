@@ -17,7 +17,6 @@
               element-loading-background="rgba(0, 0, 0, 0.8">
       <el-table-column label="序号" type="index" width="50"/>
       <el-table-column prop="name" label="姓名" width="100"/>
-      <el-table-column prop="sex" label="性别" width="50"/>
       <el-table-column prop="grade" label="班级" width="100"/>
       <el-table-column prop="number" label="学号"/>
       <el-table-column prop="department" label="系别"/>
@@ -47,14 +46,30 @@
         <el-form-item label="学生姓名:" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="专科学号:" prop="juniorNumber">
-          <el-input v-model="form.number"></el-input>
+        <el-form-item label="学生性别:" prop="sex">
+          <el-radio v-model="form.sex" label="0">男</el-radio>
+          <el-radio v-model="form.sex" label="1">女</el-radio>
         </el-form-item>
-        <el-form-item label="专科年级:" prop="juniorGrade">
-          <el-input v-model.number="form.grade"></el-input>
+        <el-form-item label="学生班级:" prop="grade">
+          <el-input v-model="form.grade"/>
         </el-form-item>
-        <el-form-item label="专业名称:" prop="majorName">
-          <el-input v-model="form.major"></el-input>
+        <el-form-item label="学生学号:" prop="number">
+          <el-input v-model="form.number"/>
+        </el-form-item>
+        <el-form-item label="所在系别:" prop="department">
+          <el-input v-model="form.department"/>
+        </el-form-item>
+        <el-form-item label="所学专业:" prop="major">
+          <el-input v-model="form.major"/>
+        </el-form-item>
+        <el-form-item label="学生班主任:" prop="classTeacher">
+          <el-input v-model="form.classTeacher"/>
+        </el-form-item>
+        <el-form-item>
+          <span class="toast">
+            提示：<br/>
+            新添加学生的账号和密码默认为学号,请提醒学生及时修改自己的密码。
+          </span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -91,27 +106,15 @@
         ],
         title: '新增学生信息',
         dialogFormVisible: false,
-        department: [
-          {
-            value: '计算机与通信工程学院',
-            label: '计算机与通信工程学院'
-          }, {
-            value: '商学院',
-            label: '商学院'
-          }, {
-            value: '电子工程学院',
-            label: '电子工程学院'
-          }, {
-            value: '自动化学院',
-            label: '自动化学院'
-          }],
         form: {
           id: -1,
           name: '',
-          number: '',
+          sex: '0',
           grade: '',
-          sex: '',
-          department: ''
+          number: '',
+          department: '',
+          major: '',
+          classTeacher: ''
         },
         loading: true,
         //验证规则
@@ -119,6 +122,25 @@
           name: [
             {required: true, message: '请输入学生性名'},
             {min: 2, max: 6, message: '学生姓名应在2-6个字符之间'}
+          ],
+          sex: [
+            {required: true}
+          ],
+          grade: [
+            {required: true, message: '请输入学生班级'},
+            {min: 6, max: 20, message: '班级名应在6-20个字符之间'}
+          ],
+          number: [
+            {required: true, message: '请输入学生学号'},
+            {min: 6, max: 11, message: '学生学号应在6-11个字符之间'}
+          ],
+          department: [
+            {required: true, message: '请输入学生所在系别'},
+            {min: 3, max: 20, message: '学生系别应在3-20个字符之间'}
+          ],
+          major: [
+            {required: true, message: '请输入学生所学专业'},
+            {min: 3, max: 20, message: '专业名称应在3-20个字符之间'}
           ]
         }
       }
@@ -133,8 +155,9 @@
         //必须在该方法中才可以实现表单的重置
         this.$nextTick(() => {
           this.$refs.dialog_form.resetFields()
-          switch (type) {//1编辑2添加
+          switch (type) {//0添加1编辑
             case 0:
+              this.form.id = -1
               this.title = '新增学生信息'
               break
             case 1:
@@ -154,8 +177,7 @@
         }).then(() => {
           //执行删除操作
           let id = this.tableData[index].id
-          let url = this.url_request.ip_port_dev +
-            this.url_request.root_request + '/student_manage/delete'
+          let url = this.url_request.ip_port_dev + '/student_manage/delete'
           this.addOrUpdateOrDelete(url, {id: id})
         }).catch(() => {
           this.$message({
@@ -185,39 +207,20 @@
         //表单校验
         this.$refs.dialog_form.validate((validate) => {
           if (validate) {
-            //向后台传递数据
             let id = this.form.id
-            let name = this.form.name
-            let idNumber = this.form.idNumber
-            let birthDate = this.form.birthDate
-            let juniorNumber = this.form.juniorNumber
-            let juniorClass = this.form.juniorClass
-            let juniorGrade = this.form.juniorGrade
-            let mainAcademy = this.form.mainAcademy
-            let majorNumber = this.form.majorNumber
-            let majorName = this.form.majorName
-            let examRegistrationNumber = this.form.examRegistrationNumber
-            let department = this.form.department
-            let sex = this.form.sex
-            let gradeNumber = this.form.gradeNumber
-            let studentInfo = {
-              id, name, idNumber, birthDate, juniorNumber,
-              juniorClass, juniorGrade, mainAcademy,
-              majorNumber, majorName, examRegistrationNumber, department,
-              sex, gradeNumber
-            }
-            let url = this.url_request.ip_port_dev + this.url_request.root_request
+            //添加人信息
+            this.form.teacherName = sessionStorage.getItem('name')
+            let url = this.url_request.ip_port_dev
             //判断是新增还是编辑
             if (id < 0) {
               //新增
               url += '/student_manage/add'
-              this.addOrUpdateOrDelete(url, studentInfo)
+              this.addOrUpdateOrDelete(url, this.form)
             } else {
               //编辑
               url += '/student_manage/update'
-              this.addOrUpdateOrDelete(url, studentInfo)
+              this.addOrUpdateOrDelete(url, this.form)
             }
-            this.dialogFormVisible = false
           } else {
             return false
           }
@@ -243,6 +246,7 @@
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
         this.axios(url, {
+          teacherName: sessionStorage.getItem('name'),
           method: 'post',
           data: condition
         }).then(response => {
@@ -268,6 +272,7 @@
         this.axios(url, {
           method: 'post',
           data: {
+            teacherName: sessionStorage.getItem('name'),
             currentPage: 1,
             count: this.count
           }
@@ -312,6 +317,8 @@
             center: true
           })
         })
+        //关闭对话框
+        this.dialogFormVisible = false
       },
       //输入框中内容被改变
       handleSizeChange (val) {
@@ -339,6 +346,7 @@
       this.axios(url, {
         method: 'post',
         data: {
+          teacherName: sessionStorage.getItem('name'),
           currentPage: 1,
           count: this.count
         }
@@ -371,5 +379,10 @@
 
   .footer {
     text-align: center;
+  }
+
+  .toast {
+    color: red;
+    font-size: large;
   }
 </style>
