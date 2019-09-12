@@ -12,6 +12,7 @@ import StudentInfoImport from '../components/StudentInfoImport'
 import Welcome from '../components/Welcome'
 import AlterPassWord from '../components/AlterPassWord'
 import UserManage from '../components/UserManage'
+import TaskManage from '../components/TaskManage'
 
 Vue.use(Router)
 export default new Router({
@@ -63,6 +64,10 @@ export default new Router({
         {
           path: 'welcome',
           component: Welcome
+        },
+        {
+          path: 'taskManage',
+          component: TaskManage
         },
         {
           //刚进来展示的页面

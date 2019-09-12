@@ -1,6 +1,6 @@
 <template>
   <el-menu :default-openeds="['1']">
-    <el-submenu index="1" v-if="hasTeacherRole||hasAdminRole">
+    <el-submenu index="1" v-if="hasTeacherRole">
       <template slot="title"><i class="el-icon-message"></i>学生信息管理</template>
       <el-menu-item index="1-1">
         <router-link to="/main/studentInfoCheck">学生信息查看</router-link>
@@ -15,17 +15,19 @@
         <router-link to="/main/studentInfoImport">学生信息导入</router-link>
       </el-menu-item>
     </el-submenu>
-    <el-submenu index="2" v-if="hasTeacherRole||hasAdminRole">
+    <el-submenu index="2" v-if="hasTeacherRole">
       <template slot="title"><i class="el-icon-message"></i>学生成绩管理</template>
       <el-menu-item index="2-1">选项1</el-menu-item>
       <el-menu-item index="2-2">选项2</el-menu-item>
     </el-submenu>
-    <el-submenu index="3" v-if="hasTeacherRole||hasAdminRole">
+    <el-submenu index="3" v-if="hasTeacherRole">
       <template slot="title"><i class="el-icon-message"></i>学生作业管理</template>
-      <el-menu-item index="3-1">选项1</el-menu-item>
+      <el-menu-item index="3-1">
+        <router-link to="/main/taskManage">作业管理</router-link>
+      </el-menu-item>
       <el-menu-item index="3-2">选项2</el-menu-item>
     </el-submenu>
-    <el-submenu index="4" v-if="hasTeacherRole||hasAdminRole">
+    <el-submenu index="4" v-if="hasTeacherRole">
       <template slot="title"><i class="el-icon-message"></i>课堂管理</template>
       <el-menu-item index="4-1">
         <router-link to="/main/onlineCheckName">在线考勤</router-link>
@@ -34,21 +36,21 @@
         <router-link to="/main/onlineCheckNameCheck">考勤记录查看</router-link>
       </el-menu-item>
     </el-submenu>
-    <el-submenu index="5" v-if="hasStudentRole||hasAdminRole">
+    <el-submenu index="5" v-if="hasStudentRole">
       <template slot="title"><i class="el-icon-message"></i>个人作业管理</template>
       <el-menu-item index="5-1">
         <router-link to="/main/onlineExamination">作业提交</router-link>
       </el-menu-item>
       <el-menu-item index="5-2">成绩查看</el-menu-item>
     </el-submenu>
-    <el-submenu index="6" v-if="hasStudentRole||hasAdminRole">
+    <el-submenu index="6" v-if="hasStudentRole">
       <template slot="title"><i class="el-icon-message"></i>课前资料查看</template>
       <el-menu-item index="6-1">
         <router-link to="/main/onlineExamination">资料下载</router-link>
       </el-menu-item>
       <el-menu-item index="6-2">成绩查看</el-menu-item>
     </el-submenu>
-    <el-submenu index="7" v-if="hasPublicRole||hasAdminRole">
+    <el-submenu index="7" v-if="hasPublicRole">
       <template slot="title"><i class="el-icon-message"></i>个人信息管理</template>
       <el-menu-item index="7-1">
         <router-link to="/main/alterPassWord">个人密码修改</router-link>
