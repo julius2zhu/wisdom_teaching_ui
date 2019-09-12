@@ -43,7 +43,7 @@
     text-align: center;
     /*color: #13ce66;*/
     font-size: larger;
-    background-color: #13ce66;
+    /*background-color: #13ce66;*/
     margin: 0;
     padding: 0;
   }

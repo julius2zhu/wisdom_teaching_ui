@@ -162,17 +162,14 @@
       }
     },
     mounted () {
+      const vm = this
       let url = this.url_request.ip_port_dev + '/user_manage_query'
-      this.axios.get(url, {
-        params: {
-          currentPage: 1,
-          count: this.count
-        }
-      }).then(response => {
-        this.tableData = response.data
-        this.loading = false
-      }).catch(error => {
-        this.loading = false
+      vm.netWorkRequest('get', url, {
+        currentPage: 1,
+        count: this.count
+      }, function (response) {
+        vm.tableData = response
+        vm.loading = false
       })
     }
   }
@@ -182,7 +179,8 @@
   .header {
     text-align: left;
   }
-  .footer{
+
+  .footer {
     text-align: center;
   }
 </style>

@@ -41,7 +41,7 @@
     <el-dialog title="未考勤信息" :visible.sync="dialogVisible">
       <el-table :data="onlineData">
         <el-table-column label="序号" :index="indexMethod" type="index" width="50"/>
-        <el-table-column property="createDate" label="日期" width="150"/>
+        <el-table-column property="createDate" label="日期"/>
         <el-table-column property="online" label="未考勤次数" width="200"/>
       </el-table>
     </el-dialog>
@@ -120,21 +120,16 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        this.axios(url, {
-          method: 'post',
-          data: condition
-        }).then(response => {
-          //分页信息对象
-          let pageInfo = response.data.pageInfo
-          this.currentPage = pageInfo.currentPage
-          this.totalPage = pageInfo.totalPage
-          this.count = pageInfo.count
-          this.totalCount = pageInfo.totalCount
+        const vm = this
+        vm.netWorkRequest('post', url, condition, function (response) {
+          let pageInfo = response.pageInfo
+          vm.currentPage = pageInfo.currentPage
+          vm.totalPage = pageInfo.totalPage
+          vm.count = pageInfo.count
+          vm.totalCount = pageInfo.totalCount
           //数据信息
-          this.tableData = response.data.data
-          this.loading = false
-        }).catch(error => {
-          this.loading = false
+          vm.tableData = response.data
+          vm.loading = false
         })
       },
       //重置查询条件
@@ -143,27 +138,22 @@
         this.searchKeys = ''
         this.loading = true
         let url = this.url_request.ip_port_dev + '/student_check'
-        this.axios(url, {
-          method: 'post',
-          data: {
-            teacherName: sessionStorage.getItem('name'),
-            currentPage: 1,
-            count: this.count
-          }
-        }).then(response => {
+        const vm = this
+        vm.netWorkRequest('post', url, {
+          teacherName: sessionStorage.getItem('name'),
+          currentPage: 1,
+          count: vm.count
+        }, function (response) {
           //分页信息对象
-          let pageInfo = response.data.pageInfo
-          this.currentPage = pageInfo.currentPage
-          this.totalPage = pageInfo.totalPage
-          this.count = pageInfo.count
-          this.totalCount = pageInfo.totalCount
+          let pageInfo = response.pageInfo
+          vm.currentPage = pageInfo.currentPage
+          vm.totalPage = pageInfo.totalPage
+          vm.count = pageInfo.count
+          vm.totalCount = pageInfo.totalCount
           //数据信息
-          this.tableData = response.data.data
-          this.loading = false
-        }).catch(error => {
-          this.loading = false
+          vm.tableData = response.data
+          vm.loading = false
         })
-        this.loading = false
       },
       //导出excel数据操作
       exportExcel () {
@@ -182,22 +172,21 @@
         //一个超链接就可以,不需要使用axios麻烦
         window.location.href = url + '?ids=' + ids
       },
-      //查看性详细信息
+      //查看详细信息
       detail (index, row) {
         this.dialogVisible = true
         let studentId = row.studentId
         let url = this.url_request.ip_port_dev + '/online_check'
-        this.axios.get(url, {
-          params: {
-            name: row.name,
-            studentId: studentId
-          }
-        }).then(response => {
-          this.onlineData = response.data
-        }).catch(error => {
-
+        const vm = this
+        vm.netWorkRequest('get', url, {
+          name: row.name,
+          studentId: studentId,
+          teacherName: sessionStorage.getItem('name')
+        }, function (response) {
+          vm.onlineData = response
         })
       },
+      //渲染下标
       indexMethod (index) {
         return index + 1
       }
@@ -205,27 +194,21 @@
     //请求数据
     mounted () {
       let url = this.url_request.ip_port_dev + '/student_check'
-      this.axios(url, {
-        method: 'post',
-        data: {
-          teacherName: sessionStorage.getItem('name'),
-          currentPage: 1,
-          count: this.count
-        }
-      }).then(response => {
+      const vm = this
+      vm.netWorkRequest('post', url, {
+        teacherName: sessionStorage.getItem('name'),
+        currentPage: 1,
+        count: this.count
+      }, function (response) {
         //分页信息对象
-        let pageInfo = response.data.pageInfo
-        this.currentPage = pageInfo.currentPage
-        this.totalPage = pageInfo.totalPage
-        this.count = pageInfo.count
-        this.totalCount = pageInfo.totalCount
+        let pageInfo = response.pageInfo
+        vm.currentPage = pageInfo.currentPage
+        vm.totalPage = pageInfo.totalPage
+        vm.count = pageInfo.count
+        vm.totalCount = pageInfo.totalCount
         //数据信息
-        this.tableData = response.data.data
-        this.loading = false
-      }).catch(error => {
-        this.loading = false
-      }).finally(() => {
-        this.loading = false
+        vm.tableData = response.data
+        vm.loading = false
       })
     }
   }

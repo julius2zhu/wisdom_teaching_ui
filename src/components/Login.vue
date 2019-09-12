@@ -87,39 +87,28 @@
         const password = this.form.password
         this.$refs.login_form.validate((valid) => {
           if (valid) {
-            //发送后台进行认证
-            this.axios(vm.url_request.ip_port_dev + '/login', {
-              method: 'post',
-              data: {
-                username: username,
-                password: password
+            this.netWorkRequest('post', vm.url_request.ip_port_dev + '/login',
+              {username: username, password: password},
+              function (response) {
+                let result = response.message
+                let role = response.role
+                let name = response.name
+                if (result === vm.login_show.success) {
+                  vm.$router.replace('/main')
+                  //存储数据,窗口关闭会自动销毁,临时存储下
+                  sessionStorage.setItem('username', username)
+                  sessionStorage.setItem('name', name)
+                  sessionStorage.setItem('role', role)
+                } else {
+                  vm.$message({
+                    title: '提示',
+                    message: result,
+                    type: 'error',
+                    center: true
+                  })
+                }
               }
-            }).then(response => {
-              let result = response.data.message
-              let role = response.data.role
-              let name = response.data.name
-              if (result === vm.login_show.success) {
-                vm.$router.replace('/main')
-                //存储数据,窗口关闭会自动销毁,临时存储下
-                sessionStorage.setItem('username', username)
-                sessionStorage.setItem('name', name)
-                sessionStorage.setItem('role', role)
-              } else {
-                this.$message({
-                  title: '提示',
-                  message: result,
-                  type: 'error',
-                  center: true
-                })
-              }
-            }).catch(error => {
-              this.$message({
-                title: '提示',
-                message: '系统出错,请稍后再试!',
-                type: 'error',
-                center: true
-              })
-            })
+            )
           } else {
             return false
           }

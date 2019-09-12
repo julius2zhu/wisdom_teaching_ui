@@ -12,7 +12,9 @@ import store from './store'
 import 'babel-polyfill'
 import url_request from './plugins/url_request'
 import lang_ZH from './plugins/lang_ZH'
+import CommonPlugin from './plugins/CommonPlugin'
 
+Vue.use(CommonPlugin)
 Vue.use(lang_ZH)
 Vue.use(url_request)
 Vue.use(ElementUI)

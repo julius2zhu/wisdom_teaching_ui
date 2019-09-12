@@ -16,7 +16,18 @@
   content: "002";
   visibility: hidden;
 }
+
 /**直接设置在Login.vue的style标签中不起作用**/
-.el-form-item__label{
+.el-form-item__label {
   color: #00BFFF !important;
 }
+
+.my-icon-message:before {
+  content: '003';
+  visibility: hidden;
+}
+
+.my-icon-message {
+  background: url("../image/home.png");
+}
+

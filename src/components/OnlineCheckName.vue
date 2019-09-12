@@ -124,21 +124,15 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        this.axios(url, {
-          method: 'post',
-          data: condition
-        }).then(response => {
-          //分页信息对象
-          let pageInfo = response.data.pageInfo
-          this.currentPage = pageInfo.currentPage
-          this.totalPage = pageInfo.totalPage
-          this.count = pageInfo.count
-          this.totalCount = pageInfo.totalCount
-          //数据信息
-          this.tableData = response.data.data
-          this.loading = false
-        }).catch(error => {
-          this.loading = false
+        const  vm=this
+        vm.netWorkRequest('post',url,condition,function (response) {
+          let pageInfo = response.pageInfo
+          vm.currentPage = pageInfo.currentPage
+          vm.totalPage = pageInfo.totalPage
+          vm.count = pageInfo.count
+          vm.totalCount = pageInfo.totalCount
+          vm.tableData = response.data
+          vm.loading = false
         })
       },
       //重置查询条件
@@ -147,27 +141,20 @@
         this.searchKeys = ''
         this.loading = true
         let url = this.url_request.ip_port_dev + '/student_check'
-        this.axios(url, {
-          method: 'post',
-          data: {
-            teacherName: sessionStorage.getItem('name'),
-            currentPage: 1,
-            count: this.count
-          }
-        }).then(response => {
-          //分页信息对象
-          let pageInfo = response.data.pageInfo
-          this.currentPage = pageInfo.currentPage
-          this.totalPage = pageInfo.totalPage
-          this.count = pageInfo.count
-          this.totalCount = pageInfo.totalCount
-          //数据信息
-          this.tableData = response.data.data
-          this.loading = false
-        }).catch(error => {
-          this.loading = false
+        const  vm=this
+        vm.netWorkRequest('post',url,{
+          teacherName: sessionStorage.getItem('name'),
+          currentPage: 1,
+          count: vm.count
+        },function (response) {
+          let pageInfo = response.pageInfo
+          vm.currentPage = pageInfo.currentPage
+          vm.totalPage = pageInfo.totalPage
+          vm.count = pageInfo.count
+          vm.totalCount = pageInfo.totalCount
+          vm.tableData = response.data
+          vm.loading = false
         })
-        this.loading = false
       },
       //导出excel数据操作
       exportExcel () {
@@ -234,27 +221,19 @@
     //请求数据
     mounted () {
       let url = this.url_request.ip_port_dev + '/student_check'
-      this.axios(url, {
-        method: 'post',
-        data: {
-          teacherName: sessionStorage.getItem('name'),
-          currentPage: 1,
-          count: this.count
-        }
-      }).then(response => {
-        //分页信息对象
-        let pageInfo = response.data.pageInfo
-        this.currentPage = pageInfo.currentPage
-        this.totalPage = pageInfo.totalPage
-        this.count = pageInfo.count
-        this.totalCount = pageInfo.totalCount
-        //数据信息
-        this.tableData = response.data.data
-        this.loading = false
-      }).catch(error => {
-        this.loading = false
-      }).finally(() => {
-        this.loading = false
+      const vm = this
+      vm.netWorkRequest('post',url,{
+        teacherName: sessionStorage.getItem('name'),
+        currentPage: 1,
+        count: vm.count
+      },function (response) {
+        let pageInfo = response.pageInfo
+        vm.currentPage = pageInfo.currentPage
+        vm.totalPage = pageInfo.totalPage
+        vm.count = pageInfo.count
+        vm.totalCount = pageInfo.totalCount
+        vm.tableData = response.data
+        vm.loading = false
       })
     }
   }

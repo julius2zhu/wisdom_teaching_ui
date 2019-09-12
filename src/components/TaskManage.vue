@@ -1,0 +1,263 @@
+<template>
+  <!--作业管理：
+  包括教师发布作业
+  修改删除作业
+  -->
+  <div>
+    <el-button type="success" @click="showDialog(0)">发布作业</el-button>
+    <!--<el-select v-model="itemSelect" style="width: 120px">-->
+    <!--<el-option v-for="item in searchCondition" :key="item.value" :label="item.label"-->
+    <!--:value="item.value">-->
+    <!--</el-option>-->
+    <!--</el-select>-->
+    <!--<el-input placeholder="输入关键字进行自动筛选" style="width: 200px"-->
+    <!--v-model="searchKeys" clearable/>-->
+    <!--<el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>-->
+    <!--<el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>-->
+    <el-table :data="tableData" stripe border max-height="500" height="450"
+              v-loading="loading" element-loading-text="拼命加载中"
+              element-loading-spinner="el-icon-loading"
+              element-loading-background="rgba(0, 0, 0, 0.8">
+      <el-table-column label="序号" type="index" width="50"/>
+      <el-table-column align="center" prop="name" label="作业名称"/>
+      <el-table-column align="center" prop="describes" label="描述信息"/>
+      <el-table-column align="center" prop="createDate" label="发布时间"/>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" type="success" @click="column_edit(scope.$index)">编辑
+          </el-button>
+          <el-button size="mini" type="danger" @click="column_delete(scope.$index)">删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!--页脚分页,这个一般直接交给框架去做自动分页-->
+    <div class="footer">
+      <el-pagination background
+                     layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
+      </el-pagination>
+    </div>
+
+    <!--弹出框嵌套一个表单-->
+    <el-dialog :title="title" :visible.sync="dialogFormVisible"
+               :center="true" :close-on-click-modal="false">
+      <el-form :model="form" :rules="rules" ref="dialog_form" label-width="100px">
+        <el-form-item label="作业名称:" prop="name">
+          <el-input v-model="form.name"/>
+        </el-form-item>
+        <el-form-item label="作业描述:" prop="describe">
+          <el-input v-model="form.describe"/>
+        </el-form-item>
+        <el-form-item label="选择文件:" prop="file">
+          <el-upload
+            class="upload-demo" ref="upload" :action="url"
+            :file-list="file" :limit="1" :data="form" :auto-upload="false"
+            :on-success="success" :on-error="error">
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="enSure">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'TaskManage',
+    data () {
+      return {
+        //上传的文件
+        file: [],
+        searchCondition: [
+          {value: 'name', label: '用户姓名'},
+          {value: 'username', label: '用户账号'},
+          {value: 'state', label: '用户状态'},
+        ],
+        loading: true,
+        tableData: [],
+        //当前页
+        currentPage: 1,
+        //总页数
+        totalPage: 1,
+        counts:
+          [100, 200, 300, 400, 500],
+        //每页显示的条数
+        count: 100,
+        //总条数
+        totalCount: 1,
+        //搜索下拉框选项
+        itemSelect: 'name',
+        searchKeys: '',
+        url: this.url_request.ip_port_dev + '/issue_task',
+        dialogFormVisible: false,
+        form: {
+          name: '',
+          describe: '',
+          teacherName: sessionStorage.getItem('name')
+        },
+        title: '新增作业',
+        rules: {
+          name: [
+            {required: true, message: '请输入作业名称', trigger: 'blur'},
+            {min: 6, max: 20, message: '作业名称应在6-20个字符之间', trigger: 'blur'}
+          ],
+          describe: [
+            {required: true, message: '请输入作业描述信息', trigger: 'blur'},
+            {min: 3, max: 100, message: '作业名称应在3-100个字符之间', trigger: 'blur'}
+          ]
+        }
+      }
+    },
+    methods: {
+      showDialog (what) {
+        if (what === 0) {
+          this.dialogFormVisible = true
+        }
+      },
+      //确定
+      enSure () {
+        //上传到服务器
+        this.$refs.dialog_form.validate((validate) => {
+          if (validate) {
+            this.$refs.upload.submit()
+          } else {
+            return false
+          }
+        })
+      },
+      //文件上传成功的钩子函数
+      success (response, file, fileList) {
+        if (response === '成功') {
+          this.$message({
+            message: '上传成功',
+            type: 'success'
+          })
+        } else {
+          this.$message({
+            message: '上传失败',
+            type: 'error'
+          })
+        }
+        this.form.name = ''
+        this.form.describe = ''
+        this.file = []
+        this.dialogFormVisible = false
+        this.reset()
+      },
+      //出错
+      error (error, file, fileList) {
+        this.$message({
+          message: '出错了哦，请稍后再试',
+          type: 'error'
+        })
+      },
+      //当前页数被改变
+      handleCurrentChange (val) {
+        //将改变后的页数赋值给当前页
+        this.currentPage = val
+        this.searchInfo()
+      },
+      //查询学生信息
+      searchInfo () {
+        let item = this.itemSelect
+        let key = this.searchKeys.trim()
+        let condition = {
+          currentPage: this.currentPage,
+          count: this.count
+        }
+        if (item === 'name') {
+          condition.name = key
+        } else if (item === 'number') {
+          condition.number = key
+        } else if (item === 'department') {
+          condition.department = key
+        } else {
+          condition.major = key
+        }
+        //执行搜索操作
+        let url = this.url_request.ip_port_dev + '/student_check'
+        this.axios(url, {
+          teacherName: sessionStorage.getItem('name'),
+          method: 'post',
+          data: condition
+        }).then(response => {
+          //分页信息对象
+          let pageInfo = response.data.pageInfo
+          this.currentPage = pageInfo.currentPage
+          this.totalPage = pageInfo.totalPage
+          this.count = pageInfo.count
+          this.totalCount = pageInfo.totalCount
+          //数据信息
+          this.tableData = response.data.data
+          this.loading = false
+        }).catch(error => {
+          this.loading = false
+        })
+      },
+      //重置查询条件
+      reset () {
+        const vm = this
+        this.itemSelect = 'name'
+        this.searchKeys = ''
+        this.loading = true
+        let url = this.url_request.ip_port_dev + '/issue_task_check'
+        vm.netWorkRequest('post', url, {
+          teacherName: sessionStorage.getItem('name'),
+          currentPage: 1,
+          count: vm.count
+        }, function (response) {
+          //分页信息对象
+          let pageInfo = response.pageInfo
+          vm.currentPage = pageInfo.currentPage
+          vm.totalPage = pageInfo.totalPage
+          vm.count = pageInfo.count
+          vm.totalCount = pageInfo.totalCount
+          //数据信息
+          vm.tableData = response.data
+        })
+        vm.loading = false
+      },
+      //列的编辑
+      column_edit (index) {
+
+      },
+      //列的删除
+      column_delete (index) {
+        let id = this.tableData[index].id
+        this.axios('', {
+          method: 'post',
+          data: {
+            id: id
+          }
+        })
+      }
+    },
+    mounted () {
+      const vm = this
+      let url = this.url_request.ip_port_dev + '/issue_task_check'
+      vm.netWorkRequest('post', url, {
+        teacherName: sessionStorage.getItem('name'),
+        currentPage: 1,
+        count: vm.count
+      }, function (response) {
+        //分页信息对象
+        let pageInfo = response.pageInfo
+        vm.currentPage = pageInfo.currentPage
+        vm.totalPage = pageInfo.totalPage
+        vm.count = pageInfo.count
+        vm.totalCount = pageInfo.totalCount
+        //数据信息
+        vm.tableData = response.data
+      })
+      vm.loading = false
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
