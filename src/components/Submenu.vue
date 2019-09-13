@@ -39,7 +39,7 @@
     <el-submenu index="5" v-if="hasStudentRole">
       <template slot="title"><i class="el-icon-message"></i>个人作业管理</template>
       <el-menu-item index="5-1">
-        <router-link to="/main/onlineExamination">作业提交</router-link>
+        <router-link to="/main/studentTaskSubmit">作业提交</router-link>
       </el-menu-item>
       <el-menu-item index="5-2">成绩查看</el-menu-item>
     </el-submenu>

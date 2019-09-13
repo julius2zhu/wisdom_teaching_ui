@@ -22,6 +22,13 @@
       <el-table-column align="center" prop="name" label="作业名称"/>
       <el-table-column align="center" prop="describes" label="描述信息"/>
       <el-table-column align="center" prop="createDate" label="发布时间"/>
+      <el-table-column type="expand" label="下载">
+        <template slot-scope="props">
+          附件下载:
+          <el-button circle icon="el-icon-link" @click="download(props.row.path)">
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" type="success" @click="column_edit(scope.$index)">编辑
@@ -32,7 +39,7 @@
       </el-table-column>
     </el-table>
     <!--页脚分页,这个一般直接交给框架去做自动分页-->
-    <div class="footer">
+    <div class="table_footer">
       <el-pagination background
                      layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
       </el-pagination>
@@ -45,13 +52,13 @@
         <el-form-item label="作业名称:" prop="name">
           <el-input v-model="form.name"/>
         </el-form-item>
-        <el-form-item label="作业描述:" prop="describe">
-          <el-input v-model="form.describe"/>
+        <el-form-item label="作业描述:" prop="describes">
+          <el-input v-model="form.describes"/>
         </el-form-item>
         <el-form-item label="选择文件:" prop="file">
           <el-upload
             class="upload-demo" ref="upload" :action="url"
-            :file-list="file" :limit="1" :data="form" :auto-upload="false"
+            :file-list="form.file" :limit="1" :data="form" :auto-upload="false"
             :on-success="success" :on-error="error">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
           </el-upload>
@@ -71,7 +78,6 @@
     data () {
       return {
         //上传的文件
-        file: [],
         searchCondition: [
           {value: 'name', label: '用户姓名'},
           {value: 'username', label: '用户账号'},
@@ -95,9 +101,11 @@
         url: this.url_request.ip_port_dev + '/issue_task',
         dialogFormVisible: false,
         form: {
+          id: -1,
           name: '',
-          describe: '',
-          teacherName: sessionStorage.getItem('name')
+          describes: '',
+          teacherName: sessionStorage.getItem('name'),
+          file: []
         },
         title: '新增作业',
         rules: {
@@ -105,7 +113,7 @@
             {required: true, message: '请输入作业名称', trigger: 'blur'},
             {min: 6, max: 20, message: '作业名称应在6-20个字符之间', trigger: 'blur'}
           ],
-          describe: [
+          describes: [
             {required: true, message: '请输入作业描述信息', trigger: 'blur'},
             {min: 3, max: 100, message: '作业名称应在3-100个字符之间', trigger: 'blur'}
           ]
@@ -113,9 +121,25 @@
       }
     },
     methods: {
-      showDialog (what) {
+      /**
+       * 显示对话框
+       * @param what 做什么
+       * @param index 数据下标,编辑时候用到
+       */
+      showDialog (what, index) {
         if (what === 0) {
+          //新增就改变id为-1,也是更改上次编辑残留的id信息
+          this.form.id = -1
+          this.form.name = ''
+          this.form.describes = ''
+          this.form.file = []
           this.dialogFormVisible = true
+        } else {
+          this.title = '编辑作业信息'
+          this.form.file = []
+          this.dialogFormVisible = true
+          const object = Object.assign({}, this.tableData[index])
+          this.form = object
         }
       },
       //确定
@@ -223,17 +247,37 @@
       },
       //列的编辑
       column_edit (index) {
-
+        this.showDialog(1, index)
       },
       //列的删除
       column_delete (index) {
         let id = this.tableData[index].id
-        this.axios('', {
-          method: 'post',
-          data: {
+        const vm = this
+        let url = this.url_request.ip_port_dev + '/issue_task_delete/'
+        vm.$confirm('此操作将永久删除该条信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          vm.netWorkRequest('get', url, {
             id: id
-          }
+          }, function (response) {
+            vm.reset()
+            vm.$message({
+              type: 'success',
+              message: response
+            })
+          })
+        }).catch(() => {
+          vm.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
+      },
+      download (path) {
+        let url = this.url_request.ip_port_dev + '/issue_task_download/'
+        window.location.href = url + '?path=' + path
       }
     },
     mounted () {
@@ -259,5 +303,7 @@
 </script>
 
 <style scoped>
-
+  .table_footer {
+    text-align: center;
+  }
 </style>
