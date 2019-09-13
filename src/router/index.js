@@ -14,6 +14,7 @@ import AlterPassWord from '../components/AlterPassWord'
 import UserManage from '../components/UserManage'
 import TaskManage from '../components/TaskManage'
 import StudentTaskSubmit from '../components/StudentTaskSubmit'
+import TaskSubmitCheck from '../components/TaskSubmitCheck'
 
 Vue.use(Router)
 export default new Router({
@@ -73,6 +74,10 @@ export default new Router({
         {
           path: 'studentTaskSubmit',
           component: StudentTaskSubmit
+        },
+        {
+          path: 'taskSubmitCheck',
+          component: TaskSubmitCheck
         },
         {
           //刚进来展示的页面

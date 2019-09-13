@@ -77,7 +77,6 @@
     name: 'TaskManage',
     data () {
       return {
-        //上传的文件
         searchCondition: [
           {value: 'name', label: '用户姓名'},
           {value: 'username', label: '用户账号'},

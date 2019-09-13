@@ -4,6 +4,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/index.css'
+import './assets/theme-chalk/iconfont.css'
 //引入axios
 import axios from 'axios'
 import PubSub from 'pubsub-js'
@@ -13,7 +14,7 @@ import 'babel-polyfill'
 import url_request from './plugins/url_request'
 import lang_ZH from './plugins/lang_ZH'
 import CommonPlugin from './plugins/CommonPlugin'
-
+import iconfont from './assets/theme-chalk/iconfont'
 Vue.use(CommonPlugin)
 Vue.use(lang_ZH)
 Vue.use(url_request)

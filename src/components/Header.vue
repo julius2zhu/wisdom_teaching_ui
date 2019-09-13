@@ -1,20 +1,20 @@
 <template>
   <div class="header">
-    <span class="left">
+    <span style="margin-right: 300px">
       欢迎您使用智慧教学在线系统
     </span>
     欢迎您:{{name}}
-    您的角色:
     <span v-if="this.role==='0'">
-      学生
+     同学
     </span>
     <span v-if="this.role==='1'">
-      教师
+      老师
     </span>
     <span v-if="this.role==='2'">
       管理员
     </span>
-    <el-button type="danger" @click="logout">退出登录</el-button>
+    <el-link id="logout" :underline="false" @click="logout">退出登陆</el-link>
+    <!--<el-button type="danger" @click="logout">退出登录</el-button>-->
   </div>
 </template>
 <script>
@@ -38,18 +38,23 @@
   }
 </script>
 
-<style scoped>
+<style>
   .header {
     text-align: center;
-    /*color: #13ce66;*/
     font-size: larger;
-    /*background-color: #13ce66;*/
     margin: 0;
     padding: 0;
   }
 
-  .left {
-    margin-right: 600px;
+  .el-header {
+    background: url("../assets/image/header.png") center no-repeat;
+    background-size: 100% 100%;
   }
 
+#logout {
+    font-size: large;
+    float: right;
+  }
 </style>
+
+
