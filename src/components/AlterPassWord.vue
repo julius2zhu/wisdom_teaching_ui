@@ -1,7 +1,7 @@
 <template>
   <el-form :model="form" :rules="rules" ref="login_form" label-width="100px"
            class="login-form">
-    <p>密码修改</p>
+    <p class="title">密码修改</p>
     <el-form-item label="旧的密码:" prop="oldPass">
       <el-input v-model="form.oldPass" show-password
                 placeholder="请输入旧的密码"></el-input>
@@ -50,35 +50,28 @@
     methods: {
       alter () {
         let vm = this
-        let oldPass = this.form.oldPass
-        let newPass = this.form.newPass
-        let againPass = this.form.againPass
+        const oldPass = this.form.oldPass
+        const newPass = this.form.newPass
+        const againPass = this.form.againPass
         this.$refs.login_form.validate((valid) => {
           if (valid) {
             if (newPass !== againPass) {
               this.$message.error('两次密码输入不一致,请检查输入')
             } else {
+              const url = vm.url_request.ip_port_dev + '/alter_password'
               //发送后台进行认证
-              this.axios(vm.url_request.ip_port_dev + vm.url_request.root_request + '/alter_password', {
-                method: 'post',
-                data: {
-                  password: oldPass,
-                  newPassWord: newPass
+              vm.netWorkRequest('post', url, {
+                username: sessionStorage.getItem('username'),
+                password: oldPass,
+                newPassWord: newPass
+              }, function (response) {
+                let type = 'success'
+                if (response === '失败') {
+                  type = 'error'
                 }
-              }).then(response => {
-                let result = response.data
-                this.$message({
-                  title: '提示',
-                  message: result,
-                  type: 'info',
-                  center: true
-                })
-              }).catch(error => {
-                this.$message({
-                  title: '提示',
-                  message: '系统出错,请稍后再试!',
-                  type: 'error',
-                  center: true
+                vm.$message({
+                  type: type,
+                  message: response
                 })
               })
             }
@@ -96,10 +89,15 @@
   .login-form {
     width: 40%;
     text-align: center;
-    margin: 100px auto;
+    margin: 50px auto;
   }
 
   .el-input {
     width: 80%;
+  }
+
+  .title {
+    color: white;
+    font-size: 30px;
   }
 </style>
