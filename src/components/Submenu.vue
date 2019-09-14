@@ -39,8 +39,18 @@
         </svg>
         <span class="sub-item">学生成绩管理</span>
       </template>
-      <el-menu-item index="2-1">选项1</el-menu-item>
-      <el-menu-item index="2-2">选项2</el-menu-item>
+      <el-menu-item index="2-1">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-pingshichengjiluru"></use>
+        </svg>
+        平时成绩打分
+      </el-menu-item>
+      <el-menu-item index="2-2">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-qimochengjiluru"></use>
+        </svg>
+        期末成绩录入
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="3" v-if="hasTeacherRole">
       <template slot="title">
@@ -134,13 +144,16 @@
         <router-link to="/main/alterPassWord">个人密码修改</router-link>
       </el-menu-item>
       <el-menu-item index="7-3">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xiangmuxinxibiangeng"></use>
+        </svg>
         <router-link to="/main/alterPassWord">个人信息变更</router-link>
       </el-menu-item>
     </el-submenu>
     <el-submenu index="8" v-if="hasAdminRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-yonghuxinxi"></use>
+          <use xlink:href="#icon-yonghu"></use>
         </svg>
         <span>用户信息管理</span>
       </template>
@@ -151,20 +164,42 @@
         <router-link to="/main/userManage">用户信息维护</router-link>
       </el-menu-item>
     </el-submenu>
+
     <el-submenu index="9" v-if="hasPublicRole">
+      <template slot="title">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-ziliaoku1"></use>
+        </svg>
+        <span class="sub-item">资料信息库</span>
+      </template>
+      <el-menu-item index="9-1">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-ziyuanchaxun-hover"></use>
+        </svg>
+        公共资源查询
+      </el-menu-item>
+      <el-menu-item index="9-2">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-shangchuan"></use>
+        </svg>
+        公共资源上传
+      </el-menu-item>
+    </el-submenu>
+
+    <el-submenu index="10" v-if="hasPublicRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-xitong"></use>
         </svg>
         <span class="sub-item">关于平台系统</span>
       </template>
-      <el-menu-item index="9-1">
+      <el-menu-item index="10-1">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-shezhiguanyuruanjian"></use>
         </svg>
         关于软件
       </el-menu-item>
-      <el-menu-item index="9-2">
+      <el-menu-item index="10-2">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-mingxie-"></use>
         </svg>
@@ -172,7 +207,6 @@
       </el-menu-item>
     </el-submenu>
   </el-menu>
-
 </template>
 <script>
   export default {

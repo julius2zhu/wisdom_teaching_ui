@@ -3,7 +3,7 @@
     <el-form :model="form" :rules="rules" ref="login_form" label-width="100px"
              class="login-form">
       <p>用户登录</p>
-      <el-form-item label="用户账号:" prop="username">
+      <el-form-item   label="用户账号:" prop="username">
         <el-input v-model="form.username" clearable
                   prefix-icon="my-icon-user" placeholder="请输入用户账号"/>
       </el-form-item>
@@ -146,12 +146,14 @@
     color: white;
   }
 
-  p {
+  .toast {
     color: white;
   }
 
-  .toast {
-    color: #000;
+  p {
+    color: white;
+    font-size: large;
   }
+
 </style>
 

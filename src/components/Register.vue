@@ -4,7 +4,7 @@
     <p>用户注册</p>
     <el-form-item label="用户账号:" prop="username">
       <el-input v-model="form.username" clearable
-                placeholder="请输入用户账号"></el-input>
+                @change="usernameChange" placeholder="请输入用户账号"></el-input>
     </el-form-item>
     <el-form-item label="用户密码:" prop="password">
       <el-input v-model="form.password" show-password
@@ -15,12 +15,8 @@
                 placeholder="请再次输入密码"></el-input>
     </el-form-item>
     <el-form-item label="姓名:" prop="name">
-      <el-input v-model="form.name" show-password
+      <el-input v-model="form.name"
                 placeholder="请输入您的姓名"></el-input>
-    </el-form-item>
-    <el-form-item label="学号:" prop="number">
-      <el-input v-model="form.number" show-password
-                placeholder="请输入您的学号"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="register">立即注册</el-button>
@@ -37,11 +33,10 @@
     data () {
       return {
         form: {
-          username: '',
-          password: '',
-          again: '',
-          name: '',
-          number: ''
+          username: null,
+          password: null,
+          again: null,
+          name: null,
         },
         rules: {
           username: [
@@ -58,54 +53,45 @@
           ],
           name: [
             {required: true, message: '请输入您的姓名', trigger: 'blur'},
-            {min: 6, max: 20, message: '姓名应在6-10个字符之间', trigger: 'blur'}
-          ],
-          number: [
-            {required: true, message: '请输入您的学号', trigger: 'blur'},
-            {min: 6, max: 20, message: '学号应在6-20个字符之间', trigger: 'blur'}
+            {min: 2, max: 6, message: '姓名应在2-6个字符之间', trigger: 'blur'}
           ]
         }
       }
     },
     methods: {
+      //监听用户输入改变
+      usernameChange (value) {
+        const vm = this
+        const url = vm.url_request.ip_port_dev + '/public_data_query_user'
+        if (value.trim().length >= 6) {
+          vm.netWorkRequest('get', url, {
+            username: value
+          }, function (response) {
+            if (response !== '') {
+              vm.$message.error(response)
+            }
+          })
+        }
+      },
       register () {
         const vm = this
-        const username = this.form.username
-        const password = this.form.password
-        const role = this.form.role
-        this.$refs.login_form.validate((valid) => {
+        let password = vm.form.password
+        let again = vm.form.again
+        const url = vm.url_request.ip_port_dev + '/register'
+        vm.$refs.login_form.validate((valid) => {
           if (valid) {
-            //发送后台进行认证
-            this.axios(vm.url_request.ip_port_dev + '/login', {
-              method: 'post',
-              data: {
-                username: username,
-                password: password
-              }
-            }).then(response => {
-              let result = response.data.message
-              console.log(response.data)
-              if (result === vm.login_show.success) {
-                vm.$router.replace('/main')
-                //隔几秒再发送,因为必须先订阅在发布才可以有效果
-              } else {
-                this.$message({
-                  title: '提示',
-                  message: result,
-                  type: 'error',
-                  center: true
-                })
-              }
-            }).catch(error => {
-              this.$message({
-                title: '提示',
-                message: '系统出错,请稍后再试!',
-                type: 'error',
-                center: true
-              })
+            if (password !== again) {
+              vm.$message.error('两次密码输入不一致,请检查输入')
+              return false
+            }
+            //进行注册
+            vm.netWorkRequest('post', url, {
+              name: vm.form.name,
+              username: vm.form.username,
+              password: password
+            }, function (response) {
+              vm.$message(response)
             })
-          } else {
-            return false
           }
         })
       },
@@ -130,12 +116,12 @@
   .back {
     text-decoration: none;
     font-size: large;
-    color: white;
     margin-left: 200px;
+    color: white;
   }
 
   p {
     color: white;
-    font-size: 35px;
+    font-size: large;
   }
 </style>

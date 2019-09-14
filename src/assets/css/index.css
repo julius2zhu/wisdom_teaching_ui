@@ -19,22 +19,21 @@
 
 /**直接设置在Login.vue的style标签中不起作用**/
 .el-form-item__label {
-  color: black !important;
+  color: white !important;
 }
 
 /*改变表单的一些通用样式*/
 .el-dialog__header {
-  background-color: #5EE8E8 !important;
+  background-color: #D2B48C !important;
 }
 
 .el-dialog__body {
-  background-image: url("../image/form_background.jpg");
-  /*background-color: #4169E1 !important;*/
-
+  /*background-image: url("../image/form_background.jpg");*/
+  background-color: #D2B48C !important;
 }
 
 .el-dialog__footer {
-  background-color: #5EE8E8 !important;
+  background-color: #D2B48C !important;
 }
 
 

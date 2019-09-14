@@ -12,7 +12,7 @@
 <!--不能使用scope作用域-->
 <style>
   html {
-    background: url("./assets/image/background.jpg") center no-repeat;
+    background: url("./assets/image/background_2.jpg") center no-repeat;
     background-size: 100% 100%;
   }
 
