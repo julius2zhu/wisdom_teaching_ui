@@ -1,16 +1,17 @@
 <template>
+  <!--管理员对用户信息进行维护,包括冻结和删除-->
   <div>
     <div class="header">
       <el-button type="success" @click="addUser">添加用户</el-button>
-      <el-select v-model="itemSelect" style="width: 120px">
-        <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
-                   :value="item.value">
-        </el-option>
-      </el-select>
-      <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
-                v-model="searchKeys" clearable/>
-      <el-button icon="el-icon-search" plain>查询</el-button>
-      <el-button icon="el-icon-refresh" plain>重置</el-button>
+      <!--<el-select v-model="itemSelect" style="width: 120px">-->
+      <!--<el-option v-for="item in searchCondition" :key="item.value" :label="item.label"-->
+      <!--:value="item.value">-->
+      <!--</el-option>-->
+      <!--</el-select>-->
+      <!--<el-input placeholder="输入关键字进行自动筛选" style="width: 200px"-->
+      <!--v-model="searchKeys" clearable/>-->
+      <!--<el-button icon="el-icon-search" plain>查询</el-button>-->
+      <!--<el-button icon="el-icon-refresh" plain>重置</el-button>-->
     </div>
     <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
     <el-table :data="tableData" stripe border max-height="500" height="450"
@@ -20,7 +21,7 @@
       <el-table-column label="序号" type="index" width="50"/>
       <el-table-column align="center" prop="name" label="姓名"/>
       <el-table-column align="center" prop="username" label="用户账号"/>
-      <el-table-column align="center" prop="createdDate" label="注册时间"/>
+      <el-table-column align="center" prop="createDate" label="注册时间"/>
       <el-table-column align="center" label="状态" width="80">
         <template slot-scope="props">
           <span v-if="props.row.state==='1'" style="color: green">
@@ -34,14 +35,14 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.state==='0'">
-         <el-button size="mini" type="success" @click="column_delete(scope.$index)">解冻
+         <el-button size="mini" type="success" @click="column_freezeOrThaw(scope.$index,1)">解冻
           </el-button>
           </span>
           <span v-else>
-            <el-button size="mini" type="danger" @click="column_delete(scope.$index)">冻结
+            <el-button size="mini" type="danger" @click="column_freezeOrThaw(scope.$index,0)">冻结
            </el-button>
           </span>
-          <el-button size="mini" type="primary" @click="showDialog(1,scope.$index)">编辑
+          <el-button size="mini" type="primary" @click="column_edit(scope.$index)">编辑
           </el-button>
           <el-button size="mini" type="danger" @click="column_delete(scope.$index)">删除
           </el-button>
@@ -51,10 +52,12 @@
     <!--页脚分页,这个一般直接交给框架去做自动分页-->
     <div class="footer">
       <el-pagination background
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
                      :current-page="currentPage" :page-sizes="counts"
                      :page-size="count"
-                     layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="totalCount">
       </el-pagination>
     </div>
     <!--弹出框嵌套一个表单-->
@@ -62,7 +65,7 @@
                :center="true" :close-on-click-modal="false">
       <el-form :model="form" :rules="rules" ref="dialog_form" label-width="100px">
         <el-form-item label="用户账号:" prop="username">
-          <el-input v-model="username"/>
+          <el-input @change="usernameChange" v-model="form.username"/>
         </el-form-item>
         <el-form-item label="用户姓名:" prop="name">
           <el-input v-model="form.name"/>
@@ -72,13 +75,15 @@
           <el-radio v-model="form.role" label="1">教师</el-radio>
           <el-radio v-model="form.role" label="2">管理员</el-radio>
         </el-form-item>
-        <el-form-item label="用户密码:" prop="password">
-          <el-input show-password v-model="form.password"/>
+        <el-form-item>
+          <p v-if="title==='新增用户'" style="color: red">
+            默认密码和账号保持一致,请提醒用户及时修改密码
+          </p>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible=false">确 定</el-button>
+        <el-button type="primary" @click="ok">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -98,10 +103,10 @@
         ],
         dialogFormVisible: false,
         form: {
-          username: '',
-          name: '',
+          id: -1,
+          username: null,
+          name: null,
           role: '0',
-          password: ''
         },
         rules: {
           username: [
@@ -109,16 +114,8 @@
             {min: 6, max: 20, message: '用户账号应在6-20个字符之间', trigger: 'blur'}
           ],
           name: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
-            {min: 6, max: 20, message: '密码应在6-20个字符之间', trigger: 'blur'}
-          ],
-          role: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
-            {min: 6, max: 20, message: '密码应在6-20个字符之间', trigger: 'blur'}
-          ],
-          password: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
-            {min: 6, max: 20, message: '密码应在6-20个字符之间', trigger: 'blur'}
+            {required: true, message: '请输入用户姓名', trigger: 'blur'},
+            {min: 2, max: 20, message: '名字应在2-6个字符之间', trigger: 'blur'}
           ]
         },
         tableData: [],
@@ -158,19 +155,95 @@
         this.searchInfo()
       },
       addUser () {
+        this.title = '新增用户'
+        this.form.id = -1
+        this.form.name = ''
+        this.form.username = ''
+        this.form.role = '0'
         this.dialogFormVisible = true
+      },
+      //列的编辑
+      column_edit (index) {
+        this.title = '编辑用户'
+        //设置相关数据回显
+        let obj = Object.assign({}, this.tableData[index])
+        this.form = obj
+        this.dialogFormVisible = true
+      },
+      //删除用户
+      column_delete (index) {
+        const vm = this
+        const id = vm.tableData[index].id
+        const url = vm.url_request.ip_port_dev + '/user_manage_delete'
+        vm.netWorkRequest('post', url, {
+          id: id
+        }, function (response) {
+          vm.$message(response)
+          vm.reset()
+        })
+      },
+      /**
+       * 冻结或者解冻
+       * @param index 数据的下标
+       * @param what 1解冻0冻结
+       */
+      column_freezeOrThaw (index, what) {
+        const vm = this
+        const url = vm.url_request.ip_port_dev + '/user_manage_freezeOrThaw'
+        const id = vm.tableData[index].id
+        let state = '0'
+        if (what === 1) {
+          state = '1'
+        }
+        vm.netWorkRequest('post', url, {
+          id: id,
+          state: state
+        }, function (response) {
+          vm.$message(response)
+          vm.reset()
+        })
+      },
+      reset () {
+        const vm = this
+        let url = this.url_request.ip_port_dev + '/user_manage_query'
+        vm.netWorkRequest('get', url, {
+          currentPage: 1,
+          count: 100
+        }, function (response) {
+          vm.tableData = response
+          vm.loading = false
+        })
+      },
+      ok () {
+        const vm = this
+        const url = vm.url_request.ip_port_dev + '/user_manage_addOrUpdate'
+        vm.$refs.dialog_form.validate(valid => {
+          if (valid) {
+            vm.netWorkRequest('post', url, vm.form, function (response) {
+              vm.$message(response)
+              vm.reset()
+              vm.dialogFormVisible = false
+            })
+          }
+        })
+      },
+      //用户名输入框内容改变就发到后台数据库查询是否存在,提升用户体验
+      usernameChange (value) {
+        const vm = this
+        const url = vm.url_request.ip_port_dev + '/public_data_query_user'
+        if (value.trim().length >= 6) {
+          vm.netWorkRequest('get', url, {
+            username: value
+          }, function (response) {
+            if (response !== '') {
+              vm.$message.error(response)
+            }
+          })
+        }
       }
     },
     mounted () {
-      const vm = this
-      let url = this.url_request.ip_port_dev + '/user_manage_query'
-      vm.netWorkRequest('get', url, {
-        currentPage: 1,
-        count: this.count
-      }, function (response) {
-        vm.tableData = response
-        vm.loading = false
-      })
+      this.reset()
     }
   }
 </script>
