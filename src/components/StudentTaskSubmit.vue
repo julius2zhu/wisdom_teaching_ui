@@ -1,5 +1,5 @@
 <template>
-  <!--学生作业提交-->
+  <!--学生自己作业提交-->
   <div>
     <el-table :data="tableData" stripe border max-height="500" height="450"
               v-loading="loading" element-loading-text="拼命加载中"
@@ -35,8 +35,7 @@
     <!--页脚分页,这个一般直接交给框架去做自动分页-->
     <div class="table_footer">
       <el-pagination background
-                     layout="total, sizes, prev, pager, next, jumper"
-      >
+                     layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
     </div>
   </div>
@@ -124,5 +123,7 @@
 </script>
 
 <style scoped>
-
+  .table_footer {
+    text-align: center;
+  }
 </style>

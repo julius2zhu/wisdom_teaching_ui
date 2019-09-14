@@ -15,6 +15,7 @@ import UserManage from '../components/UserManage'
 import TaskManage from '../components/TaskManage'
 import StudentTaskSubmit from '../components/StudentTaskSubmit'
 import TaskSubmitCheck from '../components/TaskSubmitCheck'
+import StudentTaskScoreCheck from '../components/StudentTaskScoreCheck'
 
 Vue.use(Router)
 export default new Router({
@@ -78,6 +79,10 @@ export default new Router({
         {
           path: 'taskSubmitCheck',
           component: TaskSubmitCheck
+        },
+        {
+          path: 'studentTaskScoreCheck',
+          component: StudentTaskScoreCheck
         },
         {
           //刚进来展示的页面

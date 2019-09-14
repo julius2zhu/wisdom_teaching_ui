@@ -1,20 +1,19 @@
 <template>
   <div class="header">
-    <span style="margin-right: 300px">
-      欢迎您使用智慧教学在线系统
+    <span id="toast">
+      智慧教学在线系统
     </span>
     欢迎您:{{name}}
-    <span v-if="this.role==='0'">
+    <span v-if="role==='0'">
      同学
     </span>
-    <span v-if="this.role==='1'">
+    <span v-if="role==='1'">
       老师
     </span>
-    <span v-if="this.role==='2'">
+    <span v-if="role==='2'">
       管理员
     </span>
     <el-link id="logout" :underline="false" @click="logout">退出登陆</el-link>
-    <!--<el-button type="danger" @click="logout">退出登录</el-button>-->
   </div>
 </template>
 <script>
@@ -38,7 +37,7 @@
   }
 </script>
 
-<style>
+<style >
   .header {
     text-align: center;
     font-size: larger;
@@ -51,9 +50,13 @@
     background-size: 100% 100%;
   }
 
-#logout {
+  #logout {
     font-size: large;
     float: right;
+  }
+  #toast{
+    margin-right: 420px;
+    font-family: "Arial";
   }
 </style>
 

@@ -41,9 +41,34 @@
                      layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
       </el-pagination>
     </div>
+    <!--用于教师给学生打分和给评语-->
+    <el-dialog title="批阅打分" :visible.sync="dialogFormVisible" center>
+      <el-form :model="form">
+        <el-form-item label="作业名称:" :label-width="formLabelWidth">
+          {{form.taskName}}
+        </el-form-item>
+        <el-form-item label="学生姓名:" :label-width="formLabelWidth">
+          {{form.name}}
+        </el-form-item>
+        <el-form-item label="打分:" :label-width="formLabelWidth">
+          <el-input-number v-model="form.score" :precision="2" :step="0.1" :max="100">
 
+          </el-input-number>
+        </el-form-item>
+        <el-form-item label="评语:" :label-width="formLabelWidth">
+          <el-input clear type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 4}" show-word-limit
+                    maxlength="200"
+                    v-model="form.remark">
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="ok">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
-
 </template>
 
 <script>
@@ -51,12 +76,6 @@
     name: 'TaskSubmitCheck',
     data () {
       return {
-        //上传的文件
-        searchCondition: [
-          {value: 'name', label: '用户姓名'},
-          {value: 'username', label: '用户账号'},
-          {value: 'state', label: '用户状态'},
-        ],
         loading: true,
         tableData: [],
         //当前页
@@ -74,19 +93,13 @@
         searchKeys: '',
         url: this.url_request.ip_port_dev + '/issue_task',
         dialogFormVisible: false,
+        formLabelWidth: '150px',
         form: {
           id: -1,
-          name: '',
-          describes: '',
-          teacherName: sessionStorage.getItem('name'),
-          file: []
-        },
-        title: '新增作业',
-        rules: {
-          name: [
-            {required: true, message: '请输入作业名称', trigger: 'blur'},
-            {min: 6, max: 20, message: '作业名称应在6-20个字符之间', trigger: 'blur'}
-          ]
+          name: '',//学生姓名
+          taskName: '',//作业名称
+          score: 0,//打分
+          remark: ''//评语
         }
       }
     },
@@ -118,9 +131,32 @@
       //批阅打分
       column_read (index) {
         const vm = this
-        const id = this.tableData[index].id
-        //将表单的输入内容绑定到一起使用post方式发送到后台修改相关信息
-
+        //获取到选择该行数据data
+        const data = this.tableData[index]
+        vm.form.id = data.id
+        vm.form.taskName = data.homeWork.name
+        vm.form.name = data.user.name
+        vm.form.score = data.score
+        vm.form.remark = data.remark
+        //填充到表单数据中
+        vm.dialogFormVisible = true
+      },
+      //教师提交信息
+      ok () {
+        const vm = this
+        const url = vm.url_request.ip_port_dev + '/student_submit_task_correct'
+        vm.netWorkRequest('post', url, {
+          id: vm.form.id,
+          score: vm.form.score,
+          remark: vm.form.remark
+        }, function (response) {
+          vm.$message({
+            type: 'success',
+            message: response
+          })
+          vm.dialogFormVisible = false
+          vm.reset()
+        })
       }
     },
     mounted () {
@@ -130,5 +166,7 @@
 </script>
 
 <style scoped>
-
+  .table_footer {
+    text-align: center;
+  }
 </style>

@@ -90,9 +90,19 @@
         <span class="sub-item">个人作业管理</span>
       </template>
       <el-menu-item index="5-1">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-tijiao"></use>
+        </svg>
         <router-link to="/main/studentTaskSubmit">作业提交</router-link>
       </el-menu-item>
-      <el-menu-item index="5-2">成绩查看</el-menu-item>
+      <el-menu-item index="5-2">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-chengji"></use>
+        </svg>
+        <router-link to="/main/studentTaskScoreCheck">
+          成绩查看
+        </router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="6" v-if="hasStudentRole">
       <template slot="title">
@@ -104,9 +114,11 @@
         </span>
       </template>
       <el-menu-item index="6-1">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-data-download"></use>
+        </svg>
         <router-link to="/main/onlineExamination">资料下载</router-link>
       </el-menu-item>
-      <el-menu-item index="6-2">成绩查看</el-menu-item>
     </el-submenu>
     <el-submenu index="7" v-if="hasPublicRole">
       <template slot="title">
