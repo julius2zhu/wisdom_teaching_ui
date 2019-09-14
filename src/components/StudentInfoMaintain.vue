@@ -108,13 +108,13 @@
         dialogFormVisible: false,
         form: {
           id: -1,
-          name: '',
+          name: null,
           sex: '0',
-          grade: '',
-          number: '',
-          department: '',
-          major: '',
-          classTeacher: ''
+          grade: null,
+          number: null,
+          department: null,
+          major: null,
+          classTeacher: null
         },
         loading: true,
         //验证规则
@@ -230,6 +230,7 @@
       searchInfo () {
         let item = this.itemSelect
         let key = this.searchKeys.trim()
+        const vm = this
         let condition = {
           currentPage: this.currentPage,
           count: this.count
@@ -245,49 +246,32 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        this.axios(url, {
-          teacherName: sessionStorage.getItem('name'),
-          method: 'post',
-          data: condition
-        }).then(response => {
+        vm.netWorkRequest('post', url, condition, function (response) {
           //分页信息对象
-          let pageInfo = response.data.pageInfo
-          this.currentPage = pageInfo.currentPage
-          this.totalPage = pageInfo.totalPage
-          this.count = pageInfo.count
-          this.totalCount = pageInfo.totalCount
+          let pageInfo = response.pageInfo
+          vm.totalPage = pageInfo.totalPage
+          vm.totalCount = pageInfo.totalCount
           //数据信息
-          this.tableData = response.data.data
-          this.loading = false
-        }).catch(error => {
-          this.loading = false
+          vm.tableData = response.data
+          vm.loading = false
         })
       },
       //重置查询条件
       reset () {
-        this.itemSelect = 'name'
-        this.searchKeys = ''
-        this.loading = true
+        const vm = this
         let url = this.url_request.ip_port_dev + '/student_check'
-        this.axios(url, {
-          method: 'post',
-          data: {
-            teacherName: sessionStorage.getItem('name'),
-            currentPage: 1,
-            count: this.count
-          }
-        }).then(response => {
+        vm.netWorkRequest('post', url, {
+          teacherName: sessionStorage.getItem('name'),
+          currentPage: 1,
+          count: 100
+        }, function (response) {
           //分页信息对象
-          let pageInfo = response.data.pageInfo
-          this.currentPage = pageInfo.currentPage
-          this.totalPage = pageInfo.totalPage
-          this.count = pageInfo.count
-          this.totalCount = pageInfo.totalCount
+          let pageInfo = response.pageInfo
+          vm.totalPage = pageInfo.totalPage
+          vm.totalCount = pageInfo.totalCount
           //数据信息
-          this.tableData = response.data.data
-          this.loading = false
-        }).catch(error => {
-          this.loading = false
+          vm.tableData = response.data
+          vm.loading = false
         })
       },
       /**
@@ -296,42 +280,22 @@
        * @param student 学生信息对象实体
        */
       addOrUpdateOrDelete (url, student) {
-        //执行新增或者更新操作
-        this.axios(url, {
-          method: 'post',
-          data: student
-        }).then(response => {
-          let result = response.data
-          this.reset()
-          this.$message({
+        const vm = this
+        vm.netWorkRequest('post', url, student, function (response) {
+          vm.$message({
             title: '提示',
-            message: result,
+            message: response,
             type: 'success',
             center: true
           })
-        }).catch(error => {
-          this.$message({
-            title: '提示',
-            message: '系统出错,请稍后再试!',
-            type: 'error',
-            center: true
-          })
+          vm.reset()
+          vm.dialogFormVisible = false
         })
-        //关闭对话框
-        this.dialogFormVisible = false
       },
-      //输入框中内容被改变
+      //每页显示的记录数被改变
       handleSizeChange (val) {
-        switch (val) {
-          case 100:
-          case 200:
-          case 300:
-          case 400:
-          case 500:
-            this.count = val
-            break
-        }
-        this.handleCurrentChange(val)
+        this.count = val
+        this.searchInfo()
       },
       //当前页数被改变
       handleCurrentChange (val) {
@@ -341,23 +305,7 @@
       }
     },
     mounted () {
-      const  vm=this
-      let url = this.url_request.ip_port_dev + '/student_check'
-      vm.netWorkRequest('post',url,{
-        teacherName: sessionStorage.getItem('name'),
-        currentPage: 1,
-        count: vm.count
-      },function (response) {
-        //分页信息对象
-        let pageInfo = response.pageInfo
-        vm.currentPage = pageInfo.currentPage
-        vm.totalPage = pageInfo.totalPage
-        vm.count = pageInfo.count
-        vm.totalCount = pageInfo.totalCount
-        //数据信息
-        vm.tableData = response.data
-      })
-      vm.loading = false
+      this.reset()
     }
   }
 </script>

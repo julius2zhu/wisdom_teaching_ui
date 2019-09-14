@@ -82,7 +82,7 @@
         totalPage: 1,
         //每页显示的条数
         counts: [100, 200, 300, 400, 500],
-        //传递给后台
+        //默认显示的条数
         count: 100,
         //总条数
         totalCount: 1,
@@ -99,22 +99,13 @@
       }
     },
     methods: {
-      //输入框中内容被改变或者每页显示条数改变
+      //输入框中内容被改变
       handleSizeChange (val) {
-        switch (val) {
-          case 100:
-          case 200:
-          case 300:
-          case 400:
-          case 500:
-            this.count = val
-            break
-        }
-        this.handleCurrentChange(val)
+        this.count = val
+        this.searchInfo()
       },
       //当前页数被改变
       handleCurrentChange (val) {
-        // 将改变后的页数赋值给当前页
         this.currentPage = val
         this.searchInfo()
       },
@@ -138,13 +129,11 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        const vm=this
-        vm.netWorkRequest('post',url,condition,function (response) {
+        const vm = this
+        vm.netWorkRequest('post', url, condition, function (response) {
           //分页信息对象
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
           //数据信息
           vm.tableData = response.data
@@ -157,17 +146,15 @@
         this.searchKeys = ''
         this.loading = true
         let url = this.url_request.ip_port_dev + '/student_check'
-        const vm=this
-        vm.netWorkRequest('post',url,{
+        const vm = this
+        vm.netWorkRequest('post', url, {
           teacherName: sessionStorage.getItem('name'),
           currentPage: 1,
-          count: vm.count
-        },function (response) {
+          count: 100
+        }, function (response) {
           //分页信息对象
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
           //数据信息
           vm.tableData = response.data
@@ -177,23 +164,7 @@
     },
     //请求数据
     mounted () {
-      let url = this.url_request.ip_port_dev + '/student_check'
-      const vm = this
-      vm.netWorkRequest('post',url,{
-        teacherName: sessionStorage.getItem('name'),
-        currentPage: 1,
-        count: vm.count
-      },function (response) {
-        //分页信息对象
-        let pageInfo = response.pageInfo
-        vm.currentPage = pageInfo.currentPage
-        vm.totalPage = pageInfo.totalPage
-        vm.count = pageInfo.count
-        vm.totalCount = pageInfo.totalCount
-        //数据信息
-        vm.tableData = response.data
-        vm.loading = false
-      })
+      this.reset()
     }
   }
 </script>
