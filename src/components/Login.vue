@@ -143,7 +143,7 @@
   .register {
     text-decoration: none;
     font-size: large;
-    color: coral;
+    color: white;
   }
 
   p {

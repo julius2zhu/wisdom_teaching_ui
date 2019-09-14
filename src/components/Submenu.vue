@@ -133,7 +133,9 @@
         </svg>
         <router-link to="/main/alterPassWord">个人密码修改</router-link>
       </el-menu-item>
-      <el-menu-item index="7-2">选项2</el-menu-item>
+      <el-menu-item index="7-3">
+        <router-link to="/main/alterPassWord">个人信息变更</router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="8" v-if="hasAdminRole">
       <template slot="title">

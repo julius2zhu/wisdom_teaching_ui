@@ -76,7 +76,7 @@
           <el-radio v-model="form.role" label="2">管理员</el-radio>
         </el-form-item>
         <el-form-item>
-          <p v-if="title==='新增用户'" style="color: red">
+          <p v-if="title==='新增用户'" style="color: red;font-size: large">
             默认密码和账号保持一致,请提醒用户及时修改密码
           </p>
         </el-form-item>
@@ -116,6 +116,9 @@
           name: [
             {required: true, message: '请输入用户姓名', trigger: 'blur'},
             {min: 2, max: 20, message: '名字应在2-6个字符之间', trigger: 'blur'}
+          ],
+          role: [
+            {required: true},
           ]
         },
         tableData: [],

@@ -130,10 +130,12 @@
   .back {
     text-decoration: none;
     font-size: large;
-    color: coral;
+    color: white;
+    margin-left: 200px;
   }
 
   p {
     color: white;
+    font-size: 35px;
   }
 </style>
