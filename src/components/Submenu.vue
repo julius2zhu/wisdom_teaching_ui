@@ -176,13 +176,17 @@
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-ziyuanchaxun-hover"></use>
         </svg>
-        公共资源查询
+        <router-link to="/main/publicResourcesSearch">
+          公共资源查询
+        </router-link>
       </el-menu-item>
       <el-menu-item index="9-2">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-shangchuan"></use>
         </svg>
-        公共资源上传
+        <router-link to="/main/publicResourcesUpload">
+          公共资源上传
+        </router-link>
       </el-menu-item>
     </el-submenu>
 
@@ -192,18 +196,21 @@
           <use xlink:href="#icon-xitong"></use>
         </svg>
         <span class="sub-item">关于平台系统</span>
+
       </template>
       <el-menu-item index="10-1">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-shezhiguanyuruanjian"></use>
         </svg>
-        关于软件
+        <router-link to="/main/aboutSystem">关于软件</router-link>
       </el-menu-item>
       <el-menu-item index="10-2">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-mingxie-"></use>
         </svg>
-        特别鸣谢
+        <router-link to="/main/thanks">
+          特别鸣谢
+        </router-link>
       </el-menu-item>
     </el-submenu>
   </el-menu>

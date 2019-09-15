@@ -4,7 +4,9 @@
   修改删除作业
   -->
   <div>
-    <el-button type="success" @click="showDialog(0)">发布作业</el-button>
+    <el-button type="primary" @click="showDialog(0)">
+      <i class="el-icon-plus"></i>发布作业
+    </el-button>
     <el-table :data="tableData" stripe border max-height="500" height="450"
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
@@ -22,9 +24,11 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" type="success" @click="column_edit(scope.$index)">编辑
+          <el-button size="mini"  @click="column_edit(scope.$index)">
+            <i class="el-icon-edit-outline"></i>编辑
           </el-button>
-          <el-button size="mini" type="danger" @click="column_delete(scope.$index)">删除
+          <el-button size="mini" type="danger" @click="column_delete(scope.$index)">
+            <i class="el-icon-delete-solid"></i>删除
           </el-button>
         </template>
       </el-table-column>
@@ -158,7 +162,7 @@
           })
         }
         this.form.name = ''
-        this.form.describe = ''
+        this.form.describes = ''
         this.file = []
         this.dialogFormVisible = false
         this.reset()
@@ -200,7 +204,7 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        vm.netWorkRequest('post', url,condition,function (response) {
+        vm.netWorkRequest('post', url, condition, function (response) {
           //分页信息对象
           let pageInfo = response.data.pageInfo
           vm.totalPage = pageInfo.totalPage

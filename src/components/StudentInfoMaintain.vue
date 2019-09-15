@@ -1,7 +1,8 @@
 <template>
   <!--学生信息维护-->
   <div>
-    <el-button type="success" @click="showDialog(0)">添加学生</el-button>
+    <el-button  type="primary" @click="showDialog(0)">
+      <i class="el-icon-circle-plus"></i>添加学生</el-button>
     <el-select v-model="itemSelect" style="width: 120px">
       <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
                  :value="item.value">
@@ -24,9 +25,11 @@
       <el-table-column prop="major" label="专业"/>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="showDialog(1,scope.$index)">编辑
+          <el-button size="mini" @click="showDialog(1,scope.$index)">
+            <i class="el-icon-edit-outline"></i>编辑
           </el-button>
-          <el-button size="mini" type="danger" @click="column_delete(scope.$index)">删除
+          <el-button size="mini" type="danger" @click="column_delete(scope.$index)">
+            <i class="el-icon-delete-solid"></i>删除
           </el-button>
         </template>
       </el-table-column>

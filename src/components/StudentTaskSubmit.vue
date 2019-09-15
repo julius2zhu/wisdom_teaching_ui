@@ -25,9 +25,12 @@
             class="upload-demo" ref="upload" :action="action" :file-list="file"
             :auto-upload="true" :data="form"
             :on-success="success" :on-error="error">
-            <el-button @click="column_submit(scope.$index)" slot="trigger" size="small" type="primary">上传</el-button>
+            <el-button @click="column_submit(scope.$index)" size="mini" type="primary">
+              <i class="el-icon-upload"></i>上传
+            </el-button>
           </el-upload>
-          <el-button size="mini" type="danger" @click="column_download(scope.$index)">下载
+          <el-button size="mini"  @click="column_download(scope.$index)">
+            <i class="el-icon-download"></i> 下载
           </el-button>
         </template>
       </el-table-column>

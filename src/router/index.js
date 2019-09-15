@@ -16,6 +16,10 @@ import TaskManage from '../components/TaskManage'
 import StudentTaskSubmit from '../components/StudentTaskSubmit'
 import TaskSubmitCheck from '../components/TaskSubmitCheck'
 import StudentTaskScoreCheck from '../components/StudentTaskScoreCheck'
+import AboutSystem from '../components/AboutSystem'
+import Thanks from '../components/Thanks'
+import PublicResourcesUpload from '../components/PublicResourcesUpload'
+import PublicResourcesSearch from '../components/PublicResourcesSearch'
 
 Vue.use(Router)
 export default new Router({
@@ -83,6 +87,21 @@ export default new Router({
         {
           path: 'studentTaskScoreCheck',
           component: StudentTaskScoreCheck
+        },
+        {
+          path: 'aboutSystem',
+          component: AboutSystem
+        },
+        {
+          path: 'thanks',
+          component: Thanks
+        },
+        {
+          path: 'publicResourcesUpload',
+          component: PublicResourcesUpload
+        }, {
+          path: 'publicResourcesSearch',
+          component: PublicResourcesSearch
         },
         {
           //刚进来展示的页面

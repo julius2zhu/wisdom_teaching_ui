@@ -21,13 +21,15 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span v-if="tableData[scope.$index].submitState==='1'">
-          <el-button size="mini" type="success" @click="column_download(scope.$index)">下载
+          <el-button size="mini" @click="column_download(scope.$index)">
+            <i class="el-icon-download"></i>下载
           </el-button>
           <el-button size="mini" type="danger" @click="column_read(scope.$index)">批阅打分
           </el-button>
           </span>
           <span v-else>
-            <el-button size="mini" type="success" disabled>下载
+            <el-button size="mini" disabled>
+               <i class="el-icon-download"></i>下载
           </el-button>
           <el-button size="mini" type="danger" disabled>批阅打分
           </el-button>
@@ -186,7 +188,7 @@
         //将改变后的页数赋值给当前页
         this.currentPage = val
         this.search()
-      },
+      }
     },
     mounted () {
       this.reset()
