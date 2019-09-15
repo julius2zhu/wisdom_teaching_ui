@@ -2,7 +2,7 @@
   <!--管理员对用户信息进行维护,包括冻结和删除-->
   <div>
     <div class="header">
-      <el-button type="success" @click="addUser">添加用户</el-button>
+      <el-button plain class="el-icon-user-solid" @click="addUser">添加用户</el-button>
     </div>
     <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
     <el-table :data="tableData" stripe border max-height="500" height="450"
@@ -26,16 +26,19 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.state==='0'">
-         <el-button size="mini" type="success" @click="column_freezeOrThaw(scope.$index,1)">解冻
+         <el-button size="mini" class="el-icon-unlock"
+                    type="success" @click="column_freezeOrThaw(scope.$index,1)">解冻
           </el-button>
           </span>
           <span v-else>
-            <el-button size="mini" type="danger" @click="column_freezeOrThaw(scope.$index,0)">冻结
-           </el-button>
+            <el-button size="mini"
+                       class="el-icon-lock" type="danger" @click="column_freezeOrThaw(scope.$index,0)">冻结</el-button>
           </span>
-          <el-button size="mini" type="primary" @click="column_edit(scope.$index)">编辑
+          <el-button size="mini" type="primary" class="el-icon-edit-outline"
+                     @click="column_edit(scope.$index)">编辑
           </el-button>
-          <el-button size="mini" type="danger" @click="column_delete(scope.$index)">删除
+          <el-button class="el-icon-delete-solid" size="mini" type="danger"
+                     @click="column_delete(scope.$index)">删除
           </el-button>
         </template>
       </el-table-column>

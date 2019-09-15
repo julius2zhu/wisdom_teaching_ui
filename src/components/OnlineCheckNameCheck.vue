@@ -1,7 +1,6 @@
 <template>
   <!--考勤信息查看-->
   <div>
-    <el-button type="primary" @click="exportExcel">导出excel表格</el-button>
     <!--搜索条件中下拉框-->
     <el-select v-model="itemSelect" style="width: 120px">
       <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"

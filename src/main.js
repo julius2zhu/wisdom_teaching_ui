@@ -15,6 +15,7 @@ import url_request from './plugins/url_request'
 import lang_ZH from './plugins/lang_ZH'
 import CommonPlugin from './plugins/CommonPlugin'
 import iconfont from './assets/theme-chalk/iconfont'
+Vue.use(iconfont)
 Vue.use(CommonPlugin)
 Vue.use(lang_ZH)
 Vue.use(url_request)

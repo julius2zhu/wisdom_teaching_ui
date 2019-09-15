@@ -28,16 +28,17 @@
       <el-table-column prop="major" label="专业"/>
       <el-table-column label="操作" width="160" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="on(scope.$index,scope.row)">到
+          <el-button class="el-icon-check" size="mini" @click="on(scope.$index,scope.row)">到
           </el-button>
-          <el-button size="mini" type="danger" @click="off(scope.$index,scope.row)">未到
+          <el-button class="el-icon-close" size="mini" type="danger" @click="off(scope.$index,scope.row)">未到
           </el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="footer">
-      <el-button type="primary" @click="submit">提交信息</el-button>
-      <el-button type="danger">重置信息</el-button>
+      <el-button type="primary" class="el-icon-upload" @click="submit">提交信息
+      </el-button>
+      <el-button class="el-icon-refresh-left" type="danger" @click="resetTable">重置信息</el-button>
     </div>
     <el-pagination background
                    @size-change="handleSizeChange"
@@ -200,6 +201,9 @@
         }).catch(error => {
           this.$message('提交失败!')
         })
+      },
+      resetTable () {
+        this.$refs.table.clearSelection()
       }
     },
     //请求数据

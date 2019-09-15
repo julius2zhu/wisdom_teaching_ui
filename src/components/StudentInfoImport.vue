@@ -4,16 +4,11 @@
     <el-upload class="upload-class" ref="upload" drag
                :action="uploadUrl"
                :on-change="beforeAvatarUpload"
-               :limit="1" :file-list="fileList"
-               :auto-upload="false"
-               :on-success="success"
-               :on-error="error"
-               :on-progress="progress">
+               :limit="1" :file-list="file" :auto-upload="false" :on-success="success"
+               :on-error="error" :on-progress="progress" :data="form">
       <br/>
-      <el-link :href="downloadTemplate" type="primary" target="_blank">
-      <span id="toast">
-        下载导入模板和说明文档
-      </span>
+      <el-link type="primary" @click="downloadTemplate">
+        <i class="el-icon-download"></i>下载模板和使用说明
       </el-link>
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <br/>
@@ -32,24 +27,30 @@
   export default {
     data () {
       return {
-        fileList: [],
+        file: [],
         uploadUrl: '',
         dialogVisible: false,
-        downloadTemplate: 'student_info_manage/download_template?fileName=template.zip'
+        form: {
+          teacherName: sessionStorage.getItem('name')
+        }
       }
     },
     methods: {
+      downloadTemplate () {
+        window.location.href = this.url_request.ip_port_dev
+          + '/public_data_resources_download?id=1'
+      },
       submitUpload () {
         this.$refs.upload.submit()
       },
       beforeAvatarUpload (file) {
-        this.uploadUrl = this.url_request.ip_port_dev + this.url_request.root_request + '/upload_template'
+        this.uploadUrl = this.url_request.ip_port_dev + '/upload_template'
         const name = file.name
         const index = name.lastIndexOf('.')
         const suffix = name.slice(index + 1)
         if (!(suffix === 'xlsx')) {
           this.$message.error('上传文件只能是 xlsx 格式!')
-          this.fileList = []
+          this.file = []
         }
       },
       //上传中
@@ -64,11 +65,13 @@
           message: '数据导入成功!',
           type: 'success'
         })
+        this.file = []
       },
       //失败
       error (params) {
         this.dialogVisible = false
         this.$message.error('数据导入出错,请稍后再试!')
+        this.file = []
       }
     }
   }

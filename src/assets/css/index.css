@@ -41,9 +41,18 @@
 /*改变表格的一些通用样式*/
 /*底部分页全部居中*/
 .el-pagination.is-background {
-  margin-top: 25px;
+  margin-top: 10px;
   text-align: center;
   color: white;
 }
+
+.el-pagination__total {
+  color: #FF1493;
+}
+
+.el-pagination__jump {
+  color: #FF1493;
+}
+
 
 
