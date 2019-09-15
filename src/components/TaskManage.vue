@@ -5,15 +5,6 @@
   -->
   <div>
     <el-button type="success" @click="showDialog(0)">发布作业</el-button>
-    <!--<el-select v-model="itemSelect" style="width: 120px">-->
-    <!--<el-option v-for="item in searchCondition" :key="item.value" :label="item.label"-->
-    <!--:value="item.value">-->
-    <!--</el-option>-->
-    <!--</el-select>-->
-    <!--<el-input placeholder="输入关键字进行自动筛选" style="width: 200px"-->
-    <!--v-model="searchKeys" clearable/>-->
-    <!--<el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>-->
-    <!--<el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>-->
     <el-table :data="tableData" stripe border max-height="500" height="450"
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
@@ -38,13 +29,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--页脚分页,这个一般直接交给框架去做自动分页-->
-    <div class="table_footer">
-      <el-pagination background
-                     layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
-      </el-pagination>
-    </div>
-
+    <el-pagination background
+                   @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="currentPage" :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="totalCount">
+    </el-pagination>
     <!--弹出框嵌套一个表单-->
     <el-dialog :title="title" :visible.sync="dialogFormVisible"
                :center="true" :close-on-click-modal="false">
@@ -178,17 +170,22 @@
           type: 'error'
         })
       },
-      //当前页数被改变
+      handleSizeChange (val) {
+        this.count = val
+        this.search()
+      },
       handleCurrentChange (val) {
         //将改变后的页数赋值给当前页
         this.currentPage = val
-        this.searchInfo()
+        this.search()
       },
       //查询学生信息
-      searchInfo () {
+      search () {
+        const vm = this
         let item = this.itemSelect
         let key = this.searchKeys.trim()
         let condition = {
+          teacherName: sessionStorage.getItem('name'),
           currentPage: this.currentPage,
           count: this.count
         }
@@ -203,22 +200,14 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        this.axios(url, {
-          teacherName: sessionStorage.getItem('name'),
-          method: 'post',
-          data: condition
-        }).then(response => {
+        vm.netWorkRequest('post', url,condition,function (response) {
           //分页信息对象
           let pageInfo = response.data.pageInfo
-          this.currentPage = pageInfo.currentPage
-          this.totalPage = pageInfo.totalPage
-          this.count = pageInfo.count
-          this.totalCount = pageInfo.totalCount
+          vm.totalPage = pageInfo.totalPage
+          vm.totalCount = pageInfo.totalCount
           //数据信息
-          this.tableData = response.data.data
-          this.loading = false
-        }).catch(error => {
-          this.loading = false
+          vm.tableData = response.data.data
+          vm.loading = false
         })
       },
       //重置查询条件
@@ -231,13 +220,11 @@
         vm.netWorkRequest('post', url, {
           teacherName: sessionStorage.getItem('name'),
           currentPage: 1,
-          count: vm.count
+          count: 100
         }, function (response) {
           //分页信息对象
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
           //数据信息
           vm.tableData = response.data
@@ -253,11 +240,7 @@
         let id = this.tableData[index].id
         const vm = this
         let url = this.url_request.ip_port_dev + '/issue_task_delete/'
-        vm.$confirm('此操作将永久删除该条信息, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+        vm.myConfirm(null, null, function () {
           vm.netWorkRequest('get', url, {
             id: id
           }, function (response) {
@@ -267,11 +250,6 @@
               message: response
             })
           })
-        }).catch(() => {
-          vm.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
         })
       },
       download (path) {
@@ -280,29 +258,11 @@
       }
     },
     mounted () {
-      const vm = this
-      let url = this.url_request.ip_port_dev + '/issue_task_check'
-      vm.netWorkRequest('post', url, {
-        teacherName: sessionStorage.getItem('name'),
-        currentPage: 1,
-        count: vm.count
-      }, function (response) {
-        //分页信息对象
-        let pageInfo = response.pageInfo
-        vm.currentPage = pageInfo.currentPage
-        vm.totalPage = pageInfo.totalPage
-        vm.count = pageInfo.count
-        vm.totalCount = pageInfo.totalCount
-        //数据信息
-        vm.tableData = response.data
-      })
-      vm.loading = false
+      this.reset()
     }
   }
 </script>
 
 <style scoped>
-  .table_footer {
-    text-align: center;
-  }
+
 </style>

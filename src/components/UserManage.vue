@@ -3,15 +3,6 @@
   <div>
     <div class="header">
       <el-button type="success" @click="addUser">添加用户</el-button>
-      <!--<el-select v-model="itemSelect" style="width: 120px">-->
-      <!--<el-option v-for="item in searchCondition" :key="item.value" :label="item.label"-->
-      <!--:value="item.value">-->
-      <!--</el-option>-->
-      <!--</el-select>-->
-      <!--<el-input placeholder="输入关键字进行自动筛选" style="width: 200px"-->
-      <!--v-model="searchKeys" clearable/>-->
-      <!--<el-button icon="el-icon-search" plain>查询</el-button>-->
-      <!--<el-button icon="el-icon-refresh" plain>重置</el-button>-->
     </div>
     <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
     <el-table :data="tableData" stripe border max-height="500" height="450"
@@ -49,17 +40,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--页脚分页,这个一般直接交给框架去做自动分页-->
-    <div class="footer">
-      <el-pagination background
-                     @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"
-                     :current-page="currentPage" :page-sizes="counts"
-                     :page-size="count"
-                     layout="total, sizes, prev, pager, next, jumper"
-                     :total="totalCount">
-      </el-pagination>
-    </div>
+    <el-pagination background
+                   @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="currentPage" :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="totalCount">
+    </el-pagination>
     <!--弹出框嵌套一个表单-->
     <el-dialog :title="title" :visible.sync="dialogFormVisible"
                :center="true" :close-on-click-modal="false">
@@ -138,24 +126,16 @@
       }
     },
     methods: {
-      //输入框中内容被改变
+      //counts被改变
       handleSizeChange (val) {
-        switch (val) {
-          case 100:
-          case 200:
-          case 300:
-          case 400:
-          case 500:
-            this.count = val
-            break
-        }
-        this.handleCurrentChange(val)
+        this.count = val
+        this.search()
       },
       //当前页数被改变
       handleCurrentChange (val) {
         //将改变后的页数赋值给当前页
         this.currentPage = val
-        this.searchInfo()
+        this.search()
       },
       addUser () {
         this.title = '新增用户'
@@ -178,11 +158,13 @@
         const vm = this
         const id = vm.tableData[index].id
         const url = vm.url_request.ip_port_dev + '/user_manage_delete'
-        vm.netWorkRequest('post', url, {
-          id: id
-        }, function (response) {
-          vm.$message(response)
-          vm.reset()
+        vm.myConfirm(null, null, function () {
+          vm.netWorkRequest('post', url, {
+            id: id
+          }, function (response) {
+            vm.$message(response)
+            vm.reset()
+          })
         })
       },
       /**
@@ -206,14 +188,39 @@
           vm.reset()
         })
       },
+      //搜索信息
+      search () {
+        const vm = this
+        let url = vm.url_request.ip_port_dev + '/user_manage_query'
+        vm.netWorkRequest('post', url, {
+          currentPage: vm.currentPage,
+          count: vm.count
+        }, function (response) {
+          //获取数据部分,json数组对象
+          vm.tableData = response.data
+          //获取分页信息,json对象
+          let pageInfo = response.pageInfo
+          //设置条数和总页数
+          vm.totalCount = pageInfo.totalCount
+          vm.totalPage = pageInfo.totalPage
+          vm.loading = false
+        })
+      },
+      //重置信息
       reset () {
         const vm = this
-        let url = this.url_request.ip_port_dev + '/user_manage_query'
-        vm.netWorkRequest('get', url, {
+        let url = vm.url_request.ip_port_dev + '/user_manage_query'
+        vm.netWorkRequest('post', url, {
           currentPage: 1,
           count: 100
         }, function (response) {
-          vm.tableData = response
+          //获取数据部分,json数组对象
+          vm.tableData = response.data
+          //获取分页信息,json对象
+          let pageInfo = response.pageInfo
+          //设置条数和总页数
+          vm.totalCount = pageInfo.totalCount
+          vm.totalPage = pageInfo.totalPage
           vm.loading = false
         })
       },
@@ -256,7 +263,4 @@
     text-align: left;
   }
 
-  .footer {
-    text-align: center;
-  }
 </style>

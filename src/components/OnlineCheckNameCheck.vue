@@ -1,4 +1,5 @@
 <template>
+  <!--考勤信息查看-->
   <div>
     <el-button type="primary" @click="exportExcel">导出excel表格</el-button>
     <!--搜索条件中下拉框-->
@@ -9,7 +10,7 @@
     </el-select>
     <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
               v-model="searchKeys" clearable/>
-    <el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>
+    <el-button icon="el-icon-search" plain @click="search">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
     <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
     <el-table :data="tableData" stripe border max-height="500" height="450"
@@ -26,17 +27,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="footer">
-      <el-pagination background
-                     @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"
-                     :current-page="currentPage"
-                     :page-sizes="counts"
-                     :page-size="count"
-                     layout="total, sizes, prev, pager, next, jumper"
-                     :total="totalCount">
-      </el-pagination>
-    </div>
+    <el-pagination background
+                   @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="currentPage" :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="totalCount">
+    </el-pagination>
     <!--详细的未考勤信息-->
     <el-dialog title="未考勤信息" :visible.sync="dialogVisible">
       <el-table :data="onlineData">
@@ -54,17 +52,15 @@
     data () {
       return {
         dialogVisible: false,
-        //表格数据
         tableData: [],
-        //学生未考勤数据
         onlineData: [],
         //当前页
         currentPage: 1,
         //总页数
         totalPage: 1,
+        counts:
+          [100, 200, 300, 400, 500],
         //每页显示的条数
-        counts: [100, 200, 300, 400, 500],
-        //传递给后台
         count: 100,
         //总条数
         totalCount: 1,
@@ -81,32 +77,22 @@
       }
     },
     methods: {
-      //输入框中内容被改变或者每页显示条数改变
       handleSizeChange (val) {
-        switch (val) {
-          case 100:
-          case 200:
-          case 300:
-          case 400:
-          case 500:
-            this.count = val
-            break
-        }
-        this.handleCurrentChange(val)
+        this.count = val
+        this.search()
       },
-      //当前页数被改变
       handleCurrentChange (val) {
-        // 将改变后的页数赋值给当前页
         this.currentPage = val
-        this.searchInfo()
+        this.search()
       },
       //查询学生信息
-      searchInfo () {
+      search () {
+        const vm = this
         let item = this.itemSelect
         let key = this.searchKeys.trim()
         let condition = {
           currentPage: this.currentPage,
-          count: this.count,
+          count: vm.count,
           teacherName: sessionStorage.getItem('name')
         }
         if (item === 'name') {
@@ -120,14 +106,10 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        const vm = this
         vm.netWorkRequest('post', url, condition, function (response) {
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
-          //数据信息
           vm.tableData = response.data
           vm.loading = false
         })
@@ -142,15 +124,11 @@
         vm.netWorkRequest('post', url, {
           teacherName: sessionStorage.getItem('name'),
           currentPage: 1,
-          count: vm.count
+          count: 100
         }, function (response) {
-          //分页信息对象
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
-          //数据信息
           vm.tableData = response.data
           vm.loading = false
         })
@@ -191,32 +169,11 @@
         return index + 1
       }
     },
-    //请求数据
     mounted () {
-      let url = this.url_request.ip_port_dev + '/student_check'
-      const vm = this
-      vm.netWorkRequest('post', url, {
-        teacherName: sessionStorage.getItem('name'),
-        currentPage: 1,
-        count: this.count
-      }, function (response) {
-        //分页信息对象
-        let pageInfo = response.pageInfo
-        vm.currentPage = pageInfo.currentPage
-        vm.totalPage = pageInfo.totalPage
-        vm.count = pageInfo.count
-        vm.totalCount = pageInfo.totalCount
-        //数据信息
-        vm.tableData = response.data
-        vm.loading = false
-      })
+      this.reset()
     }
   }
 </script>
 
 <style scoped>
-  .footer {
-    margin-top: 10px;
-    text-align: center;
-  }
 </style>

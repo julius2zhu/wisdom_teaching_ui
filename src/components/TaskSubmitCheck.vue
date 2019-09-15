@@ -35,12 +35,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--页脚分页,这个一般直接交给框架去做自动分页-->
-    <div class="table_footer">
-      <el-pagination background
-                     layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
-      </el-pagination>
-    </div>
+    <el-pagination background
+                   @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="currentPage" :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="totalCount">
+    </el-pagination>
     <!--用于教师给学生打分和给评语-->
     <el-dialog title="批阅打分" :visible.sync="dialogFormVisible" center>
       <el-form :model="form">
@@ -104,6 +106,25 @@
       }
     },
     methods: {
+      //搜索信息
+      search () {
+        const vm = this
+        let url = vm.url_request.ip_port_dev + '/student_submit_task_read'
+        vm.netWorkRequest('post', url, {
+          currentPage: vm.currentPage,
+          count: vm.count,
+          teacherName: sessionStorage.getItem('name')
+        }, function (response) {
+          //获取数据部分,json数组对象
+          vm.tableData = response.data
+          //获取分页信息,json对象
+          let pageInfo = response.pageInfo
+          //设置条数和总页数
+          vm.totalCount = pageInfo.totalCount
+          vm.totalPage = pageInfo.totalPage
+          vm.loading = false
+        })
+      },
       reset () {
         const vm = this
         const url = vm.url_request.ip_port_dev + '/student_submit_task_read'
@@ -114,9 +135,7 @@
         }, function (response) {
           //分页信息对象
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
           //数据信息
           vm.tableData = response.data
@@ -132,7 +151,7 @@
       column_read (index) {
         const vm = this
         //获取到选择该行数据data
-        const data = this.tableData[index]
+        const data = vm.tableData[index]
         vm.form.id = data.id
         vm.form.taskName = data.homeWork.name
         vm.form.name = data.user.name
@@ -157,7 +176,17 @@
           vm.dialogFormVisible = false
           vm.reset()
         })
-      }
+      },
+      handleSizeChange (val) {
+        this.count = val
+        this.search()
+      },
+      //当前页数被改变
+      handleCurrentChange (val) {
+        //将改变后的页数赋值给当前页
+        this.currentPage = val
+        this.search()
+      },
     },
     mounted () {
       this.reset()

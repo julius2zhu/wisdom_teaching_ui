@@ -1,4 +1,5 @@
 <template>
+  <!--学生信息导出-->
   <div>
     <el-button type="primary" @click="exportExcel">导出excel表格</el-button>
     <!--搜索条件中下拉框-->
@@ -27,17 +28,15 @@
       <el-table-column prop="department" label="系别"/>
       <el-table-column prop="major" label="专业"/>
     </el-table>
-    <div class="footer">
-      <el-pagination background
-                     @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"
-                     :current-page="currentPage"
-                     :page-sizes="counts"
-                     :page-size="count"
-                     layout="total, sizes, prev, pager, next, jumper"
-                     :total="totalCount">
-      </el-pagination>
-    </div>
+    <el-pagination background
+                   @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="currentPage"
+                   :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="totalCount">
+    </el-pagination>
   </div>
 </template>
 
@@ -59,7 +58,7 @@
         totalCount: 1,
         //搜索下拉框选项
         itemSelect: 'name',
-        searchKeys: '',
+        searchKeys: null,
         //所有选择数据的id
         selections: [],
         searchCondition: [
@@ -74,16 +73,8 @@
     methods: {
       //输入框中内容被改变或者每页显示条数改变
       handleSizeChange (val) {
-        switch (val) {
-          case 100:
-          case 200:
-          case 300:
-          case 400:
-          case 500:
-            this.count = val
-            break
-        }
-        this.handleCurrentChange(val)
+        this.count = val
+        this.searchInfo()
       },
       //当前页数被改变
       handleCurrentChange (val) {
@@ -95,6 +86,7 @@
       searchInfo () {
         let item = this.itemSelect
         let key = this.searchKeys.trim()
+        const vm = this
         let condition = {
           currentPage: this.currentPage,
           count: this.count,
@@ -111,38 +103,30 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        const vm=this
-        vm.netWorkRequest('post',url,condition,
-          function (response) {
-            //分页信息对象
-            let pageInfo = response.pageInfo
-            vm.currentPage = pageInfo.currentPage
-            vm.totalPage = pageInfo.totalPage
-            vm.count = pageInfo.count
-            vm.totalCount = pageInfo.totalCount
-            //数据信息
-            vm.tableData = response.data
-            vm.loading = false
-          }
-        )
+        vm.netWorkRequest('post', url, condition, function (response) {
+          //分页信息对象
+          let pageInfo = response.pageInfo
+          vm.totalPage = pageInfo.totalPage
+          vm.totalCount = pageInfo.totalCount
+          //数据信息
+          vm.tableData = response.data
+          vm.loading = false
+        })
       },
       //重置查询条件
       reset () {
+        const vm = this
         this.itemSelect = 'name'
         this.searchKeys = ''
-        this.loading = true
         let url = this.url_request.ip_port_dev + '/student_check'
-        const  vm=this
-        vm.netWorkRequest('post',url,{
+        vm.netWorkRequest('post', url, {
           teacherName: sessionStorage.getItem('name'),
           currentPage: 1,
-          count: vm.count
-        },function (response) {
+          count: 100
+        }, function (response) {
           //分页信息对象
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
           //数据信息
           vm.tableData = response.data
@@ -178,30 +162,11 @@
     },
     //请求数据
     mounted () {
-      const vm = this
-      let url = this.url_request.ip_port_dev + '/student_check'
-      this.netWorkRequest('post', url, {
-        teacherName: sessionStorage.getItem('name'),
-        currentPage: 1,
-        count: vm.count
-      }, function (response) {
-        //分页信息对象
-        let pageInfo = response.pageInfo
-        vm.currentPage = pageInfo.currentPage
-        vm.totalPage = pageInfo.totalPage
-        vm.count = pageInfo.count
-        vm.totalCount = pageInfo.totalCount
-        //数据信息
-        vm.tableData = response.data
-        vm.loading = false
-      })
+      this.reset()
     }
   }
 </script>
 
 <style scoped>
-  .footer {
-    margin-top: 10px;
-    text-align: center;
-  }
+
 </style>

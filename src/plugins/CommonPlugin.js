@@ -46,5 +46,31 @@ export default {
         })
       }
     }
+    /**
+     * 弹出确认对话框
+     * @param title 标题
+     * @param message 信息
+     * @param fn 确定的回调函数
+     */
+    Vue.prototype.myConfirm = function (title, message, fn) {
+      if (title === null) {
+        title = '提示信息'
+      }
+      if (message === null) {
+        message = '您确定要删除该条记录吗?此操作将不可恢复!'
+      }
+      this.$confirm(message, title, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        fn()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    }
   }
 }

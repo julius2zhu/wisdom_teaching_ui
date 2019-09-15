@@ -32,12 +32,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--页脚分页,这个一般直接交给框架去做自动分页-->
-    <div class="table_footer">
-      <el-pagination background
-                     layout="total, sizes, prev, pager, next, jumper">
-      </el-pagination>
-    </div>
+    <el-pagination background
+                   @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="currentPage" :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="totalCount">
+    </el-pagination>
   </div>
 </template>
 
@@ -55,12 +57,51 @@
           id: -1
         },
         tableData: [],
+        //当前页
         currentPage: 1,
+        //总页数
+        totalPage: 1,
+        counts:
+          [100, 200, 300, 400, 500],
+        //每页显示的条数
         count: 100,
+        //总条数
+        totalCount: 1,
+        //搜索下拉框选项
+        itemSelect: 'name',
+        searchKeys: '',
         loading: true
       }
     },
     methods: {
+      //counts被改变
+      handleSizeChange (val) {
+        this.count = val
+        this.search()
+      },
+      //当前页数被改变
+      handleCurrentChange (val) {
+        //将改变后的页数赋值给当前页
+        this.currentPage = val
+        this.search()
+      },
+      search () {
+        const vm = this
+        let url = vm.url_request.ip_port_dev + '/student_task_submit_check'
+        vm.netWorkRequest('post', url, {
+          username: sessionStorage.getItem('username'),
+          currentPage: vm.currentPage,
+          count: vm.count
+        }, function (response) {
+          //分页信息对象
+          let pageInfo = response.pageInfo
+          vm.totalPage = pageInfo.totalPage
+          vm.totalCount = pageInfo.totalCount
+          //数据信息
+          vm.tableData = response.data
+          vm.loading = false
+        })
+      },
       column_submit (index) {
         //获取点击作业的该条主键id
         const id = this.tableData[index].id
@@ -106,9 +147,7 @@
         }, function (response) {
           //分页信息对象
           let pageInfo = response.pageInfo
-          vm.currentPage = pageInfo.currentPage
           vm.totalPage = pageInfo.totalPage
-          vm.count = pageInfo.count
           vm.totalCount = pageInfo.totalCount
           //数据信息
           vm.tableData = response.data
@@ -123,7 +162,5 @@
 </script>
 
 <style scoped>
-  .table_footer {
-    text-align: center;
-  }
+
 </style>

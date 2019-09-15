@@ -1,14 +1,16 @@
 <template>
+  <!--学生信息查看-->
   <div>
     <!--搜索条件中下拉框-->
     <el-select v-model="itemSelect" style="width: 120px">
-      <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
+      <el-option v-for="item in searchCondition"
+                 :key="item.value" :label="item.label"
                  :value="item.value">
       </el-option>
     </el-select>
     <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
               v-model="searchKeys" clearable/>
-    <el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>
+    <el-button icon="el-icon-search" plain @click="search">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
     <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
     <el-table :data="tableData" stripe border max-height="500" height="450"
@@ -55,18 +57,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--页脚分页,这个一般直接交给框架去做自动分页-->
-    <div class="footer">
-      <el-pagination background
-                     @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"
-                     :current-page="currentPage"
-                     :page-sizes="counts"
-                     :page-size="count"
-                     layout="total, sizes, prev, pager, next, jumper"
-                     :total="totalCount">
-      </el-pagination>
-    </div>
+    <el-pagination background
+                   @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="currentPage" :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="totalCount">
+    </el-pagination>
   </div>
 </template>
 
@@ -74,15 +72,14 @@
   export default {
     data () {
       return {
-        //表格数据
         tableData: [],
         //当前页
         currentPage: 1,
         //总页数
         totalPage: 1,
+        counts:
+          [100, 200, 300, 400, 500],
         //每页显示的条数
-        counts: [100, 200, 300, 400, 500],
-        //默认显示的条数
         count: 100,
         //总条数
         totalCount: 1,
@@ -99,23 +96,24 @@
       }
     },
     methods: {
-      //输入框中内容被改变
       handleSizeChange (val) {
         this.count = val
-        this.searchInfo()
+        this.search()
       },
       //当前页数被改变
       handleCurrentChange (val) {
+        //将改变后的页数赋值给当前页
         this.currentPage = val
-        this.searchInfo()
+        this.search()
       },
       //查询学生信息
-      searchInfo () {
+      search () {
+        const vm = this
         let item = this.itemSelect
         let key = this.searchKeys.trim()
         let condition = {
           currentPage: this.currentPage,
-          count: this.count,
+          count: vm.count,
           teacherName: sessionStorage.getItem('name')
         }
         if (item === 'name') {
@@ -129,7 +127,6 @@
         }
         //执行搜索操作
         let url = this.url_request.ip_port_dev + '/student_check'
-        const vm = this
         vm.netWorkRequest('post', url, condition, function (response) {
           //分页信息对象
           let pageInfo = response.pageInfo
@@ -170,10 +167,6 @@
 </script>
 
 <style scoped>
-  .footer {
-    text-align: center;
-  }
-
   .demo-table-expand {
     font-size: 0;
   }

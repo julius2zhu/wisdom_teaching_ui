@@ -1,4 +1,5 @@
 <template>
+  <!--学生信息维护-->
   <div>
     <el-button type="success" @click="showDialog(0)">添加学生</el-button>
     <el-select v-model="itemSelect" style="width: 120px">
@@ -30,15 +31,12 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--页脚分页,这个一般直接交给框架去做自动分页-->
-    <div class="footer">
-      <el-pagination background
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="currentPage" :page-sizes="counts"
-                     :page-size="count"
-                     layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
-      </el-pagination>
-    </div>
+    <el-pagination background
+                   @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                   :current-page="currentPage" :page-sizes="counts"
+                   :page-size="count"
+                   layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
+    </el-pagination>
     <!--弹出框嵌套一个表单-->
     <el-dialog :title="title" :visible.sync="dialogFormVisible"
                :center="true" :close-on-click-modal="false" @open="open">
@@ -233,7 +231,8 @@
         const vm = this
         let condition = {
           currentPage: this.currentPage,
-          count: this.count
+          count: this.count,
+          teacherName: sessionStorage.getItem('name')
         }
         if (item === 'name') {
           condition.name = key
@@ -259,6 +258,8 @@
       //重置查询条件
       reset () {
         const vm = this
+        this.itemSelect = 'name'
+        this.searchKeys = ''
         let url = this.url_request.ip_port_dev + '/student_check'
         vm.netWorkRequest('post', url, {
           teacherName: sessionStorage.getItem('name'),
@@ -318,10 +319,6 @@
   .el-table {
     width: 100%;
     margin-top: 10px
-  }
-
-  .footer {
-    text-align: center;
   }
 
   .toast {
