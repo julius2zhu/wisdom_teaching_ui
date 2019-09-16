@@ -1,14 +1,14 @@
 <template>
   <!--学生信息维护-->
   <div>
-    <el-button  type="primary" @click="showDialog(0)">
+    <el-button  plain  @click="showDialog(0)">
       <i class="el-icon-circle-plus"></i>添加学生</el-button>
     <el-select v-model="itemSelect" style="width: 120px">
       <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>

@@ -35,7 +35,7 @@
 
 /*表单前面的label标签字体颜色*/
 .el-form-item__label {
-  color: white !important;
+  color: 	#00FF7F !important;
   font-weight: bold;
 }
 
@@ -52,14 +52,16 @@
   text-align: center;
   color: white;
 }
-
+/*底部文字颜色*/
 .el-pagination__total {
-  color: #FF1493;
+  color: white;
+}
+/*底部文字颜色*/
+.el-pagination__jump {
+  color: white;
+  font-weight: bold;
 }
 
-.el-pagination__jump {
-  color: #FF1493;
-}
 
 
 

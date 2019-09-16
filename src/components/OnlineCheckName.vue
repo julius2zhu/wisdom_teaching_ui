@@ -7,7 +7,7 @@
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="search">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
@@ -36,9 +36,9 @@
       </el-table-column>
     </el-table>
     <div class="footer">
-      <el-button type="primary" class="el-icon-upload" @click="submit">提交信息
+      <el-button plain class="el-icon-upload" @click="submit">提交信息
       </el-button>
-      <el-button class="el-icon-refresh-left" type="danger" @click="resetTable">重置信息</el-button>
+      <el-button class="el-icon-refresh-left" plain @click="resetTable">重置信息</el-button>
     </div>
     <el-pagination background
                    @size-change="handleSizeChange"

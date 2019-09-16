@@ -45,6 +45,6 @@
   .content {
     font-size: large;
     line-height: 30px;
-    color: black;
+    color: white;
   }
 </style>

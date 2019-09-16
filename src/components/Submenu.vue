@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-openeds="['1']">
+  <el-menu :default-openeds="['5','6','7','8','9','10']">
     <el-submenu index="1" v-if="hasTeacherRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
@@ -32,26 +32,26 @@
         <router-link to="/main/studentInfoImport">学生信息导入</router-link>
       </el-menu-item>
     </el-submenu>
-    <el-submenu index="2" v-if="hasTeacherRole">
-      <template slot="title">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-xueshengchengjidengji"></use>
-        </svg>
-        <span class="sub-item">学生成绩管理</span>
-      </template>
-      <el-menu-item index="2-1">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-pingshichengjiluru"></use>
-        </svg>
-        平时成绩打分
-      </el-menu-item>
-      <el-menu-item index="2-2">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-qimochengjiluru"></use>
-        </svg>
-        期末成绩录入
-      </el-menu-item>
-    </el-submenu>
+    <!--<el-submenu index="2" v-if="hasTeacherRole">-->
+    <!--<template slot="title">-->
+    <!--<svg class="icon" aria-hidden="true">-->
+    <!--<use xlink:href="#icon-xueshengchengjidengji"></use>-->
+    <!--</svg>-->
+    <!--<span class="sub-item">学生成绩管理</span>-->
+    <!--</template>-->
+    <!--<el-menu-item index="2-1">-->
+    <!--<svg class="icon" aria-hidden="true">-->
+    <!--<use xlink:href="#icon-pingshichengjiluru"></use>-->
+    <!--</svg>-->
+    <!--平时成绩打分-->
+    <!--</el-menu-item>-->
+    <!--<el-menu-item index="2-2">-->
+    <!--<svg class="icon" aria-hidden="true">-->
+    <!--<use xlink:href="#icon-qimochengjiluru"></use>-->
+    <!--</svg>-->
+    <!--期末成绩录入-->
+    <!--</el-menu-item>-->
+    <!--</el-submenu>-->
     <el-submenu index="3" v-if="hasTeacherRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
@@ -130,34 +130,15 @@
         <router-link to="/main/onlineExamination">资料下载</router-link>
       </el-menu-item>
     </el-submenu>
-    <el-submenu index="7" v-if="hasPublicRole">
-      <template slot="title">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-gerenxinxi"></use>
-        </svg>
-        <span class="sub-item">个人信息管理</span>
-      </template>
-      <el-menu-item index="7-1">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-mimaxiugai"></use>
-        </svg>
-        <router-link to="/main/alterPassWord">个人密码修改</router-link>
-      </el-menu-item>
-      <el-menu-item index="7-3">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-xiangmuxinxibiangeng"></use>
-        </svg>
-        <router-link to="/main/alterPassWord">个人信息变更</router-link>
-      </el-menu-item>
-    </el-submenu>
-    <el-submenu index="8" v-if="hasAdminRole">
+
+    <el-submenu index="7" v-if="hasAdminRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-yonghu"></use>
         </svg>
-        <span>用户信息管理</span>
+        <span class="sub-item">用户信息管理</span>
       </template>
-      <el-menu-item index="8-1">
+      <el-menu-item index="7-1">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-xinxiweihu"></use>
         </svg>
@@ -165,14 +146,14 @@
       </el-menu-item>
     </el-submenu>
 
-    <el-submenu index="9" v-if="hasPublicRole">
+    <el-submenu index="8" v-if="hasPublicRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-ziliaoku1"></use>
         </svg>
-        <span class="sub-item">资料信息库</span>
+        <span class="sub-item">资源信息管理</span>
       </template>
-      <el-menu-item index="9-1">
+      <el-menu-item index="8-1">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-ziyuanchaxun-hover"></use>
         </svg>
@@ -180,7 +161,7 @@
           公共资源查询
         </router-link>
       </el-menu-item>
-      <el-menu-item index="9-2">
+      <el-menu-item index="8-2">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-shangchuan"></use>
         </svg>
@@ -189,7 +170,20 @@
         </router-link>
       </el-menu-item>
     </el-submenu>
-
+    <el-submenu index="9" v-if="hasPublicRole">
+      <template slot="title">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-gerenxinxi"></use>
+        </svg>
+        <span class="sub-item">个人信息管理</span>
+      </template>
+      <el-menu-item index="9-1">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-mimaxiugai"></use>
+        </svg>
+        <router-link to="/main/alterPassWord">个人密码修改</router-link>
+      </el-menu-item>
+    </el-submenu>
     <el-submenu index="10" v-if="hasPublicRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
@@ -252,7 +246,7 @@
 
   .sub-item {
     letter-spacing: 1px;
-    margin-left: 15px;
+    margin-left: 6px;
     font-size: 18px;
   }
 

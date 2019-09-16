@@ -1,7 +1,7 @@
 <template>
   <!--学生信息导出-->
   <div>
-    <el-button type="primary" @click="exportExcel">
+    <el-button plain @click="exportExcel">
       <i class="el-icon-share"></i>导出excel表格</el-button>
     <!--搜索条件中下拉框-->
     <el-select v-model="itemSelect" style="width: 120px">
@@ -9,7 +9,7 @@
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>

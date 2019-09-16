@@ -2,7 +2,7 @@
   <!--公共资源上传与管理-->
   <div>
     <div class="header">
-      <el-button type="primary" @click="upload">上传<i class="el-icon-upload el-icon--right"></i>
+      <el-button plain @click="upload"><i class="el-icon-upload el-icon--right"></i>上传
       </el-button>
     </div>
     <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->

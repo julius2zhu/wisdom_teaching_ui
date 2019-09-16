@@ -8,7 +8,7 @@
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="search">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
@@ -27,7 +27,7 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="学生姓名:">
+            <el-form-item label="学生姓名:" >
               <span>{{ props.row.name }}</span>
             </el-form-item>
             <el-form-item label="学生班级:">
@@ -37,11 +37,11 @@
               <span>{{ props.row.number }}</span>
             </el-form-item>
             <el-form-item label="学生性别:">
-              <span v-if="props.row.sex==='0'" style="color: red">
-                  女
-              </span>
-              <span v-else style="color: blue">
+              <span v-if="props.row.sex==='0'" style="color: blue">
                   男
+              </span>
+              <span v-else style="color: red">
+                  女
               </span>
             </el-form-item>
             <el-form-item label="所在系部:">
@@ -50,7 +50,7 @@
             <el-form-item label="所学专业:">
               <span>{{ props.row.major }}</span>
             </el-form-item>
-            <el-form-item label="班主任:">
+            <el-form-item label="班 主 任:">
               <span>{{ props.row.classTeacher}}</span>
             </el-form-item>
           </el-form>
@@ -169,6 +169,7 @@
 <style scoped>
   .demo-table-expand {
     font-size: 0;
+
   }
 
   .demo-table-expand label {

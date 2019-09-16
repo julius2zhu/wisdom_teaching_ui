@@ -7,12 +7,14 @@
                :limit="1" :file-list="file" :auto-upload="false" :on-success="success"
                :on-error="error" :on-progress="progress" :data="form">
       <br/>
-      <el-link type="primary" @click="downloadTemplate">
+      <el-link type="primary" @click="downloadTemplate" class="download">
         <i class="el-icon-download"></i>下载模板和使用说明
       </el-link>
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <br/>
-      <el-button style="margin: 10px 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+      <el-button style="margin: 10px 10px;" size="small" plain @click="submitUpload">
+        <i class="el-icon-upload el-icon--right"></i>上传到服务器
+      </el-button>
       <div slot="tip" class="el-upload__tip">只能上传xlsx文件</div>
     </el-upload>
     <!--弹窗-->
@@ -83,7 +85,7 @@
   }
 
   .el-upload__tip {
-    color: red;
+    color: white;
   }
 
   .progress {
@@ -94,5 +96,9 @@
     margin-top: 30px;
     color: red;
     font-size: larger;
+  }
+
+  .download {
+    color: white;
   }
 </style>

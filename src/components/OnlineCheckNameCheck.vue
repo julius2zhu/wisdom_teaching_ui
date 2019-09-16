@@ -7,7 +7,7 @@
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行自动筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="search">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
@@ -22,7 +22,8 @@
       <el-table-column prop="name" label="姓名"/>
       <el-table-column width="150" label="详细信息" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="detail(scope.$index, scope.row)">查看详细信息</el-button>
+          <el-button size="mini" @click="detail(scope.$index, scope.row)">
+            <i class="el-icon-zoom-in"></i>查看详细信息</el-button>
         </template>
       </el-table-column>
     </el-table>

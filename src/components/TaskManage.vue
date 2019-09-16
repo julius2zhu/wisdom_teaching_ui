@@ -4,7 +4,7 @@
   修改删除作业
   -->
   <div>
-    <el-button type="primary" @click="showDialog(0)">
+    <el-button  plain @click="showDialog(0)">
       <i class="el-icon-plus"></i>发布作业
     </el-button>
     <el-table :data="tableData" stripe border max-height="500" height="450"

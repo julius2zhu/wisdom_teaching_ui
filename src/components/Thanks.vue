@@ -1,8 +1,7 @@
 <template>
   <!--感谢语句-->
   <div class="content">
-    非常感谢XXXX老师在业余时间给予的指导与帮助<br/>
-    非常感谢XXXX同学的测试以及bug反馈提交<br/>
+    非常感谢郑丽萍老师在业余时间给予的指导与帮助<br/>
   </div>
 </template>
 
@@ -16,6 +15,6 @@
   .content {
     margin-top: 10px;
     font-size: large;
-    color: yellow;
+    color: white;
   }
 </style>
