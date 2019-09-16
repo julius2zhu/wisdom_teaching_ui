@@ -44,7 +44,7 @@
 <style scoped>
   .content {
     font-size: large;
-    color: yellow;
-
+    line-height: 30px;
+    color: black;
   }
 </style>

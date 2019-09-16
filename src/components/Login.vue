@@ -2,8 +2,8 @@
   <div>
     <el-form :model="form" :rules="rules" ref="login_form" label-width="100px"
              class="login-form">
-      <p>用户登录</p>
-      <el-form-item   label="用户账号:" prop="username">
+      <p>智慧课堂管理系统用户登录</p>
+      <el-form-item label="用户账号:" prop="username">
         <el-input v-model="form.username" clearable
                   prefix-icon="my-icon-user" placeholder="请输入用户账号"/>
       </el-form-item>
@@ -152,7 +152,10 @@
 
   p {
     color: white;
-    font-size: large;
+    font-size: 30px;
+    margin-left: 80px;
+    letter-spacing: 5px;
+    font-weight: bold;
   }
 
 </style>

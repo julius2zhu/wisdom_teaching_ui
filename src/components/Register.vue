@@ -1,7 +1,7 @@
 <template>
   <el-form :model="form" :rules="rules" ref="login_form" label-width="100px"
            class="login-form">
-    <p>用户注册</p>
+    <p>智慧课堂管理系统用户注册</p>
     <el-form-item label="用户账号:" prop="username">
       <el-input v-model="form.username" clearable
                 @change="usernameChange" placeholder="请输入用户账号"></el-input>
@@ -122,6 +122,9 @@
 
   p {
     color: white;
-    font-size: large;
+    font-size: 30px;
+    margin-left: 80px;
+    letter-spacing: 5px;
+    font-weight: bold;
   }
 </style>

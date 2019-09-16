@@ -12,8 +12,9 @@
 <!--不能使用scope作用域-->
 <style>
   html {
-    background: url("./assets/image/background_2.jpg") center no-repeat;
-    background-size: 100% 100%;
+    /*background: url("./assets/image/background_2.jpg") center no-repeat;*/
+    /*background-size: 100% 100%;*/
+    background-color: #0088FF;
   }
 
   .icon {

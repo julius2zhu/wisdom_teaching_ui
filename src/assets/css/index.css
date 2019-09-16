@@ -35,7 +35,14 @@
 
 /*表单前面的label标签字体颜色*/
 .el-form-item__label {
-  color: blue !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+/*改变表单出错提示信息的颜色*/
+.el-form-item__error {
+  color: white;
+  font-weight: lighter;
 }
 
 /*改变表格的一些通用样式*/

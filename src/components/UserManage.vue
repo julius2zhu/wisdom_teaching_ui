@@ -23,7 +23,7 @@
         </span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center">
+      <el-table-column label="操作" align="center" width="260px">
         <template slot-scope="scope">
           <span v-if="scope.row.state==='0'">
          <el-button size="mini" class="el-icon-unlock"
