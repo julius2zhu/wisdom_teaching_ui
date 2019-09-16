@@ -5,7 +5,7 @@
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8">
-      <el-table-column label="序号" type="index" width="50"/>
+      <el-table-column align="center" label="序号" type="index" width="50"/>
       <el-table-column align="center" prop="user.name" label="学生姓名"/>
       <el-table-column align="center" prop="homeWork.name" label="作业名称"/>
       <el-table-column align="center" prop="submitState" label="是否提交">

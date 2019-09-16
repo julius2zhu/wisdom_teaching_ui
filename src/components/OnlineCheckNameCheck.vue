@@ -18,8 +18,8 @@
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8"
               ref="table">
-      <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column prop="name" label="姓名"/>
+      <el-table-column label="序号" align="center" type="index" width="50"/>
+      <el-table-column prop="name" align="center" label="姓名"/>
       <el-table-column width="150" label="详细信息" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="detail(scope.$index, scope.row)">

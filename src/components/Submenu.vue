@@ -32,26 +32,6 @@
         <router-link to="/main/studentInfoImport">学生信息导入</router-link>
       </el-menu-item>
     </el-submenu>
-    <!--<el-submenu index="2" v-if="hasTeacherRole">-->
-    <!--<template slot="title">-->
-    <!--<svg class="icon" aria-hidden="true">-->
-    <!--<use xlink:href="#icon-xueshengchengjidengji"></use>-->
-    <!--</svg>-->
-    <!--<span class="sub-item">学生成绩管理</span>-->
-    <!--</template>-->
-    <!--<el-menu-item index="2-1">-->
-    <!--<svg class="icon" aria-hidden="true">-->
-    <!--<use xlink:href="#icon-pingshichengjiluru"></use>-->
-    <!--</svg>-->
-    <!--平时成绩打分-->
-    <!--</el-menu-item>-->
-    <!--<el-menu-item index="2-2">-->
-    <!--<svg class="icon" aria-hidden="true">-->
-    <!--<use xlink:href="#icon-qimochengjiluru"></use>-->
-    <!--</svg>-->
-    <!--期末成绩录入-->
-    <!--</el-menu-item>-->
-    <!--</el-submenu>-->
     <el-submenu index="3" v-if="hasTeacherRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">
@@ -91,6 +71,12 @@
         </svg>
         <router-link to="/main/onlineCheckNameCheck">考勤记录查看</router-link>
       </el-menu-item>
+      <el-menu-item index="4-3">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-shijuan"></use>
+        </svg>
+        <router-link to="/main/onlineExaminationManage">考试试卷管理</router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="5" v-if="hasStudentRole">
       <template slot="title">
@@ -120,14 +106,14 @@
           <use xlink:href="#icon-ziliaoku"></use>
         </svg>
         <span class="sub-item">
-          课前资料查看
+          在线试卷题库
         </span>
       </template>
       <el-menu-item index="6-1">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-data-download"></use>
+          <use xlink:href="#icon-kaoshi"></use>
         </svg>
-        <router-link to="/main/onlineExamination">资料下载</router-link>
+        <router-link to="/main/onlineExamination">在线考试</router-link>
       </el-menu-item>
     </el-submenu>
 

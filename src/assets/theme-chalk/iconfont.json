@@ -1,0 +1,303 @@
+{
+  "id": "1411163",
+  "name": "wisdom_teaching",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "智慧教学",
+  "glyphs": [
+    {
+      "icon_id": "1529804",
+      "name": "设置关于软件",
+      "font_class": "shezhiguanyuruanjian",
+      "unicode": "e6e1",
+      "unicode_decimal": 59105
+    },
+    {
+      "icon_id": "2089843",
+      "name": "课程",
+      "font_class": "kecheng",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "2209506",
+      "name": "学生成绩登记",
+      "font_class": "xueshengchengjidengji",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "2842147",
+      "name": "资料库",
+      "font_class": "ziliaoku1",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "3442039",
+      "name": "系统信息-导出",
+      "font_class": "xitongxinxi-daochu",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "3473332",
+      "name": "鸣谢-01",
+      "font_class": "mingxie-",
+      "unicode": "e6a6",
+      "unicode_decimal": 59046
+    },
+    {
+      "icon_id": "3854368",
+      "name": "作业",
+      "font_class": "zuoye",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    },
+    {
+      "icon_id": "3893145",
+      "name": "安卓",
+      "font_class": "anzhuo",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "4179898",
+      "name": "课堂",
+      "font_class": "ketang",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "4380945",
+      "name": "学生信息",
+      "font_class": "xueshengxinxi",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
+      "icon_id": "4580550",
+      "name": "教育",
+      "font_class": "jiaoyu",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "4601769",
+      "name": "观察记录查看",
+      "font_class": "guanchajiluchakan",
+      "unicode": "e6c2",
+      "unicode_decimal": 59074
+    },
+    {
+      "icon_id": "4978040",
+      "name": "学生作业",
+      "font_class": "xueshengzuoye",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "5033850",
+      "name": "用户信息",
+      "font_class": "yonghuxinxi",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "5054653",
+      "name": "密码修改",
+      "font_class": "mimaxiugai",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "5107730",
+      "name": "发布作业",
+      "font_class": "fabuzuoye",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "5120978",
+      "name": "导出",
+      "font_class": "daochu",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "5287330",
+      "name": "资料库",
+      "font_class": "ziliaoku",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "5376860",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "5639855",
+      "name": "上传",
+      "font_class": "shangchuan",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "5925113",
+      "name": "退出",
+      "font_class": "tuichu1",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
+      "icon_id": "6093916",
+      "name": "ic_补考成绩录入",
+      "font_class": "pingshichengjiluru",
+      "unicode": "e756",
+      "unicode_decimal": 59222
+    },
+    {
+      "icon_id": "6094093",
+      "name": "ic_重修成绩录入",
+      "font_class": "qimochengjiluru",
+      "unicode": "e7c2",
+      "unicode_decimal": 59330
+    },
+    {
+      "icon_id": "6458378",
+      "name": "试卷",
+      "font_class": "shijuan",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "6928088",
+      "name": "冻结",
+      "font_class": "dongjie",
+      "unicode": "eaa0",
+      "unicode_decimal": 60064
+    },
+    {
+      "icon_id": "7103488",
+      "name": "导入",
+      "font_class": "daoru",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "7253493",
+      "name": "考勤",
+      "font_class": "kaoqinguanli-copy",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "7490994",
+      "name": "考试",
+      "font_class": "kaoshi",
+      "unicode": "e7d4",
+      "unicode_decimal": 59348
+    },
+    {
+      "icon_id": "7511191",
+      "name": "成绩",
+      "font_class": "chengji",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "7526727",
+      "name": "个人信息",
+      "font_class": "gerenxinxi",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "7556358",
+      "name": "系统",
+      "font_class": "xitong",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "7600530",
+      "name": "查看",
+      "font_class": "chakan",
+      "unicode": "e694",
+      "unicode_decimal": 59028
+    },
+    {
+      "icon_id": "7692910",
+      "name": "冻结",
+      "font_class": "dongjie1",
+      "unicode": "e705",
+      "unicode_decimal": 59141
+    },
+    {
+      "icon_id": "8083851",
+      "name": "资料下载",
+      "font_class": "data-download",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "8234258",
+      "name": "考试",
+      "font_class": "kaoshi2",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "9087949",
+      "name": "资源查询-hover",
+      "font_class": "ziyuanchaxun-hover",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "9151396",
+      "name": "信息维护",
+      "font_class": "xinxiweihu",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "9419745",
+      "name": "密码",
+      "font_class": "password",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "9472888",
+      "name": "用户",
+      "font_class": "user",
+      "unicode": "e74d",
+      "unicode_decimal": 59213
+    },
+    {
+      "icon_id": "9548077",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "9839873",
+      "name": "提交",
+      "font_class": "tijiao",
+      "unicode": "e6bd",
+      "unicode_decimal": 59069
+    },
+    {
+      "icon_id": "10335096",
+      "name": "项目信息变更",
+      "font_class": "xiangmuxinxibiangeng",
+      "unicode": "e6ee",
+      "unicode_decimal": 59118
+    }
+  ]
+}

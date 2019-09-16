@@ -1,8 +1,9 @@
 <template>
   <!--学生信息维护-->
   <div>
-    <el-button  plain  @click="showDialog(0)">
-      <i class="el-icon-circle-plus"></i>添加学生</el-button>
+    <el-button plain @click="showDialog(0)">
+      <i class="el-icon-circle-plus"></i>添加学生
+    </el-button>
     <el-select v-model="itemSelect" style="width: 120px">
       <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
                  :value="item.value">
@@ -17,12 +18,12 @@
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8">
-      <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column prop="name" label="姓名" width="100"/>
-      <el-table-column prop="grade" label="班级" width="100"/>
-      <el-table-column prop="number" label="学号"/>
-      <el-table-column prop="department" label="系别"/>
-      <el-table-column prop="major" label="专业"/>
+      <el-table-column label="序号" type="index" width="50px" align="center"/>
+      <el-table-column prop="name" label="姓名" align="center"/>
+      <el-table-column prop="grade" label="班级" align="center"/>
+      <el-table-column prop="number" label="学号" align="center"/>
+      <el-table-column prop="department" label="系别" align="center"/>
+      <el-table-column prop="major" label="专业" align="center"/>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="showDialog(1,scope.$index)">

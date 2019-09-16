@@ -7,7 +7,7 @@
                :limit="1" :file-list="file" :auto-upload="false" :on-success="success"
                :on-error="error" :on-progress="progress" :data="form">
       <br/>
-      <el-link type="primary" @click="downloadTemplate" class="download">
+      <el-link type="primary" @click="downloadTemplate" id="download">
         <i class="el-icon-download"></i>下载模板和使用说明
       </el-link>
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -98,7 +98,7 @@
     font-size: larger;
   }
 
-  .download {
+  #download {
     color: white;
   }
 </style>

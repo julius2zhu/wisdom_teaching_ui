@@ -20,12 +20,12 @@
               @selection-change="selectionChange"
               ref="table">
       <el-table-column type="selection"/>
-      <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column prop="name" label="姓名"/>
-      <el-table-column prop="grade" label="班级"/>
-      <el-table-column prop="number" label="学号"/>
-      <el-table-column prop="department" label="系别"/>
-      <el-table-column prop="major" label="专业"/>
+      <el-table-column label="序号" align="center" type="index" width="50"/>
+      <el-table-column prop="name" align="center" label="姓名"/>
+      <el-table-column prop="grade" align="center" label="班级"/>
+      <el-table-column prop="number" align="center" label="学号"/>
+      <el-table-column prop="department" align="center" label="系别"/>
+      <el-table-column prop="major" align="center" label="专业"/>
       <el-table-column label="操作" width="160" align="center">
         <template slot-scope="scope">
           <el-button class="el-icon-check" size="mini" @click="on(scope.$index,scope.row)">到

@@ -18,16 +18,16 @@
               element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8">
-      <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column prop="name" label="姓名" width="100"/>
-      <el-table-column prop="grade" label="班级" width="100"/>
-      <el-table-column prop="number" label="学号"/>
-      <el-table-column prop="department" label="系别"/>
-      <el-table-column prop="major" label="专业"/>
-      <el-table-column type="expand">
+      <el-table-column label="序号" type="index" width="50px" align="center"/>
+      <el-table-column prop="name" label="姓名" align="center"/>
+      <el-table-column prop="grade" label="班级" align="center"/>
+      <el-table-column prop="number" label="学号" align="center"/>
+      <el-table-column prop="department" label="系别" align="center"/>
+      <el-table-column prop="major" label="专业" align="center"/>
+      <el-table-column type="expand" align="center" label="详细" width="50px">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="学生姓名:" >
+            <el-form-item label="学生姓名:">
               <span>{{ props.row.name }}</span>
             </el-form-item>
             <el-form-item label="学生班级:">

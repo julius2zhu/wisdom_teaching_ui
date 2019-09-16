@@ -2,7 +2,8 @@
   <!--学生信息导出-->
   <div>
     <el-button plain @click="exportExcel">
-      <i class="el-icon-share"></i>导出excel表格</el-button>
+      <i class="el-icon-share"></i>导出excel表格
+    </el-button>
     <!--搜索条件中下拉框-->
     <el-select v-model="itemSelect" style="width: 120px">
       <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
@@ -22,12 +23,12 @@
               @select="selectionSingle"
               @select-all="selectAll">
       <el-table-column type="selection"/>
-      <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column prop="name" label="姓名"/>
-      <el-table-column prop="grade" label="班级"/>
-      <el-table-column prop="number" label="学号"/>
-      <el-table-column prop="department" label="系别"/>
-      <el-table-column prop="major" label="专业"/>
+      <el-table-column label="序号" type="index" align="center" width="50"/>
+      <el-table-column prop="name" label="姓名" align="center"/>
+      <el-table-column prop="grade" label="班级" align="center"/>
+      <el-table-column prop="number" label="学号" align="center"/>
+      <el-table-column prop="department" label="系别" align="center"/>
+      <el-table-column prop="major" label="专业" align="center"/>
     </el-table>
     <el-pagination background
                    @size-change="handleSizeChange"

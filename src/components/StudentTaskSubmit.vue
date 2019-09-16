@@ -5,7 +5,7 @@
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8">
-      <el-table-column label="序号" type="index" width="50"/>
+      <el-table-column align="center" label="序号" type="index" width="50"/>
       <el-table-column align="center" prop="homeWork.name" label="作业名称"/>
       <el-table-column align="center" prop="homeWork.describes" label="描述信息"/>
       <el-table-column align="center" prop="homeWork.teacherName" label="发布教师"/>

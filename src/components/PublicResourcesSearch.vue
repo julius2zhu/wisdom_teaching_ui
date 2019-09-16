@@ -14,12 +14,12 @@
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8)" class="tableClass">
-      <el-table-column label="序号" type="index" width="50"/>
+      <el-table-column align="center" label="序号" type="index" width="50"/>
       <el-table-column align="center" prop="name" label="资源名称"/>
       <el-table-column align="center" prop="describes" label="描述信息"/>
       <el-table-column align="center" prop="createDate" label="上传时间"/>
       <el-table-column align="center" prop="username" label="上传者"/>
-      <el-table-column type="expand" align="center">
+      <el-table-column type="expand" align="center" width="50px" label="附件">
         <template slot-scope="props">
           附件下载:
           <el-button circle icon="el-icon-link" @click="download(props.row.path)">

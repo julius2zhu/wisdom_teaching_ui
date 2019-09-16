@@ -4,18 +4,18 @@
   修改删除作业
   -->
   <div>
-    <el-button  plain @click="showDialog(0)">
+    <el-button plain @click="showDialog(0)">
       <i class="el-icon-plus"></i>发布作业
     </el-button>
     <el-table :data="tableData" stripe border max-height="500" height="450"
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8">
-      <el-table-column label="序号" type="index" width="50"/>
+      <el-table-column label="序号" type="index" align="center" width="50"/>
       <el-table-column align="center" prop="name" label="作业名称"/>
       <el-table-column align="center" prop="describes" label="描述信息"/>
       <el-table-column align="center" prop="createDate" label="发布时间"/>
-      <el-table-column type="expand" label="下载">
+      <el-table-column type="expand" label="下载" width="50px">
         <template slot-scope="props">
           附件下载:
           <el-button circle icon="el-icon-link" @click="download(props.row.path)">
@@ -24,7 +24,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini"  @click="column_edit(scope.$index)">
+          <el-button size="mini" @click="column_edit(scope.$index)">
             <i class="el-icon-edit-outline"></i>编辑
           </el-button>
           <el-button size="mini" type="danger" @click="column_delete(scope.$index)">
@@ -51,12 +51,12 @@
         <el-form-item label="作业描述:" prop="describes">
           <el-input v-model="form.describes"/>
         </el-form-item>
-        <el-form-item label="选择文件:" prop="file">
+        <el-form-item label="附件上传:" prop="file">
           <el-upload
             class="upload-demo" ref="upload" :action="url"
             :file-list="form.file" :limit="1" :data="form" :auto-upload="false"
             :on-success="success" :on-error="error">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button slot="trigger" class="el-icon-upload" size="small" plain>选取文件</el-button>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -111,7 +111,8 @@
           describes: [
             {required: true, message: '请输入作业描述信息', trigger: 'blur'},
             {min: 3, max: 100, message: '作业名称应在3-100个字符之间', trigger: 'blur'}
-          ]
+          ],
+          file: [{required: true, message: '请选择需要上传的文件', trigger: 'blur'}]
         }
       }
     },
@@ -243,7 +244,7 @@
       column_delete (index) {
         let id = this.tableData[index].id
         const vm = this
-        let url = this.url_request.ip_port_dev + '/issue_task_delete/'
+        let url = this.url_request.ip_port_dev + '/issue_task_delete'
         vm.myConfirm(null, null, function () {
           vm.netWorkRequest('get', url, {
             id: id

@@ -9,10 +9,10 @@
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8">
-      <el-table-column label="序号" type="index" width="50"/>
-      <el-table-column align="center" prop="name" label="姓名"/>
-      <el-table-column align="center" prop="username" label="用户账号"/>
-      <el-table-column align="center" prop="createDate" label="注册时间"/>
+      <el-table-column align="center" label="序号" type="index" width="50"/>
+      <el-table-column align="center" prop="name" sortable label="姓名"/>
+      <el-table-column align="center" prop="username" sortable label="用户账号"/>
+      <el-table-column align="center" prop="createDate" sortable label="注册时间"/>
       <el-table-column align="center" label="状态" width="80">
         <template slot-scope="props">
           <span v-if="props.row.state==='1'" style="color: green">

@@ -5,7 +5,7 @@
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(0, 0, 0, 0.8">
-      <el-table-column label="序号" type="index" width="50"/>
+      <el-table-column align="center" label="序号" type="index" width="50"/>
       <el-table-column align="center" prop="homeWork.name" label="作业名称"/>
       <el-table-column align="center" prop="teacherName" label="发布教师"/>
       <el-table-column align="center" label="提交状态">
@@ -18,7 +18,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column type="expand" align="center">
+      <el-table-column type="expand" align="center" width="50px" label="详细">
         <template slot-scope="props">
           <p>得分:{{ props.row.score }}</p>
           <p>教师评语:{{ props.row.remark }}</p>
