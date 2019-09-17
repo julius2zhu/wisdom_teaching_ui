@@ -21,6 +21,7 @@ import Thanks from '../components/Thanks'
 import PublicResourcesUpload from '../components/PublicResourcesUpload'
 import PublicResourcesSearch from '../components/PublicResourcesSearch'
 import OnlineExaminationAdd from '../components/OnlineExaminationAdd'
+import OnlineExaminationManage from '../components/OnlineExaminationManage'
 
 Vue.use(Router)
 export default new Router({
@@ -64,6 +65,10 @@ export default new Router({
         {
           path: 'onlineExaminationAdd',
           component: OnlineExaminationAdd
+        },
+        {
+          path: 'onlineExaminationManage',
+          component: OnlineExaminationManage
         },
         {
           path: 'alterPassWord',

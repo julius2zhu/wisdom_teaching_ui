@@ -333,7 +333,7 @@
     },
     mounted () {
       const vm = this
-      let url = vm.url_request.ip_port_dev + '/course_manage_check'
+      let url = vm.url_request.ip_port_dev + '/public_data_course_query'
       vm.netWorkRequest('post', url, {}, function (response) {
         vm.options = response.data
       })

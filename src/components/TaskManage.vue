@@ -58,6 +58,7 @@
             :on-success="success" :on-error="error">
             <el-button slot="trigger" class="el-icon-upload" size="small" plain>选取文件</el-button>
           </el-upload>
+          <p  class="toast">单次上传附件不能超过10MB</p>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -269,5 +270,9 @@
 </script>
 
 <style scoped>
-
+.toast{
+  color: yellow;
+  font-weight: bold;
+  font-size: 20px;
+}
 </style>

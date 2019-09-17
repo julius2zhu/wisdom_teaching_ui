@@ -13,18 +13,11 @@
       "unicode_decimal": 59105
     },
     {
-      "icon_id": "2089843",
-      "name": "课程",
-      "font_class": "kecheng",
-      "unicode": "e615",
-      "unicode_decimal": 58901
-    },
-    {
-      "icon_id": "2209506",
-      "name": "学生成绩登记",
-      "font_class": "xueshengchengjidengji",
-      "unicode": "e658",
-      "unicode_decimal": 58968
+      "icon_id": "1918840",
+      "name": "试卷管理",
+      "font_class": "shijuanguanli",
+      "unicode": "e618",
+      "unicode_decimal": 58904
     },
     {
       "icon_id": "2842147",
@@ -97,13 +90,6 @@
       "unicode_decimal": 58888
     },
     {
-      "icon_id": "5033850",
-      "name": "用户信息",
-      "font_class": "yonghuxinxi",
-      "unicode": "e62e",
-      "unicode_decimal": 58926
-    },
-    {
       "icon_id": "5054653",
       "name": "密码修改",
       "font_class": "mimaxiugai",
@@ -153,32 +139,11 @@
       "unicode_decimal": 59151
     },
     {
-      "icon_id": "6093916",
-      "name": "ic_补考成绩录入",
-      "font_class": "pingshichengjiluru",
-      "unicode": "e756",
-      "unicode_decimal": 59222
-    },
-    {
-      "icon_id": "6094093",
-      "name": "ic_重修成绩录入",
-      "font_class": "qimochengjiluru",
-      "unicode": "e7c2",
-      "unicode_decimal": 59330
-    },
-    {
       "icon_id": "6458378",
       "name": "试卷",
       "font_class": "shijuan",
       "unicode": "e612",
       "unicode_decimal": 58898
-    },
-    {
-      "icon_id": "6928088",
-      "name": "冻结",
-      "font_class": "dongjie",
-      "unicode": "eaa0",
-      "unicode_decimal": 60064
     },
     {
       "icon_id": "7103488",
@@ -202,13 +167,6 @@
       "unicode_decimal": 59348
     },
     {
-      "icon_id": "7511191",
-      "name": "成绩",
-      "font_class": "chengji",
-      "unicode": "e606",
-      "unicode_decimal": 58886
-    },
-    {
       "icon_id": "7526727",
       "name": "个人信息",
       "font_class": "gerenxinxi",
@@ -228,20 +186,6 @@
       "font_class": "chakan",
       "unicode": "e694",
       "unicode_decimal": 59028
-    },
-    {
-      "icon_id": "7692910",
-      "name": "冻结",
-      "font_class": "dongjie1",
-      "unicode": "e705",
-      "unicode_decimal": 59141
-    },
-    {
-      "icon_id": "8083851",
-      "name": "资料下载",
-      "font_class": "data-download",
-      "unicode": "e64e",
-      "unicode_decimal": 58958
     },
     {
       "icon_id": "8234258",
@@ -265,25 +209,11 @@
       "unicode_decimal": 58953
     },
     {
-      "icon_id": "9419745",
-      "name": "密码",
-      "font_class": "password",
-      "unicode": "e654",
-      "unicode_decimal": 58964
-    },
-    {
       "icon_id": "9472888",
       "name": "用户",
       "font_class": "user",
       "unicode": "e74d",
       "unicode_decimal": 59213
-    },
-    {
-      "icon_id": "9548077",
-      "name": "退出",
-      "font_class": "tuichu",
-      "unicode": "e620",
-      "unicode_decimal": 58912
     },
     {
       "icon_id": "9839873",

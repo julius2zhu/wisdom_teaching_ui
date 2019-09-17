@@ -46,14 +46,12 @@
             v-model="form.describes">
           </el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="附件上传:">
           <el-upload class="upload-demo" ref="upload" :action="url" :file-list="form.file"
                      :auto-upload="false" :limit="1"
                      :on-success="success" :on-error="error" :data="form">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <div style="color: yellow;font-size: large" slot="tip" class="el-upload__tip">
-              单次文件上传不能超过10MB
-            </div>
+            <el-button slot="trigger" class="el-icon-upload" size="small" plain>选取文件</el-button>
+            <p class="toast">单次上传附件不能超过10MB</p>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -229,5 +227,11 @@
 
   .tableClass {
     margin-top: 10px;
+  }
+
+  .toast {
+    color: yellow;
+    font-weight: bold;
+    font-size: 20px;
   }
 </style>

@@ -85,6 +85,12 @@
         </svg>
         <router-link to="/main/onlineExaminationAdd">在线试题添加</router-link>
       </el-menu-item>
+      <el-menu-item index="5-2">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-shijuanguanli"></use>
+        </svg>
+        <router-link to="/main/onlineExaminationManage">在线试题管理</router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="6" v-if="hasStudentRole">
       <template slot="title">
