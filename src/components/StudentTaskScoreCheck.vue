@@ -70,7 +70,18 @@
           vm.tableData = response.data
           vm.loading = false
         })
-      }
+      },
+      //counts被改变
+      handleSizeChange (val) {
+        this.count = val
+        this.search()
+      },
+      //当前页数被改变
+      handleCurrentChange (val) {
+        //将改变后的页数赋值给当前页
+        this.currentPage = val
+        this.search()
+      },
     },
     mounted () {
       this.reset()

@@ -170,36 +170,19 @@
         this.$refs.table.toggleRowSelection(row, true)
       },
       submit () {
-        let data = {}
-        //未考勤人id
-        let noOnlineIds = ''
-        this.selections.forEach(function (item) {
-          noOnlineIds += item.studentId + ','
+        const teacherName = sessionStorage.getItem('name')
+        const vm = this
+        //被选中的学生数据(设置为未考勤)
+        vm.selections.forEach((item, index) => {
+          vm.selections[index].online = 1
+          vm.selections[index].teacherName = teacherName
         })
-        //所有人的id
-        let wholeIds = ''
-        this.tableData.forEach(function (item) {
-          wholeIds += item.studentId + ','
-        })
-        data.what = 'insert'
-        data.ids = wholeIds
-        data.teacherName = sessionStorage.getItem('name')
         let url = this.url_request.ip_port_dev + '/online_checkName'
-        //执行插入操作
-        this.axios.get(url, {
-          params: data
-        }).then(reponse => {
-          data.what = 'update'
-          data.ids = noOnlineIds
-          this.axios.get(url, {
-            params: data
-          }).then(
-            this.$message('提交成功!')
-          ).catch(error => {
-            this.$message('提交失败!')
+        vm.netWorkRequest('post', url, vm.selections, function (response) {
+          vm.$message({
+            type: 'success',
+            message: response
           })
-        }).catch(error => {
-          this.$message('提交失败!')
         })
       },
       resetTable () {

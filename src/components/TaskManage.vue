@@ -112,8 +112,7 @@
           describes: [
             {required: true, message: '请输入作业描述信息', trigger: 'blur'},
             {min: 3, max: 100, message: '作业名称应在3-100个字符之间', trigger: 'blur'}
-          ],
-          file: [{required: true, message: '请选择需要上传的文件', trigger: 'blur'}]
+          ]
         }
       }
     },
