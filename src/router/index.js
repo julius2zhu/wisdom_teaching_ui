@@ -22,6 +22,7 @@ import PublicResourcesUpload from '../components/PublicResourcesUpload'
 import PublicResourcesSearch from '../components/PublicResourcesSearch'
 import OnlineExaminationAdd from '../components/OnlineExaminationAdd'
 import OnlineExaminationManage from '../components/OnlineExaminationManage'
+import CourseManage from '../components/CourseManage'
 
 Vue.use(Router)
 export default new Router({
@@ -77,6 +78,10 @@ export default new Router({
         {
           path: 'userManage',
           component: UserManage
+        },
+        {
+          path: 'courseManage',
+          component: CourseManage
         },
         {
           path: 'welcome',

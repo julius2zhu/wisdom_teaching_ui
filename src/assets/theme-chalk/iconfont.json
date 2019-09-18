@@ -20,11 +20,18 @@
       "unicode_decimal": 58904
     },
     {
-      "icon_id": "2842147",
-      "name": "资料库",
-      "font_class": "ziliaoku1",
-      "unicode": "e604",
-      "unicode_decimal": 58884
+      "icon_id": "2089843",
+      "name": "课程",
+      "font_class": "kecheng",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "3389696",
+      "name": "成绩查看",
+      "font_class": "chengjichakan",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
     },
     {
       "icon_id": "3442039",
@@ -46,27 +53,6 @@
       "font_class": "zuoye",
       "unicode": "e683",
       "unicode_decimal": 59011
-    },
-    {
-      "icon_id": "3893145",
-      "name": "安卓",
-      "font_class": "anzhuo",
-      "unicode": "e647",
-      "unicode_decimal": 58951
-    },
-    {
-      "icon_id": "4179898",
-      "name": "课堂",
-      "font_class": "ketang",
-      "unicode": "e660",
-      "unicode_decimal": 58976
-    },
-    {
-      "icon_id": "4380945",
-      "name": "学生信息",
-      "font_class": "xueshengxinxi",
-      "unicode": "e689",
-      "unicode_decimal": 59017
     },
     {
       "icon_id": "4580550",
@@ -132,6 +118,13 @@
       "unicode_decimal": 58986
     },
     {
+      "icon_id": "5890724",
+      "name": "发布-提交-提交版本",
+      "font_class": "tijiao",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
       "icon_id": "5925113",
       "name": "退出",
       "font_class": "tuichu1",
@@ -158,6 +151,13 @@
       "font_class": "kaoqinguanli-copy",
       "unicode": "e600",
       "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "7348374",
+      "name": "学生",
+      "font_class": "xueshengxinxi",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
     },
     {
       "icon_id": "7490994",
@@ -188,6 +188,13 @@
       "unicode_decimal": 59028
     },
     {
+      "icon_id": "8083851",
+      "name": "资料下载",
+      "font_class": "data-download",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
       "icon_id": "8234258",
       "name": "考试",
       "font_class": "kaoshi2",
@@ -209,18 +216,11 @@
       "unicode_decimal": 58953
     },
     {
-      "icon_id": "9472888",
-      "name": "用户",
-      "font_class": "user",
-      "unicode": "e74d",
-      "unicode_decimal": 59213
-    },
-    {
-      "icon_id": "9839873",
-      "name": "提交",
-      "font_class": "tijiao",
-      "unicode": "e6bd",
-      "unicode_decimal": 59069
+      "icon_id": "9791689",
+      "name": "课堂",
+      "font_class": "ketang",
+      "unicode": "e605",
+      "unicode_decimal": 58885
     },
     {
       "icon_id": "10335096",

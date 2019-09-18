@@ -211,14 +211,16 @@
           //数据信息
           vm.tableData = response.data
           vm.loading = false
-          console.log(vm.tableData)
         })
       }
     },
     mounted () {
       const vm = this
       let url = vm.url_request.ip_port_dev + '/public_data_course_query'
-      vm.netWorkRequest('post', url, {}, function (response) {
+      vm.netWorkRequest('post', url, {
+        currentPage: 1,
+        count: 500,
+      }, function (response) {
         vm.courses = response.data
       })
     }
