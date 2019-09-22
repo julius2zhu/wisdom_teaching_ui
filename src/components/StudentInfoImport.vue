@@ -33,7 +33,7 @@
         uploadUrl: '',
         dialogVisible: false,
         form: {
-          teacherName: sessionStorage.getItem('name')
+          userId: sessionStorage.getItem('id')
         }
       }
     },
@@ -56,7 +56,7 @@
         }
       },
       //上传中
-      progress (params) {
+      progress () {
         this.dialogVisible = true
       },
       //成功

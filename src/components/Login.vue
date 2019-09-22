@@ -93,9 +93,11 @@
                 let result = response.message
                 let role = response.role
                 let name = response.name
+                let id = response.id
                 if (result === vm.login_show.success) {
                   vm.$router.replace('/main')
                   //存储数据,窗口关闭会自动销毁,临时存储下
+                  sessionStorage.setItem('id', id)
                   sessionStorage.setItem('username', username)
                   sessionStorage.setItem('name', name)
                   sessionStorage.setItem('role', role)

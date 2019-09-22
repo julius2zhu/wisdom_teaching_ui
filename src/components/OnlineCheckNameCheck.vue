@@ -23,7 +23,8 @@
       <el-table-column width="150" label="详细信息" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="detail(scope.$index, scope.row)">
-            <i class="el-icon-zoom-in"></i>查看详细信息</el-button>
+            <i class="el-icon-zoom-in"></i>查看详细信息
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,6 +71,7 @@
         searchCondition: [
           {value: 'name', label: '学生姓名'},
           {value: 'number', label: '学生学号'},
+          {value: 'grade', label: '学生班级'},
           {value: 'department', label: '所在系部'},
           {value: 'major', label: '所学专业'},
         ],
@@ -93,12 +95,14 @@
         let condition = {
           currentPage: this.currentPage,
           count: vm.count,
-          teacherName: sessionStorage.getItem('name')
+          userId: sessionStorage.getItem('id')
         }
         if (item === 'name') {
           condition.name = key
         } else if (item === 'number') {
           condition.number = key
+        } else if (item === 'grade') {
+          condition.grade = key
         } else if (item === 'department') {
           condition.department = key
         } else {
@@ -122,7 +126,7 @@
         let url = this.url_request.ip_port_dev + '/student_check'
         const vm = this
         vm.netWorkRequest('post', url, {
-          teacherName: sessionStorage.getItem('name'),
+          userId: sessionStorage.getItem('id'),
           currentPage: 1,
           count: 100
         }, function (response) {
@@ -153,13 +157,12 @@
       //查看详细信息
       detail (index, row) {
         this.dialogVisible = true
-        let studentId = row.studentId
-        let url = this.url_request.ip_port_dev + '/online_check'
         const vm = this
-        vm.netWorkRequest('get', url, {
-          name: row.name,
-          studentId: studentId,
-          teacherName: sessionStorage.getItem('name')
+        let url = this.url_request.ip_port_dev + '/online_check'
+        // const vm = this
+        this.netWorkRequest('get', url, {
+          studentId: row.id,
+          userId: sessionStorage.getItem('id')
         }, function (response) {
           vm.onlineData = response
         })

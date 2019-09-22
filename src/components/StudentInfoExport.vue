@@ -10,7 +10,7 @@
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 180px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
@@ -66,6 +66,7 @@
         searchCondition: [
           {value: 'name', label: '学生姓名'},
           {value: 'number', label: '学生学号'},
+          {value: 'grade', label: '学生班级'},
           {value: 'department', label: '所在系部'},
           {value: 'major', label: '所学专业'},
         ],
@@ -92,13 +93,16 @@
         let condition = {
           currentPage: this.currentPage,
           count: this.count,
-          teacherName: sessionStorage.getItem('name')
+          userId: sessionStorage.getItem('id')
         }
         if (item === 'name') {
           condition.name = key
         } else if (item === 'number') {
           condition.number = key
-        } else if (item === 'department') {
+        } else if (item === 'grade') {
+          condition.grade = key
+        }
+        else if (item === 'department') {
           condition.department = key
         } else {
           condition.major = key
@@ -122,7 +126,7 @@
         this.searchKeys = ''
         let url = this.url_request.ip_port_dev + '/student_check'
         vm.netWorkRequest('post', url, {
-          teacherName: sessionStorage.getItem('name'),
+          userId: sessionStorage.getItem('id'),
           currentPage: 1,
           count: 100
         }, function (response) {
@@ -146,17 +150,18 @@
       },
       //导出excel数据操作
       exportExcel () {
-        let ids = ''
-        this.selections.forEach(item => {
-          ids += item.id + ','
-        })
-        if (ids.length === 0) {
+        //存取所有的id
+        const ids = []
+        if (this.selections.length === 0) {
           this.$message({
             message: '请至少选择一条数据!',
             type: 'warning'
           })
           return
         }
+        this.selections.forEach(item => {
+          ids.push(item.id)
+        })
         let url = this.url_request.ip_port_dev + '/student_export'
         //一个超链接就可以,不需要使用axios麻烦
         window.location.href = url + '?ids=' + ids

@@ -77,6 +77,7 @@
         searchCondition: [
           {value: 'name', label: '学生姓名'},
           {value: 'number', label: '学生学号'},
+          {value: 'grade', label: '学生班级'},
           {value: 'department', label: '所在系部'},
           {value: 'major', label: '所学专业'},
         ],
@@ -101,12 +102,14 @@
         let condition = {
           currentPage: vm.currentPage,
           count: vm.count,
-          teacherName: sessionStorage.getItem('name')
+          userId: sessionStorage.getItem('id')
         }
         if (item === 'name') {
           condition.name = key
         } else if (item === 'number') {
           condition.number = key
+        } else if (item === 'grade') {
+          condition.grade = key
         } else if (item === 'department') {
           condition.department = key
         } else {
@@ -130,7 +133,7 @@
         let url = this.url_request.ip_port_dev + '/student_check'
         const vm = this
         vm.netWorkRequest('post', url, {
-          teacherName: sessionStorage.getItem('name'),
+          userId: sessionStorage.getItem('id'),
           currentPage: 1,
           count: 100
         }, function (response) {
@@ -140,23 +143,6 @@
           vm.tableData = response.data
           vm.loading = false
         })
-      },
-      //导出excel数据操作
-      exportExcel () {
-        let ids = ''
-        this.selections.forEach(item => {
-          ids += item.id + ','
-        })
-        if (ids.length === 0) {
-          this.$message({
-            message: '请至少选择一条数据!',
-            type: 'warning'
-          })
-          return
-        }
-        let url = this.url_request.ip_port_dev + '/student_export'
-        //一个超链接就可以,不需要使用axios麻烦
-        window.location.href = url + '?ids=' + ids
       },
       //当选择项被改变时候触发
       selectionChange (selection) {
@@ -170,12 +156,12 @@
         this.$refs.table.toggleRowSelection(row, true)
       },
       submit () {
-        const teacherName = sessionStorage.getItem('name')
+        const userId = sessionStorage.getItem('id')
         const vm = this
         //被选中的学生数据(设置为未考勤)
         vm.selections.forEach((item, index) => {
           vm.selections[index].online = 1
-          vm.selections[index].teacherName = teacherName
+          vm.selections[index].userId = userId
         })
         let url = this.url_request.ip_port_dev + '/online_checkName'
         vm.netWorkRequest('post', url, vm.selections, function (response) {

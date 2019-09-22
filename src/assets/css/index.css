@@ -22,20 +22,20 @@
 .el-dialog__header {
   background-color: #D2B48C !important;
 }
-
 /*表单体*/
-.el-dialog__body {
+div.el-dialog__body {
   background-color: #D2B48C !important;
 }
 
 /*表单底部*/
 .el-dialog__footer {
   background-color: #D2B48C !important;
+  padding: 0 0 10px 0;
 }
 
 /*表单前面的label标签字体颜色*/
 .el-form-item__label {
-  color: 	#00FF7F !important;
+  color: #00FF7F !important;
   font-weight: bold;
 }
 
@@ -52,16 +52,22 @@
   text-align: center;
   color: white;
 }
+
 /*底部文字颜色*/
 .el-pagination__total {
   color: white;
 }
+
 /*底部文字颜色*/
 .el-pagination__jump {
   color: white;
   font-weight: bold;
 }
 
+/*将所有的文件上传设置为行内元素*/
+.upload-demo {
+  display: inline-block;
+}
 
 
 

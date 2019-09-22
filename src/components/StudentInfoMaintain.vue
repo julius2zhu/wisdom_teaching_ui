@@ -9,7 +9,7 @@
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 180px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
@@ -43,7 +43,7 @@
     </el-pagination>
     <!--弹出框嵌套一个表单-->
     <el-dialog :title="title" :visible.sync="dialogFormVisible"
-               :center="true" :close-on-click-modal="false" @open="open">
+                     :center="true" :close-on-click-modal="false" @open="open">
       <el-form :model="form" :rules="rules" :inline="true" ref="dialog_form">
         <el-form-item label="学生姓名:" prop="name">
           <el-input v-model="form.name"></el-input>
@@ -56,7 +56,7 @@
           <el-input v-model="form.grade"/>
         </el-form-item>
         <el-form-item label="学生学号:" prop="number">
-          <el-input v-model="form.number"/>
+          <el-input v-model.number="form.number" @change="numberChange"/>
         </el-form-item>
         <el-form-item label="所在系别:" prop="department">
           <el-input v-model="form.department"/>
@@ -103,6 +103,7 @@
         searchCondition: [
           {value: 'name', label: '学生姓名'},
           {value: 'number', label: '学生学号'},
+          {value: 'grade', label: '学生班级'},
           {value: 'department', label: '所在系部'},
           {value: 'major', label: '所学专业'},
         ],
@@ -133,8 +134,8 @@
             {min: 6, max: 20, message: '班级名应在6-20个字符之间'}
           ],
           number: [
-            {required: true, message: '请输入学生学号'},
-            {min: 6, max: 11, message: '学生学号应在6-11个字符之间'}
+            {required: true, message: '学号不能为空'},
+            {type: 'number', message: '学号必须为数字值'}
           ],
           department: [
             {required: true, message: '请输入学生所在系别'},
@@ -210,8 +211,8 @@
         this.$refs.dialog_form.validate((validate) => {
           if (validate) {
             let id = this.form.id
-            //添加人信息
-            this.form.teacherName = sessionStorage.getItem('name')
+            //添加人id
+            this.form.userId = sessionStorage.getItem('id')
             let url = this.url_request.ip_port_dev
             //判断是新增还是编辑
             if (id < 0) {
@@ -236,12 +237,14 @@
         let condition = {
           currentPage: this.currentPage,
           count: this.count,
-          teacherName: sessionStorage.getItem('name')
+          userId: sessionStorage.getItem('id')
         }
         if (item === 'name') {
           condition.name = key
         } else if (item === 'number') {
           condition.number = key
+        } else if (item === 'grade') {
+          condition.grade = key
         } else if (item === 'department') {
           condition.department = key
         } else {
@@ -266,7 +269,7 @@
         this.searchKeys = ''
         let url = this.url_request.ip_port_dev + '/student_check'
         vm.netWorkRequest('post', url, {
-          teacherName: sessionStorage.getItem('name'),
+          userId: sessionStorage.getItem('id'),
           currentPage: 1,
           count: 100
         }, function (response) {
@@ -307,6 +310,21 @@
         //将改变后的页数赋值给当前页
         this.currentPage = val
         this.searchInfo()
+      },
+      //学生学号值被改变,从数据库查询该生信息
+      numberChange (value) {
+        //是新增且是数值
+        if ((this.title === '新增学生信息') && (!isNaN(value))) {
+          const vm = this
+          const url = vm.url_request.ip_port_dev + '/public_data_student_info_query'
+          vm.netWorkRequest('post', url, {number: value}, function (response) {
+            //返回值不为空才填充表单
+            if (response !== '') {
+              vm.form = response
+              vm.form.id = -1
+            }
+          })
+        }
       }
     },
     mounted () {

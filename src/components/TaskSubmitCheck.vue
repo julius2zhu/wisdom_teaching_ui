@@ -131,7 +131,7 @@
         const vm = this
         const url = vm.url_request.ip_port_dev + '/student_submit_task_read'
         vm.netWorkRequest('post', url, {
-          teacherName: sessionStorage.getItem('name'),
+          userId: sessionStorage.getItem('id'),
           currentPage: 1,
           count: 100
         }, function (response) {

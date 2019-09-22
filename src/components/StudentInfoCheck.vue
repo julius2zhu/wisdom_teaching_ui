@@ -8,7 +8,7 @@
                  :value="item.value">
       </el-option>
     </el-select>
-    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
+    <el-input placeholder="输入关键字进行筛选" style="width: 180px"
               v-model="searchKeys" clearable/>
     <el-button icon="el-icon-search" plain @click="search">查询</el-button>
     <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
@@ -89,6 +89,7 @@
         searchCondition: [
           {value: 'name', label: '学生姓名'},
           {value: 'number', label: '学生学号'},
+          {value: 'grade', label: '学生班级'},
           {value: 'department', label: '所在系部'},
           {value: 'major', label: '所学专业'},
         ],
@@ -114,13 +115,16 @@
         let condition = {
           currentPage: this.currentPage,
           count: vm.count,
-          teacherName: sessionStorage.getItem('name')
+          userId: sessionStorage.getItem('id')
         }
         if (item === 'name') {
           condition.name = key
         } else if (item === 'number') {
           condition.number = key
-        } else if (item === 'department') {
+        } else if (item === 'grade') {
+          condition.grade = key
+        }
+        else if (item === 'department') {
           condition.department = key
         } else {
           condition.major = key
@@ -145,7 +149,7 @@
         let url = this.url_request.ip_port_dev + '/student_check'
         const vm = this
         vm.netWorkRequest('post', url, {
-          teacherName: sessionStorage.getItem('name'),
+          userId: sessionStorage.getItem('id'),
           currentPage: 1,
           count: 100
         }, function (response) {
