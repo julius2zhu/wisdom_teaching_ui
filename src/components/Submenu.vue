@@ -197,6 +197,12 @@
         </svg>
         <router-link to="/main/alterPassWord">个人密码修改</router-link>
       </el-menu-item>
+      <el-menu-item index="11-1">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xinxibiangeng"></use>
+        </svg>
+        <router-link to="/main/personInfoAlter">个人信息完善</router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="12" v-if="hasPublicRole">
       <template slot="title">
@@ -204,7 +210,6 @@
           <use xlink:href="#icon-xitong"></use>
         </svg>
         <span class="sub-item">关于平台系统</span>
-
       </template>
       <el-menu-item index="12-1">
         <svg class="icon" aria-hidden="true">

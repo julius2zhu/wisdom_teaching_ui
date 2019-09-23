@@ -3,6 +3,14 @@
   <div>
     <div class="header">
       <el-button plain class="el-icon-user-solid" @click="addUser">添加用户</el-button>
+      <el-select v-model="itemSelect" style="width: 120px">
+        <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
+                   :value="item.value">
+        </el-option>
+      </el-select>
+      <el-input v-model="searchKeys" placeholder="请输入用户姓名或账号" style="width: 200px"></el-input>
+      <el-button icon="el-icon-search" plain @click="search">查询</el-button>
+      <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
     </div>
     <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
     <el-table :data="tableData" stripe border max-height="500" height="450"
@@ -89,8 +97,7 @@
         title: '新增用户',
         searchCondition: [
           {value: 'name', label: '用户姓名'},
-          {value: 'username', label: '用户账号'},
-          {value: 'state', label: '用户状态'},
+          {value: 'username', label: '用户账号'}
         ],
         dialogFormVisible: false,
         form: {
@@ -194,25 +201,34 @@
       //搜索信息
       search () {
         const vm = this
-        let url = vm.url_request.ip_port_dev + '/user_manage_query'
-        vm.netWorkRequest('post', url, {
+        vm.loading = true
+        const condition = {
           currentPage: vm.currentPage,
           count: vm.count
-        }, function (response) {
-          //获取数据部分,json数组对象
-          vm.tableData = response.data
-          //获取分页信息,json对象
-          let pageInfo = response.pageInfo
-          //设置条数和总页数
-          vm.totalCount = pageInfo.totalCount
-          vm.totalPage = pageInfo.totalPage
-          vm.loading = false
-        })
+        }
+        if (vm.itemSelect === 'name') {
+          condition.name = vm.searchKeys
+        } else {
+          condition.username = vm.searchKeys
+        }
+        let url = vm.url_request.ip_port_dev + '/user_manage_query'
+        vm.netWorkRequest('post', url, condition, function (response) {
+            //获取数据部分,json数组对象
+            vm.tableData = response.data
+            //获取分页信息,json对象
+            let pageInfo = response.pageInfo
+            //设置条数和总页数
+            vm.totalCount = pageInfo.totalCount
+            vm.totalPage = pageInfo.totalPage
+            vm.loading = false
+          }
+        )
       },
       //重置信息
       reset () {
         const vm = this
         let url = vm.url_request.ip_port_dev + '/user_manage_query'
+        vm.currentPage = 1
         vm.netWorkRequest('post', url, {
           currentPage: 1,
           count: 100
@@ -226,7 +242,8 @@
           vm.totalPage = pageInfo.totalPage
           vm.loading = false
         })
-      },
+      }
+      ,
       ok () {
         const vm = this
         const url = vm.url_request.ip_port_dev + '/user_manage_addOrUpdate'
@@ -239,7 +256,8 @@
             })
           }
         })
-      },
+      }
+      ,
       //用户名输入框内容改变就发到后台数据库查询是否存在,提升用户体验
       usernameChange (value) {
         const vm = this

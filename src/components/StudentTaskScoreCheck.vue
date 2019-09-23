@@ -7,7 +7,7 @@
               element-loading-background="rgba(0, 0, 0, 0.8">
       <el-table-column align="center" label="序号" type="index" width="50"/>
       <el-table-column align="center" prop="homeWork.name" label="作业名称"/>
-      <el-table-column align="center" prop="teacherName" label="发布教师"/>
+      <el-table-column align="center" prop="user.name" label="发布教师"/>
       <el-table-column align="center" label="提交状态">
         <template slot-scope="props">
           <span style="color:red;" v-if="props.row.submitState==='0'">

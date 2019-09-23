@@ -6,6 +6,10 @@
       <el-input v-model="form.username" clearable
                 @change="usernameChange" placeholder="请输入用户账号"></el-input>
     </el-form-item>
+    <el-form-item label="学生学号:" prop="number">
+      <el-input v-model="form.number" clearable
+                placeholder="请输入学号"></el-input>
+    </el-form-item>
     <el-form-item label="用户密码:" prop="password">
       <el-input v-model="form.password" show-password
                 @keyup.enter.native="login" placeholder="请输入用户密码"></el-input>
@@ -37,6 +41,7 @@
           password: null,
           again: null,
           name: null,
+          number: null
         },
         rules: {
           username: [
@@ -46,6 +51,10 @@
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'},
             {min: 6, max: 20, message: '密码应在6-20个字符之间', trigger: 'blur'}
+          ],
+          number: [
+            {required: true, message: '请输入学号', trigger: 'blur'},
+            {min: 6, max: 11, message: '学号应在6-11个字符之间', trigger: 'blur'}
           ],
           again: [
             {required: true, message: '请再次输入密码', trigger: 'blur'},
@@ -85,11 +94,7 @@
               return false
             }
             //进行注册
-            vm.netWorkRequest('post', url, {
-              name: vm.form.name,
-              username: vm.form.username,
-              password: password
-            }, function (response) {
+            vm.netWorkRequest('post', url, vm.form, function (response) {
               vm.$message(response)
             })
           }

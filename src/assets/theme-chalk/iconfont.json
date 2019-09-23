@@ -27,6 +27,13 @@
       "unicode_decimal": 58901
     },
     {
+      "icon_id": "3040356",
+      "name": "密码修改",
+      "font_class": "mimaxiugai",
+      "unicode": "e6d1",
+      "unicode_decimal": 59089
+    },
+    {
       "icon_id": "3389696",
       "name": "成绩查看",
       "font_class": "chengjichakan",
@@ -74,13 +81,6 @@
       "font_class": "xueshengzuoye",
       "unicode": "e608",
       "unicode_decimal": 58888
-    },
-    {
-      "icon_id": "5054653",
-      "name": "密码修改",
-      "font_class": "mimaxiugai",
-      "unicode": "e601",
-      "unicode_decimal": 58881
     },
     {
       "icon_id": "5107730",
@@ -188,13 +188,6 @@
       "unicode_decimal": 59028
     },
     {
-      "icon_id": "8083851",
-      "name": "资料下载",
-      "font_class": "data-download",
-      "unicode": "e64e",
-      "unicode_decimal": 58958
-    },
-    {
       "icon_id": "8234258",
       "name": "考试",
       "font_class": "kaoshi2",
@@ -225,7 +218,7 @@
     {
       "icon_id": "10335096",
       "name": "项目信息变更",
-      "font_class": "xiangmuxinxibiangeng",
+      "font_class": "xinxibiangeng",
       "unicode": "e6ee",
       "unicode_decimal": 59118
     }

@@ -67,12 +67,6 @@
         <el-form-item label="学生班主任:" prop="classTeacher">
           <el-input v-model="form.classTeacher"/>
         </el-form-item>
-        <el-form-item>
-          <span class="toast">
-            提示：<br/>
-            新添加学生的账号和密码默认为学号,请提醒学生及时修改自己的密码。
-          </span>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -341,10 +335,5 @@
   .el-table {
     width: 100%;
     margin-top: 10px
-  }
-
-  .toast {
-    color: red;
-    font-size: large;
   }
 </style>

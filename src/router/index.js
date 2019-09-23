@@ -24,6 +24,7 @@ import OnlineExaminationAdd from '../components/OnlineExaminationAdd'
 import OnlineExaminationManage from '../components/OnlineExaminationManage'
 import CourseManage from '../components/CourseManage'
 import OnlineExamination from '../components/OnlineExamination'
+import PersonInfoAlter from '../components/PersonInfoAlter'
 
 Vue.use(Router)
 export default new Router({
@@ -79,6 +80,10 @@ export default new Router({
         {
           path: 'alterPassWord',
           component: AlterPassWord
+        },
+        {
+          path: 'personInfoAlter',
+          component: PersonInfoAlter
         },
         {
           path: 'userManage',
