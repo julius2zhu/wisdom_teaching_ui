@@ -37,12 +37,10 @@ export default {
         }).catch(error => {
           this.$message({
             title: '提示',
-            message: '系统出错,稍后再试',
+            message: error,
             type: 'error',
             center: true
           })
-        }).finally(() => {
-          return false
         })
       }
     }

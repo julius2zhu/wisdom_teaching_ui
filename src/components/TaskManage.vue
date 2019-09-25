@@ -66,7 +66,7 @@
           <span class="toast">单次上传附件不能超过10MB </span>
         </el-form-item>
         <span v-if="title==='新增作业信息'">
-               <el-form-item label="选择学生:">
+              <p style="margin-left: 30px ;color: #00FF7F;font-weight: bold;">选择学生:</p>
           <!--搜索条件中下拉框-->
           <el-select v-model="itemSelect" style="width: 120px">
             <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
@@ -77,7 +77,7 @@
                     v-model="searchKeys" clearable/>
           <el-button icon="el-icon-search" plain @click="searchInfo">查询</el-button>
           <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
-                 <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
+          <!--表格主体内容部分 设置max-height需要设置height 否则不起作用-->
           <el-table :data="innerTableData" stripe border max-height="300" height="280"
                     v-loading="loading"
                     element-loading-text="拼命加载中"
@@ -99,7 +99,6 @@
                          layout="total, sizes, prev, pager, next, jumper"
                          :total="innerTotalCount">
           </el-pagination>
-        </el-form-item>
         </span>
       </el-form>
       <div slot="footer" class="dialog-footer">
