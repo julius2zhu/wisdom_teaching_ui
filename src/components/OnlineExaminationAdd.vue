@@ -10,7 +10,6 @@
         :value="item.value">
       </el-option>
     </el-select>
-    <el-button plain :disabled="addBtn" @click="addNameAndDescribes=true">添加试题</el-button>
     <!--显示课程的相关信息-->
     <div style="color: white;">
       <p>课程名称:{{course.label}}</p>
@@ -19,11 +18,29 @@
       <p>创建时间:{{course.createDate}}</p>
       <p>更新时间:{{course.updateDate}}</p>
       <p>创建者姓名:{{course.createName}}</p>
-      <el-button plain :disabled="singleBtn" @click="addSingle=true">单选题</el-button>
-      <el-button plain :disabled="multipleBtn" @click="addMultiple=true">多选题</el-button>
-      <el-button plain :disabled="simpleAnswerBtn" @click="addSimpleAnswer=true">简答题</el-button>
+      <p>选择文件之前请先选择课程信息</p>
     </div>
-
+    <el-upload class="upload-class" ref="upload" :action="uploadUrl"
+               :on-change="beforeAvatarUpload" :limit="1" :file-list="file"
+               :auto-upload="false" :on-success="success" :disabled="isSelectFile"
+               :on-error="error" :on-progress="progress" :data="form">
+      <br/>
+      <el-link type="primary" @click="downloadTemplate" class="download">
+        <i class="el-icon-download"></i>下载模板和使用说明
+      </el-link>
+      <el-button slot="trigger" size="small" type="primary">选取文件
+      </el-button>
+      <br/>
+      <el-button style="margin: 10px 10px;" size="small" plain @click="submitUpload">
+        <i class="el-icon-upload el-icon--right"></i>上传到服务器
+      </el-button>
+      <div slot="tip" class="download">只能上传docx文件</div>
+    </el-upload>
+    <!--弹窗-->
+    <el-dialog
+      title="提示" :visible.sync="dialogVisible" width="20%" center>
+      <span>数据正在导入中,请勿关闭浏览器或者断开网络...</span>
+    </el-dialog>
     <!--首次添加试题表单-->
     <el-dialog title="添加试题" :visible.sync="addNameAndDescribes" center>
       <el-form ref="addNameAndDescribes_form" :model="formNameAndDescribes" :rules="addNameAndDescribesRules">
@@ -162,15 +179,18 @@
     name: 'CoursesManage',
     data () {
       return {
+        file: [],
+        uploadUrl: '',
+        dialogVisible: false,
+        isSelectFile: true,//是否允许选择文件
+        form: {
+          courseId: null,
+          userId: sessionStorage.getItem('id')
+        },
         //课程信息
         options: [],
         //选择课程的值
         value: null,
-        //添加试卷按钮,按钮控制
-        addBtn: true,
-        singleBtn: true,
-        multipleBtn: true,
-        simpleAnswerBtn: true,
         //首次添加试题名称和描述信息,表单显示
         addNameAndDescribes: false,
         //添加单选
@@ -247,88 +267,59 @@
       //选择框内容被改变
       change (value) {
         const vm = this
-        //用户重新选择课程信息,禁用相关按钮
-        vm.singleBtn = true
-        vm.multipleBtn = true
-        vm.simpleAnswerBtn = true
         const options = vm.options
         //遍历数组设置相关数据
         options.forEach((item, index) => {
           if (item.value === value) {
             const data = options[index]
             vm.course = data
-            vm.addBtn = false
           }
         })
+        vm.isSelectFile = false
       },
       //首次添加试题信息和描述信息
       addNameAndDescribesMethod () {
-        //获取选择的课程编号
-        const vm = this
-        const courseId = vm.course.value
-        vm.formNameAndDescribes.courseId = courseId
-        vm.formNameAndDescribes.createName = sessionStorage.getItem('name')
-        const url = vm.url_request.ip_port_dev + '/examination_manage_add'
-        this.$refs.addNameAndDescribes_form.validate(valid => {
-          if (valid) {
-            vm.netWorkRequest('post', url, vm.formNameAndDescribes, function (response) {
-              //获取返回的试卷id
-              if (response > 0) {
-                vm.formNameAndDescribes.name = ''
-                vm.formNameAndDescribes.describes = ''
-                //设置全局供使用
-                vm.examinationId = response
-                //关闭对话框
-                vm.addNameAndDescribes = false
-                //启用禁用按钮
-                vm.singleBtn = false
-                vm.multipleBtn = false
-                vm.simpleAnswerBtn = false
-              }
-            })
-          }
-        })
+
       },
-      /**
-       * 添加单选/多选/简答
-       * @param content 内容
-       * @param questionType 问题类型0单选1多选2简答
-       */
       submit (content, questionType) {
-        const vm = this
-        content.questionType = questionType
-        content.examinationId = vm.examinationId
-        const url = vm.url_request.ip_port_dev + '/examination_manage_addRecord'
-        vm.netWorkRequest('post', url, content, function (response) {
-          vm.$message({
-            type: 'success',
-            message: response
-          })
-          //清空下表单
-          if (questionType === 1) {
-            vm.formSingle.question = ''
-            vm.formSingle.selectA = ''
-            vm.formSingle.selectB = ''
-            vm.formSingle.selectC = ''
-            vm.formSingle.selectD = ''
-            vm.formSingle.correct = ''
-            vm.formSingle.analyze = ''
-          } else if (questionType === 2) {
-            vm.formMultiple.question = ''
-            vm.formMultiple.selectA = ''
-            vm.formMultiple.selectB = ''
-            vm.formMultiple.selectC = ''
-            vm.formMultiple.selectD = ''
-            vm.formMultiple.selectE = ''
-            vm.formMultiple.selectF = ''
-            vm.formMultiple.selectG = ''
-            vm.formMultiple.correct = ''
-            vm.formMultiple.analyze = ''
-          } else {
-            vm.formSimpleAnswer.question = ''
-            vm.formSimpleAnswer.analyze = ''
-          }
+      },
+      downloadTemplate () {
+        window.location.href = this.url_request.ip_port_dev
+          + '/public_data_resources_download?id=1'
+      },
+      submitUpload () {
+        this.$refs.upload.submit()
+      },
+      beforeAvatarUpload (file) {
+        this.uploadUrl = this.url_request.ip_port_dev + '/examination_import'
+        const name = file.name
+        const index = name.lastIndexOf('.')
+        const suffix = name.slice(index + 1)
+        if (!(suffix === 'docx')) {
+          this.$message.error('上传文件只能是 docx 格式!')
+          this.file = []
+        }
+        this.form.courseId = this.value
+      },
+      //上传中
+      progress () {
+        this.dialogVisible = true
+      },
+      //成功
+      success (params) {
+        this.dialogVisible = false
+        this.$message({
+          showClose: true,
+          message: '数据导入成功!',
+          type: 'success'
         })
+        this.file = []
+      },
+      //失败
+      error (params) {
+        this.dialogVisible = false
+        this.$message.error('数据导入出错,请稍后再试!')
+        this.file = []
       }
     },
     mounted () {
@@ -348,5 +339,9 @@
   .name {
     color: white;
     font-size: 25px;
+  }
+
+  .download {
+    color: white;
   }
 </style>

@@ -190,7 +190,7 @@
       },
       innerHandleCurrentChange (val) {
         // 将改变后的页数赋值给当前页
-        this.currentPage = val
+        this.innerCurrentPage = val
         this.searchInfo()
       },
       //初始化学生数据
@@ -249,6 +249,7 @@
       },
       //重置学生信息查询条件
       reset () {
+        this.innerCurrentPage = 1
         const vm = this
         this.itemSelect = 'name'
         this.searchKeys = ''

@@ -188,6 +188,13 @@
       "unicode_decimal": 59028
     },
     {
+      "icon_id": "7964507",
+      "name": "试卷管理",
+      "font_class": "shijuanguanli1",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
       "icon_id": "8234258",
       "name": "考试",
       "font_class": "kaoshi2",
