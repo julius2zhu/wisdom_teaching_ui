@@ -225,7 +225,7 @@
       </el-menu-item>
       <el-menu-item index="12-2">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-mingxie-"></use>
+          <use xlink:href="#icon-icon04"></use>
         </svg>
         <router-link to="/main/thanks">
           特别鸣谢

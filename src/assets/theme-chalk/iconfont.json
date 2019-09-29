@@ -6,6 +6,13 @@
   "description": "智慧教学",
   "glyphs": [
     {
+      "icon_id": "1164033",
+      "name": "特别鸣谢",
+      "font_class": "icon04",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
       "icon_id": "1529804",
       "name": "设置关于软件",
       "font_class": "shezhiguanyuruanjian",
@@ -46,13 +53,6 @@
       "font_class": "xitongxinxi-daochu",
       "unicode": "e62c",
       "unicode_decimal": 58924
-    },
-    {
-      "icon_id": "3473332",
-      "name": "鸣谢-01",
-      "font_class": "mingxie-",
-      "unicode": "e6a6",
-      "unicode_decimal": 59046
     },
     {
       "icon_id": "3854368",

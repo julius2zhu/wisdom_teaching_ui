@@ -25,7 +25,7 @@
                :auto-upload="false" :on-success="success" :disabled="isSelectFile"
                :on-error="error" :on-progress="progress" :data="form">
       <br/>
-      <el-link type="primary" @click="downloadTemplate" class="download">
+      <el-link type="primary" @click="downloadTemplate" id="download">
         <i class="el-icon-download"></i>下载模板和使用说明
       </el-link>
       <el-button slot="trigger" size="small" type="primary">选取文件
@@ -285,7 +285,7 @@
       },
       downloadTemplate () {
         window.location.href = this.url_request.ip_port_dev
-          + '/public_data_resources_download?id=1'
+          + '/public_data_resources_download?id=2'
       },
       submitUpload () {
         this.$refs.upload.submit()
@@ -342,6 +342,10 @@
   }
 
   .download {
+    color: white;
+  }
+/*使用class选择器不起作用*/
+  #download {
     color: white;
   }
 </style>
