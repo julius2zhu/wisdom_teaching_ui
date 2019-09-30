@@ -20,7 +20,6 @@ import AboutSystem from '../components/AboutSystem'
 import Thanks from '../components/Thanks'
 import PublicResourcesUpload from '../components/PublicResourcesUpload'
 import PublicResourcesSearch from '../components/PublicResourcesSearch'
-import OnlineExaminationAdd from '../components/OnlineExaminationAdd'
 import OnlineExaminationManage from '../components/OnlineExaminationManage'
 import CourseManage from '../components/CourseManage'
 import OnlineExamination from '../components/OnlineExamination'
@@ -64,10 +63,6 @@ export default new Router({
         {
           path: 'onlineCheckNameCheck',
           component: OnlineCheckNameCheck
-        },
-        {
-          path: 'onlineExaminationAdd',
-          component: OnlineExaminationAdd
         },
         {
           path: 'onlineExaminationManage',

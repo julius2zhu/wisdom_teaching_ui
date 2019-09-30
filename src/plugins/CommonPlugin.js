@@ -70,5 +70,26 @@ export default {
         })
       })
     }
+    /**
+     * 弹出一个单行输入框
+     * @param title  标题
+     * @param toast 提示信息
+     * @param fn    回调函数
+     */
+    Vue.prototype.myPrompt = function (title, toast, fn) {
+      this.$prompt(toast, title, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        // inputErrorMessage: '邮箱格式不正确'
+      }).then(({value}) => {
+        fn(value)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
+    }
   }
 }
