@@ -51,10 +51,10 @@
                :center="true" :close-on-click-modal="false">
       <el-form :model="form" :rules="rules" ref="dialog_form" label-width="100px">
         <el-form-item label="作业名称:" prop="name">
-          <el-input v-model="form.name"/>
+          <el-input placeholder="请输入作业名称" v-model="form.name"/>
         </el-form-item>
         <el-form-item label="作业描述:" prop="describes">
-          <el-input v-model="form.describes"/>
+          <el-input placeholder="请输入作业描述" v-model="form.describes"/>
         </el-form-item>
         <el-form-item label="附件上传:" prop="file">
           <el-upload
@@ -162,12 +162,12 @@
         title: '新增作业信息',
         rules: {
           name: [
-            {required: true, message: '请输入作业名称', trigger: 'blur'},
+            {required: true, message: '作业名称不能为空', trigger: 'blur'},
             {min: 6, max: 20, message: '作业名称应在6-20个字符之间', trigger: 'blur'}
           ],
           describes: [
-            {required: true, message: '请输入作业描述信息', trigger: 'blur'},
-            {min: 3, max: 100, message: '作业名称应在3-100个字符之间', trigger: 'blur'}
+            {required: true, message: '作业描述信息不能为空', trigger: 'blur'},
+            {min: 3, max: 100, message: '作业描述应在3-100个字符之间', trigger: 'blur'}
           ]
         }
       }
@@ -283,6 +283,10 @@
        * @param index 数据下标,编辑时候用到
        */
       showDialog (what, index) {
+        //bug----重置表单信息
+        this.$nextTick(() => {
+          this.$refs.dialog_form.resetFields()
+        })
         if (what === 0) {
           //显示学生数据
           this.initStudentInfo()

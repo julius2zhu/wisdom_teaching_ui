@@ -15,40 +15,14 @@
       <el-form-item>
         <el-button type="primary" @click="login">立即登录</el-button>
         <el-button @click="reset">重置表单</el-button>
-        <el-popover placement="top" width="160" v-model="visible">
-          <p class="toast">平台提供验证信息自助找回以及人工协助找回密码</p>
-          <div style="text-align: right; margin: 0">
-            <el-button size="mini" type="text" @click="ownRetrieve">自助找回</el-button>
-            <el-button type="primary" size="mini" @click="personRetrieve">人工找回</el-button>
-          </div>
-          <el-button slot="reference">忘记密码</el-button>
-        </el-popover>
+        <el-tooltip class="item" effect="dark" content="请联系管理员进行找回" placement="top-start">
+          <el-button>忘记密码</el-button>
+        </el-tooltip>
       </el-form-item>
       <el-form-item>
         <router-link class="register" to="/register">新用户注册</router-link>
       </el-form-item>
     </el-form>
-    <!--弹窗找回密码-->
-    <el-dialog title="找回密码" :visible.sync="dialogFormVisible">
-      <el-form :model="info_form">
-        <el-form-item label="用户账号" label-width="100px">
-          <el-input v-model="info_form.username" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="预留手机号" label-width="100px">
-          <el-input v-model="info_form.mobile" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="学生证号:" label-width="100px">
-          <el-input v-model="info_form.number" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="邮箱:" label-width="100px">
-          <el-input v-model="info_form.email" autocomplete="off"/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 <script>

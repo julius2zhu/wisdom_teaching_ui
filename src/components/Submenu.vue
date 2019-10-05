@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-openeds="['6','7','8','9','10']">
+  <el-menu :default-openeds="['1','6','7','8','9','10']">
     <el-submenu index="1" v-if="hasTeacherRole">
       <template slot="title">
         <svg class="icon" aria-hidden="true">

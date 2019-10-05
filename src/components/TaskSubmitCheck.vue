@@ -1,6 +1,16 @@
 <template>
   <!--教师查看学生提交作业情况,并可以下载打分和给评语-->
   <div>
+    <!--搜索条件中下拉框-->
+    <el-select v-model="itemSelect" style="width: 120px">
+      <el-option v-for="item in searchCondition" :key="item.value" :label="item.label"
+                 :value="item.value">
+      </el-option>
+    </el-select>
+    <el-input placeholder="输入关键字进行筛选" style="width: 200px"
+              v-model="searchKeys" clearable/>
+    <el-button icon="el-icon-search" plain @click="search">查询</el-button>
+    <el-button icon="el-icon-refresh" plain @click="reset">重置</el-button>
     <el-table :data="tableData" stripe border max-height="500" height="450"
               v-loading="loading" element-loading-text="拼命加载中"
               element-loading-spinner="el-icon-loading"
@@ -56,7 +66,6 @@
         </el-form-item>
         <el-form-item label="打分:" :label-width="formLabelWidth">
           <el-input-number v-model="form.score" :precision="2" :step="0.1" :max="100">
-
           </el-input-number>
         </el-form-item>
         <el-form-item label="评语:" :label-width="formLabelWidth">
@@ -80,6 +89,13 @@
     name: 'TaskSubmitCheck',
     data () {
       return {
+        itemSelect: 'name',
+        searchKeys: '',
+        searchCondition: [
+          {value: 'name', label: '学生姓名'},
+          {value: 'number', label: '学生学号'},
+          {value: 'grade', label: '学生班级'}
+        ],
         loading: true,
         tableData: [],
         //当前页
@@ -92,9 +108,6 @@
         count: 100,
         //总条数
         totalCount: 1,
-        //搜索下拉框选项
-        itemSelect: 'name',
-        searchKeys: '',
         url: this.url_request.ip_port_dev + '/issue_task',
         dialogFormVisible: false,
         formLabelWidth: '150px',
@@ -111,12 +124,22 @@
       //搜索信息
       search () {
         const vm = this
+        let item = this.itemSelect
+        let key = this.searchKeys.trim()
+        let condition = {
+          currentPage: this.currentPage,
+          count: this.count,
+          userId: sessionStorage.getItem('id')
+        }
+        if (item === 'name') {
+          condition.name = key
+        } else if (item === 'number') {
+          condition.number = key
+        } else {
+          condition.grade = key
+        }
         let url = vm.url_request.ip_port_dev + '/student_submit_task_read'
-        vm.netWorkRequest('post', url, {
-          currentPage: vm.currentPage,
-          count: vm.count,
-          teacherName: sessionStorage.getItem('name')
-        }, function (response) {
+        vm.netWorkRequest('post', url, condition, function (response) {
           //获取数据部分,json数组对象
           vm.tableData = response.data
           //获取分页信息,json对象
@@ -129,6 +152,8 @@
       },
       reset () {
         const vm = this
+        this.currentPage = 1
+        this.searchKeys = ''
         const url = vm.url_request.ip_port_dev + '/student_submit_task_read'
         vm.netWorkRequest('post', url, {
           userId: sessionStorage.getItem('id'),

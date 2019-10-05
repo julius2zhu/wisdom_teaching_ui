@@ -1,19 +1,30 @@
 <template>
-  <div>
-    欢迎使用智慧教学在线系统！
+  <div class="demo-image">
+    <span class="block" v-for="fit in fits" :key="fit">
+      <span class="demonstration">{{ fit }}</span>
+      <el-image
+        style="width: 100px; height: 100px"
+        :src="url"
+        :fit="fit"></el-image>
+    </span>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'Welcome'
+    name: 'Welcome',
+    data(){
+      return{
+        fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      }
+    }
   }
 </script>
 
 <style scoped>
   div {
     color: white;
-    margin-top: 50px;
     font-size: large;
   }
 

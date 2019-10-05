@@ -68,6 +68,8 @@ div.el-dialog__body {
 .upload-demo {
   display: inline-block;
 }
-
-
+/*侧边栏样式*/
+.el-aside{
+  overflow: hidden;
+}
 

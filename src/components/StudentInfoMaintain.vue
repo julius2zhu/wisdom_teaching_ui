@@ -43,29 +43,29 @@
     </el-pagination>
     <!--弹出框嵌套一个表单-->
     <el-dialog :title="title" :visible.sync="dialogFormVisible"
-                     :center="true" :close-on-click-modal="false" @open="open">
+               :center="true" :close-on-click-modal="false" @open="open">
       <el-form :model="form" :rules="rules" :inline="true" ref="dialog_form">
         <el-form-item label="学生姓名:" prop="name">
-          <el-input v-model="form.name"></el-input>
+          <el-input placeholder="请输入学生姓名" v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="学生性别:" prop="sex">
           <el-radio v-model="form.sex" label="0">男</el-radio>
           <el-radio v-model="form.sex" label="1">女</el-radio>
         </el-form-item>
         <el-form-item label="学生班级:" prop="grade">
-          <el-input v-model="form.grade"/>
+          <el-input placeholder="请输入学生班级" v-model="form.grade"/>
         </el-form-item>
         <el-form-item label="学生学号:" prop="number">
-          <el-input v-model.number="form.number" @change="numberChange"/>
+          <el-input placeholder="请输入学生学号" v-model.number="form.number" @change="numberChange"/>
         </el-form-item>
         <el-form-item label="所在系别:" prop="department">
-          <el-input v-model="form.department"/>
+          <el-input placeholder="请输入学生系别" v-model="form.department"/>
         </el-form-item>
         <el-form-item label="所学专业:" prop="major">
-          <el-input v-model="form.major"/>
+          <el-input placeholder="请输入学生专业" v-model="form.major"/>
         </el-form-item>
         <el-form-item label="学生班主任:" prop="classTeacher">
-          <el-input v-model="form.classTeacher"/>
+          <el-input  placeholder="请输入学生班主任" v-model="form.classTeacher"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -117,14 +117,14 @@
         //验证规则
         rules: {
           name: [
-            {required: true, message: '请输入学生性名'},
-            {min: 2, max: 6, message: '学生姓名应在2-6个字符之间'}
+            {required: true, message: '姓名不能为空'},
+            {min: 2, max: 6, message: '姓名应在2-6个字符之间'}
           ],
           sex: [
             {required: true}
           ],
           grade: [
-            {required: true, message: '请输入学生班级'},
+            {required: true, message: '班级不能为空'},
             {min: 6, max: 20, message: '班级名应在6-20个字符之间'}
           ],
           number: [
@@ -132,11 +132,11 @@
             {type: 'number', message: '学号必须为数字值'}
           ],
           department: [
-            {required: true, message: '请输入学生所在系别'},
-            {min: 3, max: 20, message: '学生系别应在3-20个字符之间'}
+            {required: true, message: '系别不能为空'},
+            {min: 3, max: 20, message: '系别应在3-20个字符之间'}
           ],
           major: [
-            {required: true, message: '请输入学生所学专业'},
+            {required: true, message: '专业不能为空'},
             {min: 3, max: 20, message: '专业名称应在3-20个字符之间'}
           ]
         }

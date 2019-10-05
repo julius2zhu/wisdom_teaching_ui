@@ -126,7 +126,7 @@ export default new Router({
         {
           //刚进来展示的页面
           path: '/main',
-          redirect: '/main/welcome'
+          redirect: '/main/studentInfoCheck'
         }
       ]
     },
