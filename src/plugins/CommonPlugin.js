@@ -2,6 +2,7 @@
  * 通用插件js库,例如常见的网络请求访问
  *
  */
+const BASE_URL = process.env.BASE_API
 export default {
   install: function (Vue, options) {
     /**
@@ -12,6 +13,7 @@ export default {
      * @param fn 回调函数
      */
     Vue.prototype.netWorkRequest = function (way, url, params, fn) {
+      console.log(BASE_URL)
       if (way === 'get') {
         this.axios.get(url, {
           params: params,

@@ -121,7 +121,7 @@
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-kaoshi"></use>
         </svg>
-        <router-link to="/main/onlineExamination">在线考试</router-link>
+        <a href="http://39.105.68.251:8081" target="_blank">在线考试</a>
       </el-menu-item>
     </el-submenu>
 

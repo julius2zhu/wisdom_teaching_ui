@@ -69,12 +69,17 @@
                 let name = response.name
                 let id = response.id
                 if (result === vm.login_show.success) {
-                  vm.$router.replace('/main')
                   //存储数据,窗口关闭会自动销毁,临时存储下
                   sessionStorage.setItem('id', id)
                   sessionStorage.setItem('username', username)
                   sessionStorage.setItem('name', name)
                   sessionStorage.setItem('role', role)
+                  //学生跳转到学生页面
+                  if (role === '0') {
+                    vm.$router.replace('/main/studentTaskSubmit')
+                  } else {
+                    vm.$router.replace('/main')
+                  }
                 } else {
                   vm.$message({
                     title: '提示',
